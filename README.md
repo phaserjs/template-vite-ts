@@ -38,7 +38,8 @@ We have provided a default project structure to get you started. This is as foll
 
 - `index.html` - A basic HTML page to contain the game.
 - `src` - Contains the game source code.
-- `src/main.ts` - The main entry point. This contains the game configuration and starts the game.
+- `src/main.ts` - The main **entry** point. This contains the game configuration and starts the game.
+- `src/global.d.ts` - Global TypeScript declarations, provide types information.
 - `src/scenes/` - The Phaser Scenes are in this folder.
 - `public/style.css` - Some simple CSS rules to help with page layout.
 - `public/assets` - Contains the static assets used by the game.
