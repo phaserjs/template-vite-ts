@@ -2,7 +2,7 @@
     "name": "template-vite-ts",
     "description": "A Phaser 3 TypeScript template using Vite.",
     "private": true,
-    "version": "0.0.1",
+    "version": "1.0.0",
     "type": "module",
     "repository": {
         "type": "git",
