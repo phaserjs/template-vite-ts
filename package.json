@@ -1,7 +1,7 @@
 {
     "name": "template-vite-ts",
     "description": "A Phaser 3 TypeScript template using Vite.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/phaserjs/template-vite-ts.git"
@@ -14,13 +14,13 @@
     },
     "homepage": "https://github.com/phaserjs/template-vite-ts#readme",
     "scripts": {
-        "dev": "vite --config vite/config.dev.js",
-        "build": "vite build --config vite/config.prod.js"
+        "dev": "vite --config vite/config.dev.mjs",
+        "build": "vite build --config vite/config.prod.mjs"
     },
     "devDependencies": {
         "terser": "^5.27.0",
         "typescript": "^5.2.2",
-        "vite": "^5.0.8"
+        "vite": "^5.1.0"
     },
     "dependencies": {
         "phaser": "^3.70.0"
