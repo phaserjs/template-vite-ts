@@ -6,9 +6,9 @@ This is a Phaser 3 project template that uses Vite for bundling. It supports hot
 
 This template has been updated for:
 
-- [Phaser 3.70.0](https://github.com/phaserjs/phaser)
-- [Vite 5.0.8](https://github.com/vitejs/vite)
-- [TypeScript 5.2.2](https://github.com/microsoft/TypeScript)
+- [Phaser 3.80.0](https://github.com/phaserjs/phaser)
+- [Vite 5.1.4](https://github.com/vitejs/vite)
+- [TypeScript 5.3.3](https://github.com/microsoft/TypeScript)
 
 ![screenshot](screenshot.png)
 
