@@ -23,7 +23,7 @@
     "vite": "^5.1.4"
   },
   "dependencies": {
-    "phaser": "^3.80.1",
-    "granadalib": "git+ssh://git@github.com:Granadagames/GranadaLib.git"
+    "granadalib": "git+ssh://git@github.com:Granadagames/GranadaLib.git",
+    "phaser": "^3.80.1"
   }
 }

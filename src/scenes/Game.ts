@@ -1,4 +1,4 @@
-import { helloWorld } from "GranadaLib/GranadaProxy";
+import { helloWorld } from "granadalib";
 import { Scene } from "phaser";
 
 export class Game extends Scene {
