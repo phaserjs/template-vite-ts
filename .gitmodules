@@ -1,6 +1,3 @@
 [submodule "submodules/GranadaLib"]
 	path = submodules/GranadaLib
 	url = git@github.com:Granadagames/GranadaAdProxy.git
-[submodule "submodules/GranadaAdProxy"]
-	path = submodules/GranadaAdProxy
-	url = git@github.com:Granadagames/GranadaAdProxy.git
