@@ -1,5 +1,5 @@
+import { helloWorld } from "GranadaLib/GranadaProxy";
 import { Scene } from "phaser";
-import { helloWorld } from "submodules/GranadaLib/dist/GranadaProxy";
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;

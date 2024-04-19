@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      granadalib:
+        specifier: git+ssh://git@github.com:Granadagames/GranadaLib.git
+        version: granada-lib@git+git@github.com:Granadagames/GranadaLib.git#502b4760c593d0422756ee6f6eaf1bd1def61412
       phaser:
         specifier: ^3.80.1
         version: 3.80.1
@@ -290,6 +293,10 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
+  granada-lib@git+git@github.com:Granadagames/GranadaLib.git#502b4760c593d0422756ee6f6eaf1bd1def61412:
+    resolution: {commit: 502b4760c593d0422756ee6f6eaf1bd1def61412, repo: git@github.com:Granadagames/GranadaLib.git, type: git}
+    version: 1.0.0
+
   nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -538,6 +545,8 @@ snapshots:
 
   fsevents@2.3.3:
     optional: true
+
+  granada-lib@git+git@github.com:Granadagames/GranadaLib.git#502b4760c593d0422756ee6f6eaf1bd1def61412: {}
 
   nanoid@3.3.7: {}
 
