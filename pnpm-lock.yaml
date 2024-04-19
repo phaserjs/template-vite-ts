@@ -9,20 +9,20 @@ importers:
   .:
     dependencies:
       granadalib:
-        specifier: git+ssh://git@github.com:Granadagames/GranadaLib.git
-        version: granada-lib@git+git@github.com:Granadagames/GranadaLib.git#4e2bed9059c47406d7f21e7632f251e5ee9fbccc
+        specifier: github:Granadagames/GranadaLib
+        version: granada-lib@git+git@github.com:Granadagames/GranadaLib.git#538813f98101a985f1003029563592fc1972f948
       phaser:
         specifier: ^3.80.1
         version: 3.80.1
     devDependencies:
       terser:
-        specifier: ^5.28.1
+        specifier: ^5.30.3
         version: 5.30.3
       typescript:
-        specifier: ^5.3.3
+        specifier: ^5.4.5
         version: 5.4.5
       vite:
-        specifier: ^5.1.4
+        specifier: ^5.2.9
         version: 5.2.9(terser@5.30.3)
 
 packages:
@@ -293,9 +293,13 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
-  granada-lib@git+git@github.com:Granadagames/GranadaLib.git#4e2bed9059c47406d7f21e7632f251e5ee9fbccc:
-    resolution: {commit: 4e2bed9059c47406d7f21e7632f251e5ee9fbccc, repo: git@github.com:Granadagames/GranadaLib.git, type: git}
+  granada-lib@git+git@github.com:Granadagames/GranadaLib.git#538813f98101a985f1003029563592fc1972f948:
+    resolution: {commit: 538813f98101a985f1003029563592fc1972f948, repo: git@github.com:Granadagames/GranadaLib.git, type: git}
     version: 1.0.0
+
+  mraid.d.ts.git@https://codeload.github.com/rpetrich/mraid.d.ts/tar.gz/f823bca40a20ae211ffbd8472e511870c105a715:
+    resolution: {tarball: https://codeload.github.com/rpetrich/mraid.d.ts/tar.gz/f823bca40a20ae211ffbd8472e511870c105a715}
+    version: 0.0.0
 
   nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
@@ -546,7 +550,11 @@ snapshots:
   fsevents@2.3.3:
     optional: true
 
-  granada-lib@git+git@github.com:Granadagames/GranadaLib.git#4e2bed9059c47406d7f21e7632f251e5ee9fbccc: {}
+  granada-lib@git+git@github.com:Granadagames/GranadaLib.git#538813f98101a985f1003029563592fc1972f948:
+    dependencies:
+      mraid.d.ts: mraid.d.ts.git@https://codeload.github.com/rpetrich/mraid.d.ts/tar.gz/f823bca40a20ae211ffbd8472e511870c105a715
+
+  mraid.d.ts.git@https://codeload.github.com/rpetrich/mraid.d.ts/tar.gz/f823bca40a20ae211ffbd8472e511870c105a715: {}
 
   nanoid@3.3.7: {}
 
