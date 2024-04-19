@@ -19,5 +19,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*", "submodules/**/*"]
+  "include": ["src/**/*", "submodules/GranadaLib/dist/*"]
 }

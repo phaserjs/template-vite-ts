@@ -1,4 +1,5 @@
 import { Scene } from "phaser";
+import { helloWorld } from "submodules/GranadaLib/dist/GranadaProxy";
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
@@ -12,9 +13,10 @@ export class Game extends Scene {
   create() {
     this.camera = this.cameras.main;
     this.camera.setBackgroundColor(0x00ff00);
-
     this.background = this.add.image(512, 384, "background");
     this.background.setAlpha(0.5);
+
+    helloWorld("hey....Json");
 
     this.msg_text = this.add.text(
       512,
