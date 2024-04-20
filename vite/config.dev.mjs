@@ -1,22 +1,15 @@
 import { defineConfig } from "vite";
-import path from "path";
+import { viteSingleFile } from "vite-plugin-singlefile";
+import inlineImages from "./plugins/inlineImages";
 
 export default defineConfig({
   base: "./",
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          phaser: ["phaser"],
-        },
-      },
-    },
-  },
-  resolve: {
-    alias: {
-      granadalib: "./node_modules/granadalib/dist",
-    },
-  },
+  plugins: [
+    viteSingleFile(
+      { removeViteModuleLoader: true, deleteInlinedFiles: true },
+      inlineImages()
+    ),
+  ],
   server: {
     port: 8080,
   },

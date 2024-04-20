@@ -1,3 +1,5 @@
 # instructions
 
-git submodule update --init --recursive
+`pnpm run dev`
+
+`pnpm run build`

@@ -14,16 +14,21 @@
   },
   "homepage": "https://github.com/phaserjs/template-vite-ts#readme",
   "scripts": {
-    "dev": "vite --config vite/config.dev.mjs",
-    "build": "vite build --config vite/config.prod.mjs"
+    "delete-assets": "node delete-assets.mjs",
+    "encode-fonts": "node encode-fonts.mjs",
+    "dev": "cross-env VITE_DEV_MODE=true vite --config vite/config.dev.mjs",
+    "build": "vite build --config vite/config.prod.mjs && pnpm run encode-fonts && pnpm run delete-assets"
   },
   "devDependencies": {
     "terser": "^5.30.3",
     "typescript": "^5.4.5",
-    "vite": "^5.2.10"
+    "vite": "^5.2.10",
+    "vite-plugin-singlefile": "^2.0.1"
   },
   "dependencies": {
+    "cross-env": "^7.0.3",
     "granadalib": "github:Granadagames/GranadaLib",
-    "phaser": "^3.80.1"
+    "phaser": "^3.80.1",
+    "rimraf": "^5.0.5"
   }
 }

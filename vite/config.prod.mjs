@@ -1,4 +1,6 @@
 import { defineConfig } from "vite";
+import { viteSingleFile } from "vite-plugin-singlefile";
+import inlineImages from "./plugins/inlineImages";
 
 const phasermsg = () => {
   return {
@@ -8,8 +10,7 @@ const phasermsg = () => {
     },
     buildEnd() {
       const line = "---------------------------------------------------------";
-      const msg = `❤️❤️❤️ Tell us about your game! - games@phaser.io ❤️❤️❤️`;
-      msg += `❤️❤️❤️ Us too! - support@granadagames.co ❤️❤️❤️`;
+      const msg = `❤️❤️❤️ Tell us about your game! - games@phaser.io ❤️❤️❤️ \n ❤️❤️❤️ Us too! - support@granadagames.co ❤️❤️❤️`;
       process.stdout.write(`${line}\n${msg}\n${line}\n`);
 
       process.stdout.write(`✨ Done ✨\n`);
@@ -21,13 +22,6 @@ export default defineConfig({
   base: "./",
   logLevel: "warning",
   build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          phaser: ["phaser"],
-        },
-      },
-    },
     minify: "terser",
     terserOptions: {
       compress: {
@@ -39,13 +33,12 @@ export default defineConfig({
       },
     },
   },
-  resolve: {
-    alias: {
-      granadalib: "./node_modules/granadalib/dist",
-    },
-  },
   server: {
     port: 8080,
   },
-  plugins: [phasermsg()],
+  plugins: [
+    phasermsg(),
+    viteSingleFile({ removeViteModuleLoader: true, deleteInlinedFiles: true }),
+    inlineImages(),
+  ],
 });

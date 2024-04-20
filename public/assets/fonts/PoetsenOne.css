@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Poetsen One';
+  src: url('PoetsenOne-Regular.eot');
+  src:
+    url('PoetsenOne-Regular.eot?#iefix') format('embedded-opentype'),
+    url('PoetsenOne-Regular.woff2') format('woff2'),
+    url('PoetsenOne-Regular.woff') format('woff'),
+    url('PoetsenOne-Regular.ttf') format('truetype'),
+    url('PoetsenOne-Regular.svg#PoetsenOne-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

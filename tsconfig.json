@@ -18,8 +18,9 @@
     "strictPropertyInitialization": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "typeRoots": ["./node_modules/@types", "node_modules/granadalib/dist/**/*"]
   },
-  "typeRoots": ["./node_modules/@types", "./node_modules/granadalib/dist"],
-  "include": ["src", "./node_modules/granadalib/dist"]
+
+  "include": ["src", "node_modules/granadalib/dist/**/*"]
 }
