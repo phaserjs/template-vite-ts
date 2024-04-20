@@ -20,5 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*"]
+  "typeRoots": ["./node_modules/@types", "./node_modules/granadalib/dist"],
+  "include": ["src", "./node_modules/granadalib/dist"]
 }

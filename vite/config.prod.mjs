@@ -39,6 +39,11 @@ export default defineConfig({
       },
     },
   },
+  resolve: {
+    alias: {
+      granadalib: "./node_modules/granadalib/dist",
+    },
+  },
   server: {
     port: 8080,
   },
