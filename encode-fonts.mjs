@@ -37,10 +37,11 @@ async function appendCSSToHTML(cssRules, htmlFilePath) {
     const htmlContent = await fs.readFile(htmlFilePath, "utf8");
     const position = htmlContent.indexOf("</head>");
     if (position !== -1) {
+      // Wrapping the CSS rules in a <style> tag
+      const styleTag = `<style>\n${cssRules.join("\n")}\n</style>\n`;
+      // Inserting the <style> tag before the </head> tag in the HTML content
       const updatedHTML =
-        htmlContent.slice(0, position) +
-        cssRules.join("\n") +
-        htmlContent.slice(position);
+        htmlContent.slice(0, position) + styleTag + htmlContent.slice(position);
       await fs.writeFile(htmlFilePath, updatedHTML, "utf8");
       console.log("CSS has been added to the HTML file.");
     } else {

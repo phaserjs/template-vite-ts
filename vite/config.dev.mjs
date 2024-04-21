@@ -1,16 +1,15 @@
 import { defineConfig } from "vite";
+import inlineImages from "./plugins/inlineImages.mjs";
+import Config from "../src/config/config";
 import { viteSingleFile } from "vite-plugin-singlefile";
-import inlineImages from "./plugins/inlineImages";
 
 export default defineConfig({
   base: "./",
-  plugins: [
-    viteSingleFile(
-      { removeViteModuleLoader: true, deleteInlinedFiles: true },
-      inlineImages()
-    ),
-  ],
   server: {
     port: 8080,
   },
+  plugins: [
+    inlineImages(Config),
+    viteSingleFile({ removeViteModuleLoader: true, deleteInlinedFiles: true }),
+  ],
 });
