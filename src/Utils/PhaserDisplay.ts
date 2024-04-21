@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { GameConfig, Images } from "./types";
+import { GameConfig, Images, Point } from "./types";
 
 export const loadAllImages = (game: Phaser.Scene, images: Images): void => {
   Object.entries(images).forEach(([key, image]) => {
@@ -72,4 +72,15 @@ export const getGameScale = (
   const scaleX = scene.scale.width / config.size.x;
   const scaleY = scene.scale.height / config.size.y;
   return Math.min(scaleX, scaleY);
+};
+
+export const getPosition = (
+  p: Point,
+  scene: Phaser.Scene,
+  config: GameConfig
+): Point => {
+  return {
+    x: p.x * getGameScale(scene, config),
+    y: p.y * getGameScale(scene, config),
+  };
 };

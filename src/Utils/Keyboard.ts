@@ -31,14 +31,16 @@ class Keyboard extends Phaser.GameObjects.Container {
     const scaledMaxWidth = config.maxWidth; // Adjust for full width
     const keyHeight = config.fontSize * 1.5 * scale;
 
-    const rows = ["QWERTYUIOP", " ASDFGHJKL ", "  ZXCVBNM  "]; // Preceding spaces for stagger
-    const staggerOffset = scaledMaxWidth * 0.05; // Offset for each subsequent row
+    const rows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
+    const baseOffset = scaledMaxWidth * 0.02; // Reduced base offset for less out-of-bounds risk
 
     rows.forEach((row, rowIndex) => {
       const trimmedRow = row.trim();
-      const keyWidth = scaledMaxWidth / 10; // Base key width on the widest row
+      const numKeys = trimmedRow.length;
+      const keyWidth =
+        (scaledMaxWidth - baseOffset * (rowIndex + 1) * 2) / numKeys; // Adjust key width to ensure fit
+      const xOffset = baseOffset * (rowIndex + 1); // Apply growing offset for each row
 
-      let xOffset = staggerOffset * rowIndex; // Calculate initial offset based on row index
       trimmedRow.split("").forEach((char, index) => {
         const x = xOffset + index * keyWidth;
         const y = rowIndex * (keyHeight + 20 * scale);
@@ -53,6 +55,7 @@ class Keyboard extends Phaser.GameObjects.Container {
           char,
           Config
         );
+        key.setOrigin(0.5); // Center align text within each key
         key.setInteractive();
         key.on(KeyboardEvent.keyPressed, () => this.handleKeyPress(char));
         this.keys.push(key);
@@ -61,11 +64,12 @@ class Keyboard extends Phaser.GameObjects.Container {
   }
 
   private centerKeyboard(): void {
-    let minX = Math.min(...this.keys.map((key) => key.x));
-    let maxX = Math.max(...this.keys.map((key) => key.x + key.width));
+    // Ensure that the entire keyboard is centered correctly
+    let minX = Math.min(...this.keys.map((key) => key.getBounds().left));
+    let maxX = Math.max(...this.keys.map((key) => key.getBounds().right));
     let totalWidth = maxX - minX;
     this.x =
-      ((this.scene.sys.game.config.width as number) - totalWidth) / 2 - minX; // Adjust container's x to center the actual used width
+      ((this.scene.sys.game.config.width as number) - totalWidth) / 2 - minX; // Adjust x to center the actual content
   }
 
   private handleKeyPress(char: string): void {
