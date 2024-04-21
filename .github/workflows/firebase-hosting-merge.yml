@@ -34,6 +34,15 @@ jobs:
       - name: Check pnpm version
         run: pnpm --version
 
+      - uses: actions/checkout@v4
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global url."git@github.com:".insteadOf "https://github.com/"
+
       # Install dependencies using pnpm
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
