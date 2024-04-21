@@ -25,7 +25,9 @@ jobs:
           cache: "pnpm"
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: |
+          npm install -g pnpm
+          echo "$(pnpm bin)" >> $GITHUB_PATH  # Ensure pnpm is in the PATH
 
       # Check pnpm version
       - name: Check pnpm version

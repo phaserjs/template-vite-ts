@@ -14,15 +14,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Setup Node.js environment and install pnpm
-      - name: Setup Node.js and pnpm
+      # Setup Node.js environment
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16" # Specify your Node.js version here
-          cache: "pnpm" # Caches pnpm modules
+          node-version: "16" # Ensure you use the Node.js version you require
+          cache: "pnpm"
 
+      # Install pnpm
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: |
+          npm install -g pnpm
+          echo "$(pnpm bin)" >> $GITHUB_PATH
 
       # Check pnpm version
       - name: Check pnpm version
