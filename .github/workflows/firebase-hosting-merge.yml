@@ -18,10 +18,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16" # Ensure you use the Node.js version you require
-          cache: "pnpm"
+          node-version: "21" # Update to use the latest Node.js version
+          cache: "pnpm" # Enable caching for pnpm here assuming pnpm is already installed
 
-      # Install pnpm
+      # Install pnpm if not cached
       - name: Install pnpm
         run: |
           npm install -g pnpm

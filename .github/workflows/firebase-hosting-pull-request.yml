@@ -17,21 +17,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Setup Node.js environment and install pnpm
-      - name: Setup Node.js and pnpm
+      # Setup Node.js environment without initially caching pnpm
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16" # Specify your Node.js version here
-          cache: "pnpm"
+          node-version: "21" # Ensure you use the Node.js version you require
 
+      # Install pnpm
       - name: Install pnpm
         run: |
           npm install -g pnpm
           echo "$(pnpm bin)" >> $GITHUB_PATH  # Ensure pnpm is in the PATH
 
-      # Check pnpm version
+      # Check pnpm version to ensure it's installed
       - name: Check pnpm version
         run: pnpm --version
+
+      # Enable caching for pnpm now that it's installed
+      - name: Cache pnpm modules
+        uses: actions/setup-node@v3
+        with:
+          node-version: "21"
+          cache: "pnpm"
 
       # Install dependencies using pnpm
       - name: Install dependencies
