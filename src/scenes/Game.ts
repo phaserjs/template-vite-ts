@@ -77,7 +77,6 @@ export class Game extends Scene {
     };
 
     this.virtualKeyboard = new Keyboard(this, keyboardConfig);
-    this.virtualKeyboard.y = getGameScale(this, Config) * Config.size.y - 300;
     console.log(this.virtualKeyboard.width);
 
     this.virtualKeyboard.onKeyPress((char) => {
