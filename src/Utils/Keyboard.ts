@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import { addText } from "./PhaserDisplay";
+import Config from "../../config";
 
 /**
  * Defines custom keyboard event types.
@@ -57,19 +59,18 @@ class Keyboard extends Phaser.GameObjects.Container {
         const x = i * keyWidth + rowOffsets[rowIndex];
         const y = rowIndex * (keyHeight + 20);
 
-        const key = this.scene.add
-          .text(x, y, char, {
-            fontFamily: config.font,
-            fontSize: `${config.fontSize}px`,
-            color: "#000",
-            backgroundColor: "#FFF",
-            align: "center",
-            fixedWidth: keyWidth,
-            fixedHeight: keyHeight,
-          })
-          .setInteractive();
+        const key = addText(
+          x,
+          y,
+          config.font,
+          config.fontSize,
+          this.scene,
+          char,
+          Config,
+          false
+        );
+        key.setInteractive();
 
-        this.add(key.setPosition(x, y));
         key.on(KeyboardEvent.keyPressed, () => this.handleKeyPress(char));
         this.keys.push(key);
       }
