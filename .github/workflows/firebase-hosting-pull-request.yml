@@ -18,13 +18,18 @@ jobs:
       - uses: actions/checkout@v4
 
       # Setup Node.js environment and install pnpm
-      - uses: actions/setup-node@v3
+      - name: Setup Node.js and pnpm
+        uses: actions/setup-node@v3
         with:
           node-version: "16" # Specify your Node.js version here
-          cache: "pnpm" # This enables caching of pnpm modules
+          cache: "pnpm"
 
       - name: Install pnpm
         run: npm install -g pnpm
+
+      # Check pnpm version
+      - name: Check pnpm version
+        run: pnpm --version
 
       # Install dependencies using pnpm
       - name: Install dependencies
