@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import Config from "../../config";
+import Config from "../config/config";
 
 export class GameOver extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;

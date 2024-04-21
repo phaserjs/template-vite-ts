@@ -21,5 +21,9 @@
     "typeRoots": ["./node_modules/@types", "node_modules/granadalib/dist/**/*"]
   },
 
-  "include": ["src/**/*", "node_modules/granadalib/dist/**/*", "config.ts"]
+  "include": [
+    "src/**/*",
+    "node_modules/granadalib/dist/**/*",
+    "src/config/config.ts"
+  ]
 }

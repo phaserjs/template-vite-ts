@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { addText, getGameScale } from "./PhaserDisplay";
-import Config from "../../config";
+import Config from "../config/config";
 
 export const KeyboardEvent = {
   keyPressed: "pointerdown", // Event triggered when a key is pressed.
@@ -31,18 +31,18 @@ class Keyboard extends Phaser.GameObjects.Container {
     const scaledMaxWidth = config.maxWidth; // Adjust for full width
     const keyHeight = config.fontSize * 1.5 * scale;
 
+    // Rows of a typical QWERTY keyboard
     const rows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
-    const baseOffset = scaledMaxWidth * 0.02; // Reduced base offset for less out-of-bounds risk
 
+    // Calculate the starting x-offset for each row to create a staggered effect
+    const offsets = [0.1, 0.15, 0.2]; // Percent of maxWidth for starting offset
     rows.forEach((row, rowIndex) => {
-      const trimmedRow = row.trim();
-      const numKeys = trimmedRow.length;
-      const keyWidth =
-        (scaledMaxWidth - baseOffset * (rowIndex + 1) * 2) / numKeys; // Adjust key width to ensure fit
-      const xOffset = baseOffset * (rowIndex + 1); // Apply growing offset for each row
+      const numKeys = row.length;
+      const totalOffset = scaledMaxWidth * offsets[rowIndex];
+      const keyWidth = (scaledMaxWidth - totalOffset * 2) / numKeys;
 
-      trimmedRow.split("").forEach((char, index) => {
-        const x = xOffset + index * keyWidth;
+      row.split("").forEach((char, index) => {
+        const x = totalOffset + index * keyWidth;
         const y = rowIndex * (keyHeight + 20 * scale);
 
         const key = addText(
@@ -55,7 +55,7 @@ class Keyboard extends Phaser.GameObjects.Container {
           char,
           Config
         );
-        key.setOrigin(0.5); // Center align text within each key
+        key.setOrigin(0.5, 0); // Center-align the text within each key horizontally
         key.setInteractive();
         key.on(KeyboardEvent.keyPressed, () => this.handleKeyPress(char));
         this.keys.push(key);
@@ -64,12 +64,12 @@ class Keyboard extends Phaser.GameObjects.Container {
   }
 
   private centerKeyboard(): void {
-    // Ensure that the entire keyboard is centered correctly
+    // Center the keyboard based on actual content width
     let minX = Math.min(...this.keys.map((key) => key.getBounds().left));
     let maxX = Math.max(...this.keys.map((key) => key.getBounds().right));
     let totalWidth = maxX - minX;
     this.x =
-      ((this.scene.sys.game.config.width as number) - totalWidth) / 2 - minX; // Adjust x to center the actual content
+      ((this.scene.sys.game.config.width as number) - totalWidth) / 2 - minX;
   }
 
   private handleKeyPress(char: string): void {

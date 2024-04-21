@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import inlineImages from "./plugins/inlineImages.mjs";
-import Config from "../src/config/config";
 import { viteSingleFile } from "vite-plugin-singlefile";
+import Config from "../src/config/config";
 
 export default defineConfig({
   base: "./",

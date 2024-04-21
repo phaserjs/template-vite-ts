@@ -1,9 +1,9 @@
 import { helloWorld } from "granadalib/dist/GranadaProxy/GranadaProxy";
 import { Scene } from "phaser";
-import Config from "../../config";
 import { images } from "../config/assets";
 import { addImage, getGameScale } from "../Utils/PhaserDisplay";
 import Keyboard, { KeyboardConfig } from "../Utils/Keyboard";
+import Config from "../config/config";
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
@@ -77,7 +77,8 @@ export class Game extends Scene {
     };
 
     this.virtualKeyboard = new Keyboard(this, keyboardConfig);
-    this.virtualKeyboard.y = getGameScale(this, Config) * Config.size.y - 360;
+    this.virtualKeyboard.y = getGameScale(this, Config) * Config.size.y - 300;
+    console.log(this.virtualKeyboard.width);
 
     this.virtualKeyboard.onKeyPress((char) => {
       console.log(`Character ${char} was pressed.`);
