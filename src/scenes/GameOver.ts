@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import Config from "../config/config";
+import Config from "../../config";
 
 export class GameOver extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
@@ -22,9 +22,5 @@ export class GameOver extends Scene {
       align: "center",
     });
     this.gameover_text.setOrigin(0.5);
-
-    this.input.once("pointerdown", () => {
-      this.scene.start(Config.pages.Game);
-    });
   }
 }

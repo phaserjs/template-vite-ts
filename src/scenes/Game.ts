@@ -1,8 +1,9 @@
 import { helloWorld } from "granadalib/dist/GranadaProxy/GranadaProxy";
 import { Scene } from "phaser";
-import Config from "../config/config";
+import Config from "../../config";
 import { images } from "../config/assets";
 import { addImage } from "../Utils/PhaserDisplay";
+import Keyboard, { KeyboardConfig } from "../Utils/Keyboard";
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
@@ -11,7 +12,11 @@ export class Game extends Scene {
   question: Phaser.GameObjects.Image;
   submit: Phaser.GameObjects.Image;
 
+  container: Phaser.GameObjects.Container;
+
   msg_text: Phaser.GameObjects.Text;
+
+  virtualKeyboard: Keyboard;
 
   constructor() {
     super("Game");
@@ -19,6 +24,7 @@ export class Game extends Scene {
 
   create() {
     this.camera = this.cameras.main;
+    this.container = this.add.container(0, 0);
 
     helloWorld("hey....Json");
 
@@ -37,19 +43,43 @@ export class Game extends Scene {
     // );
     // this.msg_text.setOrigin(0.5);
 
-    this.topBar = addImage(0, 30, images.topBar.key, this, Config, true);
-    this.question = addImage(0, 100, images.questions.key, this, Config, true);
-    this.submit = addImage(
+    this.topBar = addImage(
       0,
-      Config.size.y - 80,
-      images.submit.key,
-      this,
+      30,
+      images.topBar.key,
+      this.container,
       Config,
       true
     );
 
-    this.input.once("pointerdown", () => {
-      this.scene.start(Config.pages.GameOver);
+    this.question = addImage(
+      0,
+      100,
+      images.questions.key,
+      this.container,
+      Config,
+      true
+    );
+
+    this.submit = addImage(
+      0,
+      Config.size.y - 80,
+      images.submit.key,
+      this.container,
+      Config,
+      true
+    );
+
+    const keyboardConfig: KeyboardConfig = {
+      font: Config.fonts.PoetsenOne,
+      fontSize: 38,
+      maxWidth: Config.size.x,
+    };
+
+    this.virtualKeyboard = new Keyboard(this, keyboardConfig);
+
+    this.virtualKeyboard.onKeyPress((char) => {
+      console.log(`Character ${char} was pressed.`);
     });
   }
 }

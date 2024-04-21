@@ -1,7 +1,7 @@
 import { Scene } from "phaser";
 import { IS_DEV_MODE } from "../Utils/Constants";
 import { getScreenSize } from "granadalib/dist/ScreenUtils";
-import Config from "../config/config";
+import Config from "../../config";
 import { loadAllImages } from "../Utils/PhaserDisplay";
 
 /**

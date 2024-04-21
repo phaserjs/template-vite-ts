@@ -1,4 +1,4 @@
-import { GameConfig } from "../Utils/types";
+import { GameConfig } from "./src/Utils/types";
 
 const Config: GameConfig = {
   size: {

@@ -1,5 +1,5 @@
 import { GameObjects } from "phaser";
-import Config from "../config/config";
+import Config from "../../config";
 
 export type Point = {
   x: number;
