@@ -60,3 +60,12 @@ jobs:
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_QWORDLY_699C2 }}
           channelId: live
           projectId: qwordly-699c2
+
+      - name: Notify Slack
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_CHANNEL: "releases"
+          SLACK_COLOR: "#36a64f"
+          SLACK_MESSAGE: "Deployment complete! Ad deployed to: https://qwordly-699c2.firebaseapp.com/ \n Give it a test here: https://p.applov.in/playablePreview?create=1&qr=1"
+          SLACK_TITLE: "Qwordly Ad Deployment successful"
