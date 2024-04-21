@@ -25,7 +25,8 @@ export const addImage = (
 ): Phaser.GameObjects.Image => {
   const scene = container instanceof Phaser.Scene ? container : container.scene;
   const image = scene.add.image(x, y, key).setInteractive();
-  const scale = getGameScale(scene, config);
+  // we use 0.5 as we only use retina assets for now.
+  const scale = getGameScale(scene, config) * 0.5;
   image.setScale(scale);
   if (centerX) {
     image.setX(scene.cameras.main.width / 2);
@@ -43,26 +44,21 @@ export const addText = (
   fontFamily: string,
   fontSize: number,
   container: Phaser.GameObjects.Container | Phaser.Scene,
+  color: string,
   text: string,
-  config: GameConfig,
-  centerX: boolean = false
+  config: GameConfig
 ): Phaser.GameObjects.Text => {
   const scene = container instanceof Phaser.Scene ? container : container.scene;
   const textObject = scene.add
     .text(x, y, text, {
       fontFamily,
       fontSize: `${fontSize}px`,
-      color: "#000",
-      backgroundColor: "#FFF",
+      color,
       align: "center",
     })
     .setInteractive();
   const scale = getGameScale(scene, config);
   textObject.setFontSize(fontSize * scale);
-  if (centerX) {
-    textObject.setX(scene.cameras.main.width / 2);
-    textObject.setOrigin(0.5, 0);
-  }
   if (container instanceof Phaser.GameObjects.Container) {
     container.add(textObject);
   }
