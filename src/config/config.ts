@@ -12,7 +12,7 @@ const Config: GameConfig = {
   },
   fonts: {
     PoetsenOne: "Poetsen One",
-    ArialBlack: "Poppins",
+    Poppins: "Poppins",
   },
   images: {
     questions: {

@@ -1,7 +1,7 @@
 import { helloWorld } from "granadalib/dist/GranadaProxy/GranadaProxy";
 import { Scene } from "phaser";
 import { images } from "../config/assets";
-import { addImage, getGameScale } from "../Utils/PhaserDisplay";
+import { addImage } from "../Utils/PhaserDisplay";
 import Keyboard, { KeyboardConfig } from "../Utils/Keyboard";
 import Config from "../config/config";
 

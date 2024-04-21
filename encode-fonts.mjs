@@ -23,12 +23,12 @@ async function convertFontToBase64CSS(filePath) {
   }`;
 
   return `
-@font-face {
-    font-family: '${fontName}';
-    src: url(data:${mimeType};base64,${base64}) format('${ext}');
-    font-weight: normal;
-    font-style: normal;
-}`;
+  @font-face {
+      font-family: '${fontName}';
+      src: url(data:${mimeType};base64,${base64}) format('${ext}');
+      font-weight: normal;
+      font-style: normal;
+  }`;
 }
 
 // Function to append CSS to the head of an existing HTML file
@@ -55,6 +55,9 @@ async function appendCSSToHTML(cssRules, htmlFilePath) {
 // Main function to encode all fonts in a directory and append them to an HTML file
 async function encodeFontsAndAppendToHTML(dir, htmlFilePath) {
   const fontFiles = await listFontFiles(dir);
+
+  console.log("Font files found:", fontFiles);
+
   const cssRules = [];
 
   for (const file of fontFiles) {
