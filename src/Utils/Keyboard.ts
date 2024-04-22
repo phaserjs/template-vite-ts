@@ -1,6 +1,6 @@
 import Phaser from "phaser";
-import { addText, getGameScale } from "./PhaserDisplay";
 import Config from "../config/config";
+import { addText, getGameScale } from "../Utils/PhaserDisplay";
 
 export const KeyboardEvent = {
   keyPressed: "pointerdown", // Event triggered when a key is pressed.
@@ -9,47 +9,53 @@ export const KeyboardEvent = {
 export type KeyboardConfig = {
   font: string;
   fontSize: number;
-  maxWidth: number;
 };
 
 class Keyboard extends Phaser.GameObjects.Container {
   private keys: Phaser.GameObjects.Text[] = [];
   private keyEvent: Phaser.Events.EventEmitter;
+  private config: KeyboardConfig;
 
   constructor(scene: Phaser.Scene, config: KeyboardConfig) {
     super(scene);
     this.scene = scene;
     this.scene.add.existing(this);
     this.keyEvent = new Phaser.Events.EventEmitter();
-    config.maxWidth = this.scene.sys.game.config.width as number; // Use the full screen width
-    this.initializeKeys(config);
+    this.config = config;
+    this.initializeKeys();
     this.scene.events.once("update", () => this.centerKeyboard());
   }
 
-  private initializeKeys(config: KeyboardConfig): void {
-    const scale = getGameScale(this.scene, Config);
-    const scaledMaxWidth = config.maxWidth; // Adjust for full width
-    const keyHeight = config.fontSize * 1.5 * scale;
+  private initializeKeys(): void {
+    const scale = getGameScale(Config);
+    const scaledMaxWidth = window.innerWidth;
 
-    // Rows of a typical QWERTY keyboard
+    // Calculate dynamic padding
+    const dynamicPadding = scaledMaxWidth * 0.01; // e.g., 1% of the total width for padding between keys
+
+    const keyHeight = this.config.fontSize * 1.5 * scale;
     const rows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
+    const maxKeys = Math.max(...rows.map((row) => row.length));
+    const keyWidth =
+      (scaledMaxWidth - dynamicPadding * (maxKeys - 1)) / maxKeys;
 
-    // Calculate the starting x-offset for each row to create a staggered effect
-    const offsets = [0.1, 0.15, 0.2]; // Percent of maxWidth for starting offset
     rows.forEach((row, rowIndex) => {
       const numKeys = row.length;
-      const totalOffset = scaledMaxWidth * offsets[rowIndex];
-      const keyWidth = (scaledMaxWidth - totalOffset * 2) / numKeys;
+      const xOffset =
+        (scaledMaxWidth -
+          (keyWidth + dynamicPadding) * numKeys +
+          dynamicPadding) /
+        2;
 
       row.split("").forEach((char, index) => {
-        const x = totalOffset + index * keyWidth;
-        const y = rowIndex * (keyHeight + 20 * scale);
+        const x = xOffset + index * (keyWidth + dynamicPadding);
+        const y = rowIndex * (keyHeight + dynamicPadding); // Use dynamic padding for vertical spacing as well
 
         const key = addText(
-          x,
+          x + keyWidth / 2, // Center the text in the middle of the key's width
           y,
-          config.font,
-          config.fontSize * scale,
+          this.config.font,
+          this.config.fontSize * scale,
           this,
           "#000000",
           char,
@@ -63,14 +69,7 @@ class Keyboard extends Phaser.GameObjects.Container {
     });
   }
 
-  private centerKeyboard(): void {
-    // Center the keyboard based on actual content width
-    let minX = Math.min(...this.keys.map((key) => key.getBounds().left));
-    let maxX = Math.max(...this.keys.map((key) => key.getBounds().right));
-    let totalWidth = maxX - minX;
-    this.x =
-      ((this.scene.sys.game.config.width as number) - totalWidth) / 2 - minX;
-  }
+  private centerKeyboard(): void {}
 
   private handleKeyPress(char: string): void {
     console.log(`Key Pressed: ${char}`);

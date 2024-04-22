@@ -26,7 +26,7 @@ export const addImage = (
   const scene = container instanceof Phaser.Scene ? container : container.scene;
   const image = scene.add.image(x, y, key).setInteractive();
   // we use 0.5 as we only use retina assets for now.
-  const scale = getGameScale(scene, config) * 0.5;
+  const scale = getGameScale(config) * 0.5;
   image.setScale(scale);
   if (centerX) {
     image.setX(scene.cameras.main.width / 2);
@@ -48,7 +48,10 @@ export const addText = (
   text: string,
   config: GameConfig
 ): Phaser.GameObjects.Text => {
+  // Determine the appropriate scene whether the container is a scene or a container within a scene
   const scene = container instanceof Phaser.Scene ? container : container.scene;
+
+  // Create the text object directly in the scene
   const textObject = scene.add
     .text(x, y, text, {
       fontFamily,
@@ -57,30 +60,28 @@ export const addText = (
       align: "center",
     })
     .setInteractive();
-  const scale = getGameScale(scene, config);
+
+  const scale = getGameScale(config);
   textObject.setFontSize(fontSize * scale);
-  if (container instanceof Phaser.GameObjects.Container) {
+  textObject.setOrigin(0.5, 0); // Ensure text is centered horizontally around its x
+
+  // Add the text object to the container if it's not the scene itself
+  if (!(container instanceof Phaser.Scene)) {
     container.add(textObject);
   }
+
   return textObject;
 };
 
-export const getGameScale = (
-  scene: Phaser.Scene,
-  config: GameConfig
-): number => {
-  const scaleX = scene.scale.width / config.size.x;
-  const scaleY = scene.scale.height / config.size.y;
+export const getGameScale = (config: GameConfig): number => {
+  const scaleX = window.innerWidth / config.size.x;
+  const scaleY = window.innerHeight / config.size.y;
   return Math.min(scaleX, scaleY);
 };
 
-export const getPosition = (
-  p: Point,
-  scene: Phaser.Scene,
-  config: GameConfig
-): Point => {
+export const getPosition = (p: Point, config: GameConfig): Point => {
   return {
-    x: p.x * getGameScale(scene, config),
-    y: p.y * getGameScale(scene, config),
+    x: p.x * getGameScale(config),
+    y: p.y * getGameScale(config),
   };
 };

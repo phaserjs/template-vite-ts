@@ -1,7 +1,7 @@
 import { helloWorld } from "granadalib/dist/GranadaProxy/GranadaProxy";
 import { Scene } from "phaser";
 import { images } from "../config/assets";
-import { addImage } from "../Utils/PhaserDisplay";
+import { addImage, getGameScale } from "../Utils/PhaserDisplay";
 import Keyboard, { KeyboardConfig } from "../Utils/Keyboard";
 import Config from "../config/config";
 
@@ -73,7 +73,6 @@ export class Game extends Scene {
     const keyboardConfig: KeyboardConfig = {
       font: Config.fonts.PoetsenOne,
       fontSize: 38,
-      maxWidth: window.innerWidth,
     };
 
     this.virtualKeyboard = new Keyboard(this, keyboardConfig);

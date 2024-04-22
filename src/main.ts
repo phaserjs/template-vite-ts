@@ -7,13 +7,13 @@ import { Game, Types } from "phaser";
 //  https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
 const config: Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: window.innerWidth,
-  height: window.innerHeight,
+  width: window.innerWidth * Math.min(window.devicePixelRatio, 2),
+  height: window.innerHeight * Math.min(window.devicePixelRatio, 2),
   transparent: true,
   parent: "game-container",
   roundPixels: true,
   scale: {
-    mode: Phaser.Scale.FIT,
+    mode: Phaser.Scale.NONE,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
   scene: [Boot, MainGame, GameOver],
