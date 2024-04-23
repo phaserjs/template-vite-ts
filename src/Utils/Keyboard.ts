@@ -10,6 +10,7 @@ export type KeyboardConfig = {
   font: string;
   fontSize: number;
   color: string;
+  keyHeight: number;
 };
 
 class Keyboard extends Phaser.GameObjects.Container {
@@ -28,26 +29,22 @@ class Keyboard extends Phaser.GameObjects.Container {
 
   private initializeKeys(): void {
     const scale = getGameScale(Config);
-    const scaledMaxWidth = window.innerWidth;
 
-    const keyHeight = this.config.fontSize * 1.5 * scale;
+    const scaledKeyHeight = this.config.keyHeight * scale;
     const rows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
     const longestRowLength = Math.max(...rows.map((row) => row.length));
-    const dynamicPadding = scaledMaxWidth * 0.02; // Fixed padding percentage of total width
 
     // Calculate the width available for all keys after accounting for padding
-    const totalPadding = dynamicPadding * (longestRowLength - 1);
-    const availableWidth = scaledMaxWidth - totalPadding;
+    const availableWidth = window.innerWidth;
     const keyWidth = availableWidth / longestRowLength;
 
     rows.forEach((row, rowIndex) => {
-      let xPosition =
-        (scaledMaxWidth - (keyWidth * row.length + totalPadding)) / 2;
+      let xPosition = 0;
 
       row.split("").forEach((char) => {
         const key = addText(
           xPosition + keyWidth / 2,
-          rowIndex * (keyHeight + dynamicPadding),
+          rowIndex * scaledKeyHeight,
           this.config.font,
           this.config.fontSize,
           this,
@@ -61,7 +58,7 @@ class Keyboard extends Phaser.GameObjects.Container {
         this.keys.push(key);
 
         // Update xPosition for the next key
-        xPosition += keyWidth + dynamicPadding;
+        xPosition += keyWidth;
       });
     });
   }

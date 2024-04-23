@@ -73,6 +73,8 @@ export class Game extends Scene {
     const keyboardConfig: KeyboardConfig = {
       font: Config.fonts.PoetsenOne,
       fontSize: 38,
+      color: "#000000",
+      keyHeight: 40,
     };
 
     this.virtualKeyboard = new Keyboard(this, keyboardConfig);

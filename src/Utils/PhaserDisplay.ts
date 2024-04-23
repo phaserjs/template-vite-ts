@@ -76,7 +76,7 @@ export const addText = (
 export const getGameScale = (config: GameConfig): number => {
   const scaleX = window.innerWidth / config.size.x;
   const scaleY = window.innerHeight / config.size.y;
-  return Math.min(scaleX, scaleY);
+  return Math.max(scaleX, scaleY);
 };
 
 export const getPosition = (p: Point, config: GameConfig): Point => {
