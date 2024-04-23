@@ -29,31 +29,33 @@ class Keyboard extends Phaser.GameObjects.Container {
   private initializeKeys(): void {
     const scale = getGameScale(Config);
     const scaledMaxWidth = window.innerWidth;
-
-    // Calculate dynamic padding
-    const dynamicPadding = scaledMaxWidth * 0.01; // e.g., 1% of the total width for padding between keys
+    const dynamicPadding = scaledMaxWidth * 0.02; // Adjusted padding
 
     const keyHeight = this.config.fontSize * 1.5 * scale;
     const rows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
-    const maxKeys = Math.max(...rows.map((row) => row.length));
-    const keyWidth =
-      (scaledMaxWidth - dynamicPadding * (maxKeys - 1)) / maxKeys;
 
     rows.forEach((row, rowIndex) => {
-      const numKeys = row.length;
-      const xOffset =
-        (scaledMaxWidth -
-          (keyWidth + dynamicPadding) * numKeys +
-          dynamicPadding) /
-        2;
+      const rowWidths = row.split("").map((char) => {
+        const tempText = this.scene.add.text(0, 0, char, {
+          font: `${this.config.fontSize * scale}px ${this.config.font}`,
+          color: "#000000",
+        });
+        const textWidth = tempText.width;
+        tempText.destroy();
+        return textWidth;
+      });
+
+      const totalRowWidth =
+        rowWidths.reduce((acc, width) => acc + width, 0) +
+        dynamicPadding * (row.length - 1);
+      const xOffset = (scaledMaxWidth - totalRowWidth) / 2;
+
+      let xPosition = xOffset;
 
       row.split("").forEach((char, index) => {
-        const x = xOffset + index * (keyWidth + dynamicPadding);
-        const y = rowIndex * (keyHeight + dynamicPadding); // Use dynamic padding for vertical spacing as well
-
         const key = addText(
-          x + keyWidth / 2, // Center the text in the middle of the key's width
-          y,
+          xPosition + rowWidths[index] / 2,
+          rowIndex * (keyHeight + dynamicPadding),
           this.config.font,
           this.config.fontSize * scale,
           this,
@@ -61,10 +63,13 @@ class Keyboard extends Phaser.GameObjects.Container {
           char,
           Config
         );
-        key.setOrigin(0.5, 0); // Center-align the text within each key horizontally
+        key.setOrigin(0.5, 0);
         key.setInteractive();
         key.on(KeyboardEvent.keyPressed, () => this.handleKeyPress(char));
         this.keys.push(key);
+
+        // Move the position to the next key, accounting for the current key's width and padding
+        xPosition += rowWidths[index] + dynamicPadding;
       });
     });
   }
