@@ -35,15 +35,19 @@ class Keyboard extends Phaser.GameObjects.Container {
     const longestRowLength = Math.max(...rows.map((row) => row.length));
 
     // Calculate the width available for all keys after accounting for padding
-    const availableWidth = window.innerWidth;
+    const padding = 10; // Adjust padding as necessary
+    const availableWidth = window.innerWidth - padding * (longestRowLength - 1);
     const keyWidth = availableWidth / longestRowLength;
 
     rows.forEach((row, rowIndex) => {
-      let xPosition = 0;
+      // Calculate the starting x position to center each row
+      const rowLength = row.length;
+      const totalRowWidth = rowLength * keyWidth + (rowLength - 1) * padding;
+      let xPosition = (window.innerWidth - totalRowWidth) / 2;
 
       row.split("").forEach((char) => {
         const key = addText(
-          xPosition + keyWidth / 2,
+          xPosition + keyWidth / 2, // Center text in the middle of the key
           rowIndex * scaledKeyHeight,
           this.config.font,
           this.config.fontSize,
@@ -57,8 +61,8 @@ class Keyboard extends Phaser.GameObjects.Container {
         key.on(KeyboardEvent.keyPressed, () => this.handleKeyPress(char));
         this.keys.push(key);
 
-        // Update xPosition for the next key
-        xPosition += keyWidth;
+        // Update xPosition for the next key, including padding
+        xPosition += keyWidth + padding;
       });
     });
   }
