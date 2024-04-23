@@ -9,6 +9,7 @@ export const KeyboardEvent = {
 export type KeyboardConfig = {
   font: string;
   fontSize: number;
+  color: string;
 };
 
 class Keyboard extends Phaser.GameObjects.Container {
@@ -23,7 +24,6 @@ class Keyboard extends Phaser.GameObjects.Container {
     this.keyEvent = new Phaser.Events.EventEmitter();
     this.config = config;
     this.initializeKeys();
-    this.scene.events.once("update", () => this.centerKeyboard());
   }
 
   private initializeKeys(): void {
@@ -44,14 +44,14 @@ class Keyboard extends Phaser.GameObjects.Container {
       let xPosition =
         (scaledMaxWidth - (keyWidth * row.length + totalPadding)) / 2;
 
-      row.split("").forEach((char, index) => {
+      row.split("").forEach((char) => {
         const key = addText(
           xPosition + keyWidth / 2,
           rowIndex * (keyHeight + dynamicPadding),
           this.config.font,
-          this.config.fontSize * scale,
+          this.config.fontSize,
           this,
-          "#000000",
+          this.config.color,
           char,
           Config
         );
@@ -65,8 +65,6 @@ class Keyboard extends Phaser.GameObjects.Container {
       });
     });
   }
-
-  private centerKeyboard(): void {}
 
   private handleKeyPress(char: string): void {
     console.log(`Key Pressed: ${char}`);
