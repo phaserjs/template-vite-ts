@@ -1,4 +1,4 @@
-import { GameConfig } from "../Utils/types";
+import { GameConfig } from "../GranadaLib/types/types";
 
 const Config: GameConfig = {
   size: {

@@ -1,8 +1,8 @@
 import { Scene } from "phaser";
-import { IS_DEV_MODE } from "../Utils/Constants";
-import { getScreenSize } from "granadalib/dist/ScreenUtils";
+import { IS_DEV_MODE } from "../Utils/getIsDevMode";
 import Config from "../config/config";
-import { loadAllImages } from "../Utils/PhaserDisplay";
+import { getScreenSize } from "../GranadaLib/display/ScreenUtils";
+import { loadAllImages } from "../GranadaLib/display/PhaserDisplay";
 
 /**
  * The Boot scene is responsible for setting up the initial assets and
@@ -10,7 +10,7 @@ import { loadAllImages } from "../Utils/PhaserDisplay";
  * connection checks before starting the main game.
  */
 export class Boot extends Scene {
-  hasConnectedToAPI: boolean;
+  hasConnectedToAPI: boolean = false;
   apiCheckTime: number = 100;
   timeoutHandle: number | null = null;
 
@@ -35,14 +35,7 @@ export class Boot extends Scene {
   create = () => {
     console.log("checking connection to mraid...");
     this.scheduleAPIConnectionCheck();
-
-    if (IS_DEV_MODE) {
-      loadAllImages(this, Config.images);
-    } else {
-      this.game.textures.addBase64("topBar", topBar);
-      this.game.textures.addBase64("questions", questions);
-      this.game.textures.addBase64("submit", submit);
-    }
+    loadAllImages(this, Config.images);
   };
 
   /**

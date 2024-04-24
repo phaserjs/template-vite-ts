@@ -20,14 +20,13 @@
     "build": "vite build --config vite/config.prod.mjs && pnpm run encode-fonts && pnpm run delete-assets"
   },
   "devDependencies": {
-    "terser": "^5.30.3",
+    "terser": "^5.30.4",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
     "vite-plugin-singlefile": "^2.0.1"
   },
   "dependencies": {
     "cross-env": "^7.0.3",
-    "granadalib": "github:Granadagames/GranadaLib",
     "path": "^0.12.7",
     "phaser": "^3.80.1",
     "rimraf": "^5.0.5"

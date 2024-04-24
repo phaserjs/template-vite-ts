@@ -67,5 +67,5 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_CHANNEL: "releases"
           SLACK_COLOR: "#36a64f"
-          SLACK_MESSAGE: "Deployment complete! Ad deployed to: https://qwordly-699c2.firebaseapp.com/ \n Give it a test here: https://p.applov.in/playablePreview?create=1&qr=1"
-          SLACK_TITLE: "Qwordly Ad Deployment successful"
+          SLACK_MESSAGE: "Deployment complete!"
+          SLACK_TITLE: "GranadaGames Library updated on NPm! Go update your projects! :tada:"

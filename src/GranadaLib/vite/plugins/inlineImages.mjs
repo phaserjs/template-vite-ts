@@ -1,6 +1,18 @@
 import path from "path";
 import { promises as fs } from "fs";
+import { fileURLToPath } from "url";
 
+// Define __dirname in terms of ES Modules
+const __dirname = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../../../"
+);
+console.log("current dir", __dirname);
+/**
+ * Inline images from the config into the output files.
+ * @param {Object} config - Configuration object containing images.
+ * @returns {Object} - Rollup plugin object.
+ */
 export default function inlineImages(config) {
   let encodedImages = {};
 
@@ -8,10 +20,7 @@ export default function inlineImages(config) {
     name: "inline-images",
     enforce: "pre",
     async buildStart() {
-      const outputFilePath = path.resolve(
-        __dirname,
-        "../../src/config/assets.ts"
-      );
+      const outputFilePath = path.resolve(__dirname, "config/assets.ts");
       console.log("Starting to encode images...");
       try {
         encodedImages = await encodeConfigImages(config.images, outputFilePath);
@@ -26,10 +35,7 @@ export default function inlineImages(config) {
         options.dir || path.dirname(options.file),
         "index.html"
       );
-      const typesFilePath = path.resolve(
-        __dirname,
-        "../../src/Utils/images.d.ts"
-      ); // Adjusted path
+      const typesFilePath = path.resolve(__dirname, "Utils/images.d.ts");
       try {
         await injectBase64IntoHtml(encodedImages, indexHtmlPath);
         await createTypesFile(encodedImages, typesFilePath);
@@ -40,6 +46,11 @@ export default function inlineImages(config) {
   };
 }
 
+/**
+ * Create TypeScript types file for image assets.
+ * @param {Object} images - Image object containing base64 encoded images.
+ * @param {string} filePath - File path to write the types file.
+ */
 async function createTypesFile(images, filePath) {
   const declarations = Object.keys(images)
     .map((key) => `declare const ${key}: string;`)
@@ -48,6 +59,11 @@ async function createTypesFile(images, filePath) {
   await fs.writeFile(filePath, content, "utf8");
 }
 
+/**
+ * Inject base64 encoded images into HTML file.
+ * @param {Object} images - Image object containing base64 encoded images.
+ * @param {string} htmlFilePath - Path to the HTML file.
+ */
 async function injectBase64IntoHtml(images, htmlFilePath) {
   let htmlContent = await fs.readFile(htmlFilePath, "utf8");
   const headCloseTag = "</head>";
@@ -62,12 +78,18 @@ async function injectBase64IntoHtml(images, htmlFilePath) {
   await fs.writeFile(htmlFilePath, htmlContent, "utf8");
 }
 
+/**
+ * Encode images from config into base64 format.
+ * @param {Object} images - Image object containing image paths.
+ * @param {string} outputFilePath - File path to write the encoded images.
+ * @returns {Object} - Encoded image object.
+ */
 async function encodeConfigImages(images, outputFilePath) {
   const imageObject = {};
   const imageArray = Object.values(images);
   for (const image of imageArray) {
     try {
-      const filePath = path.resolve(__dirname, "../../public", image.path);
+      const filePath = path.resolve(__dirname, "../public", image.path);
       const base64 = await imageToBase64(filePath);
       imageObject[image.key] = { key: image.key, path: base64 };
     } catch (error) {
@@ -83,6 +105,11 @@ async function encodeConfigImages(images, outputFilePath) {
   return imageObject;
 }
 
+/**
+ * Convert an image file to base64 format.
+ * @param {string} filePath - Path to the image file.
+ * @returns {string} - Base64 encoded string of the image.
+ */
 async function imageToBase64(filePath) {
   try {
     const file = await fs.readFile(filePath);
