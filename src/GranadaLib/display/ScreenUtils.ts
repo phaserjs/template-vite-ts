@@ -21,16 +21,16 @@ export const getScreenSize = (): ScreenSize => {
   if (typeof mraid !== "undefined") {
     // When MRAID is available, use its API to get the screen size.
     const res: ScreenSize = {
-      width: mraid.getScreenSize().width,
-      height: mraid.getScreenSize().height,
+      width: mraid.getScreenSize().width * 2,
+      height: mraid.getScreenSize().height * 2,
     };
     return res;
   }
 
   // Default to using the window's inner dimensions.
   const res: ScreenSize = {
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: window.innerWidth * 2,
+    height: window.innerHeight * 2,
   };
   return res;
 };

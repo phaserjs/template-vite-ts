@@ -45,13 +45,14 @@ class LabeledImage extends Phaser.GameObjects.Container {
     };
 
     this.label = scene.make.text(textConfig);
+    this.label.setFontFamily("Poppins");
+    this.label.setFontSize(24);
 
     this.label.setOrigin(0.5);
     this.add(this.label);
 
     // Adjusting the position of label relative to the image size
     this.image.on("resize", () => this.updateLabelPosition());
-    this.image.width / 2, console.log(this.width, "width", this.image.width);
   }
 
   /**
@@ -69,6 +70,27 @@ class LabeledImage extends Phaser.GameObjects.Container {
    */
   public setLabelText = (newLabel: string): void => {
     this.label.setText(newLabel);
+  };
+
+  public setAnswerState = (texture: string) => {
+    this.label.setColor("#fff");
+    this.image.setTexture(texture);
+  };
+
+  public reset = (texture: string) => {
+    this.label.setText("");
+    this.label.setColor("#000");
+    this.image.setTexture(texture);
+    this.image.postFX.clear();
+  };
+
+  public setSelected = (isSelected: boolean) => {
+    if (isSelected) {
+      this.image.postFX.clear();
+      this.image.postFX.addGlow(0x401f40);
+    } else {
+      this.image.postFX.clear();
+    }
   };
 }
 

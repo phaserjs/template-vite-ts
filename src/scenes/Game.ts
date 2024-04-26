@@ -1,11 +1,30 @@
 import { Scene } from "phaser";
 import Config from "../config/config";
-import { helloWorld } from "../GranadaLib/GranadaProxy/GranadaProxy";
 import { addImage } from "../GranadaLib/display/PhaserDisplay";
 import LabeledImageGrid, { GridConfig } from "../gameObjects/LabeledImageGrid";
-import Keyboard, { KeyboardConfig } from "../GranadaLib/input/Keyboard";
+import Keyboard, {
+  GranadaKeyboardEvents,
+  KeyboardConfig,
+} from "../GranadaLib/input/Keyboard";
 import { QuestionType } from "../types";
 import { images } from "../config/assets";
+
+import WordCompleteModal from "../gameObjects/WordCompleteModal";
+import WelcomeModal from "../gameObjects/WelcomeModal";
+
+export const gridConfig: GridConfig = {
+  rows: 5,
+  cols: 5,
+  xPadding: 16,
+  yPadding: 16,
+};
+
+export const keyboardConfig: KeyboardConfig = {
+  font: "Poppins",
+  fontSize: 20,
+  color: "#000000",
+  padding: 16,
+};
 
 export class Game extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;
@@ -26,6 +45,9 @@ export class Game extends Scene {
   currentColIndex: number = 0;
   attemptHistory: string[][] = [];
 
+  welcomeModal: WelcomeModal | null = null;
+  completeModal: WordCompleteModal | null = null;
+
   constructor() {
     super("Game");
   }
@@ -39,88 +61,48 @@ export class Game extends Scene {
       answer: "clock",
     };
 
-    helloWorld("hey....Json");
+    this.topBar = addImage(0, 43, images.topBar.key, this.container);
+    this.question = addImage(20, 107, images.questions.key, this.container);
 
-    // this.msg_text = this.add.text(
-    //   20,
-    //   20,
-    //   "Make something fun!\nand share it with us:\nsupport@phaser.io",
-    //   {
-    //     fontFamily: Config.fonts.PoetsenOne,
-    //     fontSize: 38,
-    //     color: "#ffffff",
-    //     stroke: "#000000",
-    //     strokeThickness: 8,
-    //     align: "center",
-    //   }
-    // );
-    // this.msg_text.setOrigin(0.5);
+    this.submit = addImage(124, 676, images.submit.key, this.container);
+    this.submit.setInteractive();
+    this.submit.on("pointerdown", this.checkAnswer, this);
 
-    this.topBar = addImage(
-      0,
-      window.innerHeight * 0.01,
-      images.topBar.key,
-      this.container,
-      Config,
-      true
-    );
-
-    this.question = addImage(
-      0,
-      window.innerHeight * 0.15,
-      images.questions.key,
-      this.container,
-      Config,
-      true
-    );
-
-    this.submit = addImage(
-      0,
-      window.innerHeight * 0.9,
-      images.submit.key,
-      this.container,
-      Config,
-      true
-    );
-
-    const gridConfig: GridConfig = {
-      rows: 5,
-      cols: 5,
-      xPadding: 10,
-      yPadding: 10,
-    };
-
-    this.attemptHistory = Array.from({ length: gridConfig.rows }, () => []);
-    for (let i = 0; i < gridConfig.rows; i++) {
-      this.attemptHistory[i] = new Array(gridConfig.cols).fill("");
-    }
-
-    console.log(this.attemptHistory);
+    this.resetHistory();
 
     this.labeleldImageGrid = new LabeledImageGrid(
       this,
-      0,
-      200,
+      64,
+      277,
       images.letter.key,
-      gridConfig,
-      Config
+      gridConfig
+    );
+    this.labeleldImageGrid.setSelected(
+      this.currentRowIndex,
+      this.currentColIndex
     );
 
-    this.labeleldImageGrid.x =
-      window.innerWidth / 2 - this.labeleldImageGrid.width / 2;
-
-    const keyboardConfig: KeyboardConfig = {
-      font: Config.fonts.PoetsenOne,
-      fontSize: 38,
-      color: "#000000",
-      keyHeight: 40,
-    };
-
     this.virtualKeyboard = new Keyboard(this, keyboardConfig, Config);
-    this.virtualKeyboard.y = window.innerHeight * 0.6;
+    this.virtualKeyboard.y = 560;
+
+    this.virtualKeyboard.on(GranadaKeyboardEvents.DELETE, () => {
+      this.attemptHistory[this.currentRowIndex][this.currentColIndex] = "";
+      this.labeleldImageGrid.setLabelText(
+        this.currentRowIndex,
+        this.currentColIndex,
+        ""
+      );
+
+      this.currentColIndex = Math.max(this.currentColIndex - 1, 0);
+
+      this.labeleldImageGrid.setSelected(
+        this.currentRowIndex,
+        this.currentColIndex
+      );
+    });
 
     this.virtualKeyboard.on(
-      Phaser.Input.Events.POINTER_DOWN,
+      GranadaKeyboardEvents.POINTER_DOWN,
       (char: string) => {
         this.attemptHistory[this.currentRowIndex][this.currentColIndex] = char;
         this.labeleldImageGrid.setLabelText(
@@ -128,13 +110,85 @@ export class Game extends Scene {
           this.currentColIndex,
           char
         );
-        this.currentRowIndex = Math.min(
-          this.currentRowIndex + 1,
+
+        this.currentColIndex = Math.min(
+          this.currentColIndex + 1,
           gridConfig.cols - 1
         );
 
-        console.log(`Character ${char} was pressed.`);
+        this.labeleldImageGrid.setSelected(
+          this.currentRowIndex,
+          this.currentColIndex
+        );
       }
     );
+
+    this.welcomeModal = new WelcomeModal(this, 0, 0, () => {
+      this.welcomeModal!.destroy();
+      this.welcomeModal = null;
+    });
   }
+
+  resetHistory = () => {
+    Array.from({ length: gridConfig.rows }, () => []);
+    for (let i = 0; i < gridConfig.rows; i++) {
+      this.attemptHistory[i] = new Array(gridConfig.cols).fill("");
+    }
+  };
+
+  checkAnswer = () => {
+    if (this.welcomeModal) {
+      return;
+    }
+
+    const answer = this.attemptHistory[this.currentRowIndex]
+      .join("")
+      .toLowerCase();
+    if (answer.length < this.questionData.answer.length) {
+      return;
+    }
+
+    if (answer === this.questionData.answer) {
+      console.log("Correct Answer");
+      this.setAnswers();
+      this.fadeOutElements();
+      this.completeModal = new WordCompleteModal(this, 0, 0);
+    } else {
+      console.log("Incorrect Answer");
+      this.setAnswers();
+
+      if (this.currentRowIndex >= gridConfig.rows - 1) {
+        this.currentRowIndex = 0;
+        this.resetHistory();
+        this.labeleldImageGrid.reset();
+      } else {
+        this.currentRowIndex += 1;
+      }
+
+      this.currentColIndex = 0;
+      this.labeleldImageGrid.setSelected(
+        this.currentRowIndex,
+        this.currentColIndex
+      );
+    }
+  };
+
+  private fadeOutElements = () => {
+    this.tweens.add({
+      targets: [this.topBar, this.question, this.submit, this.virtualKeyboard],
+      alpha: 0,
+      duration: 1000,
+      ease: "Linear",
+      repeat: 0,
+      yoyo: false,
+    });
+  };
+
+  private setAnswers = () => {
+    this.labeleldImageGrid.setAnswers(
+      this.currentRowIndex,
+      this.attemptHistory[this.currentRowIndex],
+      this.questionData.answer
+    );
+  };
 }

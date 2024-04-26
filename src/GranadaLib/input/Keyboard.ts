@@ -1,4 +1,4 @@
-import { addText, getGameScale } from "../display/PhaserDisplay";
+import { addImage, addText } from "../display/PhaserDisplay";
 import { GameConfig } from "../types/types";
 
 /**
@@ -8,18 +8,24 @@ import { GameConfig } from "../types/types";
  * @property {number} fontSize - The font size for the keys.
  * @property {string} color - The color of the key text.
  * @property {number} keyHeight - The height of each key, before scaling.
+ * @property {number} maxWidth - The maximum width of the keyboard, before scaling.
  */
 export type KeyboardConfig = {
   font: string;
   fontSize: number;
   color: string;
-  keyHeight: number;
+  padding: number;
+};
+
+export const GranadaKeyboardEvents = {
+  ...Phaser.Input.Events,
+  DELETE: "deletePressed",
 };
 
 /**
  * A virtual keyboard component for Phaser games.
  */
-class Keyboard extends Phaser.GameObjects.Container {
+class GranadaKeyboard extends Phaser.GameObjects.Container {
   private keys: Phaser.GameObjects.Text[] = [];
   private config: KeyboardConfig;
   private gameConfig: GameConfig;
@@ -48,42 +54,69 @@ class Keyboard extends Phaser.GameObjects.Container {
    * Each key is a Phaser.GameObjects.Text object positioned according to the specified layout.
    */
   private initializeKeys(): void {
-    const scale = getGameScale(this.gameConfig);
-    const scaledKeyHeight = this.config.keyHeight * scale;
     const rows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
-    const longestRowLength = Math.max(...rows.map((row) => row.length));
-
-    const padding = 10 * scale * 2;
-    const availableWidth = window.innerWidth - padding * (longestRowLength - 1);
-    const keyWidth = availableWidth / longestRowLength;
-
+    const padding = this.config.padding;
+    const keyWidth = this.config.fontSize;
+    let xPosition = 0;
     rows.forEach((row, rowIndex) => {
-      let xPosition =
+      xPosition =
         (window.innerWidth -
           (row.length * keyWidth + (row.length - 1) * padding)) /
         2;
 
       row.split("").forEach((char) => {
-        const key = addText(
+        const key = this.addKey(
           xPosition + keyWidth / 2,
-          rowIndex * scaledKeyHeight,
-          this.config.font,
-          this.config.fontSize,
-          this,
-          this.config.color,
-          char,
-          this.gameConfig
-        );
-        key.setOrigin(0.5);
-        key.setInteractive();
-        key.on(Phaser.Input.Events.POINTER_DOWN, () =>
-          this.handleKeyPress(char)
+          rowIndex * (this.config.fontSize + padding),
+          char
         );
         this.keys.push(key);
-
         xPosition += keyWidth + padding;
       });
     });
+
+    // Add Delete Button
+    const deleteButtonX = 330;
+    const deleteButtonY = 65;
+    const deleteKey = addImage(
+      deleteButtonX,
+      deleteButtonY,
+      this.gameConfig.images.delete.key,
+      this
+    );
+    deleteKey.setInteractive();
+    deleteKey.x = deleteButtonX;
+    deleteKey.on(Phaser.Input.Events.POINTER_DOWN, () =>
+      this.handleDeletePress()
+    );
+  }
+
+  private addKey(x: number, y: number, char: string): Phaser.GameObjects.Text {
+    const keyBacking = addImage(x, y, this.gameConfig.images.letter.key, this);
+    keyBacking.setOrigin(0.5);
+    keyBacking.setScale(0.8);
+    keyBacking.setInteractive();
+    keyBacking.alpha = 0.08;
+
+    const key = addText(
+      x,
+      y,
+      this.config.font,
+      this.config.fontSize,
+      this,
+      this.config.color,
+      char.toLowerCase()
+    );
+    key.setOrigin(0.5);
+
+    keyBacking.on(Phaser.Input.Events.POINTER_DOWN, () =>
+      this.handleKeyPress(char)
+    );
+    return key;
+  }
+
+  private handleDeletePress(): void {
+    this.emit(GranadaKeyboardEvents.DELETE);
   }
 
   /**
@@ -91,9 +124,8 @@ class Keyboard extends Phaser.GameObjects.Container {
    * @param {string} char - The character of the key that was pressed.
    */
   private handleKeyPress(char: string): void {
-    console.log(`Key Pressed: ${char}`);
-    this.emit(Phaser.Input.Events.POINTER_DOWN, char);
+    this.emit(GranadaKeyboardEvents.POINTER_DOWN, char);
   }
 }
 
-export default Keyboard;
+export default GranadaKeyboard;

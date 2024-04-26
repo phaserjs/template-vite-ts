@@ -1,5 +1,7 @@
 import Phaser from "phaser";
 import { GameConfig, Images, Point } from "../types/types";
+import { getScreenSize } from "./ScreenUtils";
+import { IS_DEV_MODE } from "../../Utils/getIsDevMode";
 
 /**
  * Preloads all images defined in the Images object into a Phaser scene.
@@ -7,10 +9,28 @@ import { GameConfig, Images, Point } from "../types/types";
  * @param {Images} images - An object mapping image keys to their file paths and keys.
  */
 export const loadAllImages = (game: Phaser.Scene, images: Images): void => {
-  Object.entries(images).forEach(([key, image]) => {
-    console.log(`Loading image ${key} from ${image.path}`);
-    game.textures.addBase64(image.key, image.path);
-  });
+  console.log(questions);
+
+  if (IS_DEV_MODE) {
+    Object.entries(images).forEach(([key, image]) => {
+      console.log(`Loading image ${key} from ${image.path}`);
+    });
+  } else {
+    game.textures.addBase64("questions", questions);
+    game.textures.addBase64("topBar", topBar);
+    game.textures.addBase64("submit", submit);
+    game.textures.addBase64("letter", letter);
+    game.textures.addBase64("letterCorrect", letterCorrect);
+    game.textures.addBase64("letterAlmost", letterAlmost);
+    game.textures.addBase64("letterWrong", letterWrong);
+    game.textures.addBase64("delete", deleteBtn);
+    game.textures.addBase64("confetti", confetti);
+    game.textures.addBase64("wheel", wheel);
+    game.textures.addBase64("welcomeSplash", welcomeSplash);
+    game.textures.addBase64("completeSplash", completeSplash);
+    game.textures.addBase64("button", button);
+  }
+
   game.load.start();
 };
 
@@ -28,21 +48,24 @@ export const addImage = (
   x: number,
   y: number,
   key: string,
-  container: Phaser.GameObjects.Container | Phaser.Scene,
-  config: GameConfig,
-  centerX: boolean = false
+  container: Phaser.GameObjects.Container | Phaser.Scene
 ): Phaser.GameObjects.Image => {
   const scene = container instanceof Phaser.Scene ? container : container.scene;
-  const image = scene.add.image(x, y, key).setInteractive();
-  const scale = getGameScale(config) * 0.5; // Assuming use of retina assets
-  image.setScale(scale);
-  if (centerX) {
-    image.setX(scene.cameras.main.width / 2);
-    image.setOrigin(0.5, 0);
-  }
+
+  const image = scene.make.image({
+    key,
+  });
+
   if (container instanceof Phaser.GameObjects.Container) {
     container.add(image);
+  } else {
+    scene.add.existing(image);
   }
+
+  image.x = x;
+  image.y = y;
+  image.setOrigin(0);
+
   return image;
 };
 
@@ -65,25 +88,31 @@ export const addText = (
   fontSize: number,
   container: Phaser.GameObjects.Container | Phaser.Scene,
   color: string,
-  text: string,
-  config: GameConfig
+  text: string
 ): Phaser.GameObjects.Text => {
   const scene = container instanceof Phaser.Scene ? container : container.scene;
-  const textObject = scene.add
-    .text(x, y, text, {
-      fontFamily,
-      fontSize: `${fontSize}px`,
+  const textObject = scene.make.text({
+    x,
+    y,
+    text,
+    style: {
+      font: fontFamily,
       color,
       align: "center",
-    })
-    .setInteractive();
-  const scale = getGameScale(config);
-  textObject.setFontSize(fontSize * scale);
-  textObject.setOrigin(0.5, 0);
+    },
+  });
+
+  textObject.setFontFamily(fontFamily);
+  textObject.setFontSize(fontSize);
+
   if (!(container instanceof Phaser.Scene)) {
     container.add(textObject);
   }
   return textObject;
+};
+
+export const translateX = (x: number, config: GameConfig): number => {
+  return x * getGameScale(config);
 };
 
 /**
@@ -92,9 +121,13 @@ export const addText = (
  * @returns {number} The scale factor derived from the maximum of either the width or height scale.
  */
 export const getGameScale = (config: GameConfig): number => {
-  const scaleX = window.innerWidth / config.size.x;
-  const scaleY = window.innerHeight / config.size.y;
-  return Math.max(scaleX, scaleY);
+  var gameScaleW = getScreenSize().width / (config.size.x * 2);
+  var gameScaleH = getScreenSize().height / (config.size.y * 2);
+
+  let gameScale = gameScaleW < gameScaleH ? gameScaleW : gameScaleH;
+  gameScale = Math.round(gameScale * 100) / 100;
+
+  return gameScale;
 };
 
 /**

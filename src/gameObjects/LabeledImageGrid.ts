@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import LabeledImage from "./LabeledImage";
-import { GameConfig } from "../GranadaLib/types/types";
+import Config from "../config/config";
 
 export type GridConfig = {
   rows: number;
@@ -15,7 +15,7 @@ export type GridConfig = {
  */
 class LabeledImageGrid extends Phaser.GameObjects.Container {
   private labels: LabeledImage[][];
-
+  private texture: string;
   /**
    * Constructs a grid of labeled images within a Phaser scene.
    * @param scene The Phaser scene where this container will be added.
@@ -30,12 +30,17 @@ class LabeledImageGrid extends Phaser.GameObjects.Container {
     x: number,
     y: number,
     texture: string,
-    gridConfig: GridConfig,
-    gameConfig: GameConfig
+    gridConfig: GridConfig
   ) {
     super(scene, x, y);
 
+    this.texture = texture;
+
     this.labels = Array.from({ length: gridConfig.rows }, () => []);
+
+    for (let i = 0; i < gridConfig.rows; i++) {
+      this.labels[i] = [];
+    }
 
     let xPos = 0;
     let yPos = 0;
@@ -51,7 +56,7 @@ class LabeledImageGrid extends Phaser.GameObjects.Container {
           label
         );
         this.add(labeledImage);
-        this.labels[j].push(labeledImage);
+        this.labels[i][j] = labeledImage;
         xPos += labeledImage.width + gridConfig.xPadding;
       }
       yPos += this.labels[0][0].height + gridConfig.yPadding;
@@ -78,6 +83,45 @@ class LabeledImageGrid extends Phaser.GameObjects.Container {
       throw new Error(`Invalid row or column: ${row}, ${col}`);
     }
   }
+
+  public setSelected = (row: number, col: number) => {
+    this.labels.forEach((labelRow, rowIndex) => {
+      labelRow.forEach((label, colIndex) => {
+        if (row === rowIndex && col === colIndex) {
+          label.setSelected(true);
+        } else {
+          label.setSelected(false);
+        }
+      });
+    });
+  };
+
+  public reset = () => {
+    this.labels.forEach((labelRow) => {
+      labelRow.forEach((label) => {
+        label.reset(this.texture);
+      });
+    });
+  };
+
+  public setAnswers = (
+    currentRow: number,
+    currentGuess: string[],
+    answer: string
+  ) => {
+    this.labels[currentRow].forEach((label, index) => {
+      const answerToLower = answer.toLowerCase();
+      const currentLetterToLower = currentGuess[index].toLowerCase();
+
+      if (answerToLower.indexOf(currentLetterToLower) < 0) {
+        label.setAnswerState(Config.images.letterWrong.key);
+      } else if (currentLetterToLower === answerToLower[index]) {
+        label.setAnswerState(Config.images.letterCorrect.key);
+      } else {
+        label.setAnswerState(Config.images.letterAlmost.key);
+      }
+    });
+  };
 }
 
 export default LabeledImageGrid;

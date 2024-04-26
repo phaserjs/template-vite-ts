@@ -16,8 +16,8 @@
   "scripts": {
     "delete-assets": "node delete-assets.mjs",
     "encode-fonts": "node encode-fonts.mjs",
-    "dev": "cross-env VITE_DEV_MODE=true vite --config vite/config.dev.mjs && pnpm run encode-fonts && pnpm run delete-assets",
-    "build": "vite build --config vite/config.prod.mjs && pnpm run encode-fonts && pnpm run delete-assets"
+    "dev": "cross-env VITE_DEV_MODE=true vite --config vite/config.dev.mjs && pnpm run delete-assets",
+    "build": "vite build --config vite/config.prod.mjs && pnpm run delete-assets"
   },
   "devDependencies": {
     "terser": "^5.30.4",

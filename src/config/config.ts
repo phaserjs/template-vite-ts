@@ -11,25 +11,61 @@ const Config: GameConfig = {
     GameOver: "GameOver",
   },
   fonts: {
-    PoetsenOne: "Poetsen One",
+    PoetsenOne: "PoetsenOne",
     Poppins: "Poppins",
   },
   images: {
     questions: {
       key: "questions",
-      path: "assets/questions.png",
+      path: "assets/questions.svg",
     },
     topBar: {
       key: "topBar",
-      path: "assets/top-bar.png",
+      path: "assets/top-bar.svg",
     },
     submit: {
       key: "submit",
-      path: "assets/submit.png",
+      path: "assets/submit.svg",
     },
     letter: {
       key: "letter",
-      path: "assets/letter.png",
+      path: "assets/letter.svg",
+    },
+    letterCorrect: {
+      key: "letterCorrect",
+      path: "assets/letter-correct.svg",
+    },
+    letterAlmost: {
+      key: "letterAlmost",
+      path: "assets/letter-almost.svg",
+    },
+    letterWrong: {
+      key: "letterWrong",
+      path: "assets/letter-wrong.svg",
+    },
+    deleteBtn: {
+      key: "deleteBtn",
+      path: "assets/backspace.svg",
+    },
+    confetti: {
+      key: "confetti",
+      path: "assets/confetti.png",
+    },
+    wheel: {
+      key: "wheel",
+      path: "assets/wheel.svg",
+    },
+    welcomeSplash: {
+      key: "welcomeSplash",
+      path: "assets/welcome-splash.svg",
+    },
+    completeSplash: {
+      key: "completeSplash",
+      path: "assets/complete-splash.svg",
+    },
+    button: {
+      key: "button",
+      path: "assets/button.svg",
     },
   },
 };

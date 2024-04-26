@@ -1,7 +1,6 @@
 import { Scene } from "phaser";
 import { IS_DEV_MODE } from "../Utils/getIsDevMode";
 import Config from "../config/config";
-import { getScreenSize } from "../GranadaLib/display/ScreenUtils";
 import { loadAllImages } from "../GranadaLib/display/PhaserDisplay";
 
 /**
@@ -44,13 +43,6 @@ export class Boot extends Scene {
   startGame = () => {
     console.log("Starting Game...");
     this.hasConnectedToAPI = true;
-
-    const { width, height } = getScreenSize();
-    this.game.scale.setParentSize(width, height);
-    this.game.scale.resize(width, height);
-    this.game.scale.scaleMode = Phaser.Scale.NONE;
-    this.game.scale.refresh();
-
     this.scene.start(Config.pages.Game);
   };
 
