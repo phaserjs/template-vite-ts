@@ -15,6 +15,7 @@ import { images } from "../config/assets";
 import WordCompleteModal from "../gameObjects/WordCompleteModal";
 import WelcomeModal from "../gameObjects/WelcomeModal";
 import { createConfetti } from "../GranadaLib/display/createConfetti";
+import { AudioFiles } from "../Audio";
 
 export const gridConfig: GridConfig = {
   rows: 5,
@@ -59,6 +60,9 @@ export class Game extends Scene {
   }
 
   create() {
+    const music = this.sound.add(AudioFiles.name);
+    music.play();
+
     this.camera = this.cameras.main;
     this.container = createSceneContainer(this);
 

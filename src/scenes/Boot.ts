@@ -2,6 +2,7 @@ import { Scene } from "phaser";
 import { IS_DEV_MODE } from "../Utils/getIsDevMode";
 import Config from "../config/config";
 import { loadAllImages } from "../GranadaLib/display/PhaserDisplay";
+import { AudioFiles } from "../Audio";
 
 /**
  * The Boot scene is responsible for setting up the initial assets and
@@ -26,6 +27,11 @@ export class Boot extends Scene {
    */
   preload = () => {
     this.hasConnectedToAPI = false;
+
+    (this.sound as Phaser.Sound.WebAudioSoundManager).decodeAudio(
+      AudioFiles.name,
+      AudioFiles.path
+    );
   };
 
   /**
@@ -34,6 +40,7 @@ export class Boot extends Scene {
   create = () => {
     console.log("checking connection to mraid...");
     this.scheduleAPIConnectionCheck();
+
     loadAllImages(this, Config.images);
   };
 
