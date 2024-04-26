@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import { GameConfig, Images, Point } from "../types/types";
 import { getScreenSize } from "./ScreenUtils";
 import { IS_DEV_MODE } from "../../Utils/getIsDevMode";
+import Config from "../../config/config";
 
 /**
  * Preloads all images defined in the Images object into a Phaser scene.
@@ -9,27 +10,25 @@ import { IS_DEV_MODE } from "../../Utils/getIsDevMode";
  * @param {Images} images - An object mapping image keys to their file paths and keys.
  */
 export const loadAllImages = (game: Phaser.Scene, images: Images): void => {
-  console.log(questions);
-
-  if (IS_DEV_MODE) {
-    Object.entries(images).forEach(([key, image]) => {
-      console.log(`Loading image ${key} from ${image.path}`);
-    });
-  } else {
-    game.textures.addBase64("questions", questions);
-    game.textures.addBase64("topBar", topBar);
-    game.textures.addBase64("submit", submit);
-    game.textures.addBase64("letter", letter);
-    game.textures.addBase64("letterCorrect", letterCorrect);
-    game.textures.addBase64("letterAlmost", letterAlmost);
-    game.textures.addBase64("letterWrong", letterWrong);
-    game.textures.addBase64("delete", deleteBtn);
-    game.textures.addBase64("confetti", confetti);
-    game.textures.addBase64("wheel", wheel);
-    game.textures.addBase64("welcomeSplash", welcomeSplash);
-    game.textures.addBase64("completeSplash", completeSplash);
-    game.textures.addBase64("button", button);
-  }
+  // if (IS_DEV_MODE) {
+  //   Object.entries(images).forEach(([key, image]) => {
+  //     console.log(`Loading image ${key} from ${image.path}`);
+  //   });
+  // } else {
+  game.textures.addBase64("questions", questions);
+  game.textures.addBase64("topBar", topBar);
+  game.textures.addBase64("submit", submit);
+  game.textures.addBase64("letter", letter);
+  game.textures.addBase64("letterCorrect", letterCorrect);
+  game.textures.addBase64("letterAlmost", letterAlmost);
+  game.textures.addBase64("letterWrong", letterWrong);
+  game.textures.addBase64("deleteBtn", deleteBtn);
+  game.textures.addBase64("confetti", confetti);
+  game.textures.addBase64("wheel", wheel);
+  game.textures.addBase64("welcomeSplash", welcomeSplash);
+  game.textures.addBase64("completeSplash", completeSplash);
+  game.textures.addBase64("button", button);
+  //}
 
   game.load.start();
 };
@@ -111,34 +110,15 @@ export const addText = (
   return textObject;
 };
 
-export const translateX = (x: number, config: GameConfig): number => {
-  return x * getGameScale(config);
-};
-
-/**
- * Calculates the game scale based on the window dimensions and predefined game size.
- * @param {GameConfig} config - Game configuration object specifying the intended game dimensions.
- * @returns {number} The scale factor derived from the maximum of either the width or height scale.
- */
-export const getGameScale = (config: GameConfig): number => {
-  var gameScaleW = getScreenSize().width / (config.size.x * 2);
-  var gameScaleH = getScreenSize().height / (config.size.y * 2);
-
-  let gameScale = gameScaleW < gameScaleH ? gameScaleW : gameScaleH;
-  gameScale = Math.round(gameScale * 100) / 100;
-
-  return gameScale;
-};
-
-/**
- * Calculates the scaled position based on the game configuration.
- * @param {Point} p - The original point to be scaled.
- * @param {GameConfig} config - Game configuration object.
- * @returns {Point} The scaled position.
- */
-export const getPosition = (p: Point, config: GameConfig): Point => {
-  return {
-    x: p.x * getGameScale(config),
-    y: p.y * getGameScale(config),
-  };
+export const createSceneContainer = (
+  scene: Phaser.Scene
+): Phaser.GameObjects.Container => {
+  const container = scene.add.container(0, 0);
+  const scaleX = scene.game.canvas.width / Config.size.x;
+  const scaleY = scene.game.canvas.height / Config.size.y;
+  const scale = Math.min(scaleX, scaleY);
+  container.setScale(scale);
+  container.x = (scene.game.canvas.width - Config.size.x * scale) / 2;
+  container.y = (scene.game.canvas.height - Config.size.y * scale) / 2;
+  return container;
 };

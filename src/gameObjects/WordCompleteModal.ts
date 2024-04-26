@@ -9,10 +9,12 @@ export default class WordCompleteModal extends Phaser.GameObjects.Container {
   private wheel: SpinningWheel;
   private heading: Phaser.GameObjects.Text;
   private btnPlay: Button;
+  private onClose: () => void;
 
-  constructor(scene: Scene, x: number, y: number) {
+  constructor(scene: Scene, x: number, y: number, onClose: () => void) {
     super(scene, x, y);
-    scene.add.existing(this);
+
+    this.onClose = onClose;
 
     this.wheel = new SpinningWheel(scene, Config.size.x / 2, Config.size.y / 2);
     this.add(this.wheel);
@@ -46,7 +48,7 @@ export default class WordCompleteModal extends Phaser.GameObjects.Container {
     scene.tweens.add({
       targets: [this],
       alpha: 1,
-      duration: 1000,
+      duration: 700,
       ease: "Linear",
       repeat: 0,
       yoyo: false,
@@ -56,16 +58,6 @@ export default class WordCompleteModal extends Phaser.GameObjects.Container {
 
   public handlePlay() {
     this.btnPlay.disableInteractive();
-    this.scene.tweens.add({
-      targets: [this],
-      duration: 1000,
-      ease: "Linear",
-      repeat: 0,
-      alpha: 0,
-      onComplete: () => {
-        this.destroy(true);
-        this.scene.scene.start(Config.pages.gameOver);
-      },
-    });
+    this.onClose();
   }
 }

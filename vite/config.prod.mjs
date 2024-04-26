@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
-import Config from "../src/config/config";
-import inlineImages from "../src/GranadaLib/vite/plugins/inlineImages.mjs";
+// import Config from "../src/config/config";
+// import inlineImages from "../src/GranadaLib/vite/plugins/inlineImages.mjs";
 
 const phasermsg = () => {
   return {
@@ -40,6 +40,6 @@ export default defineConfig({
   plugins: [
     phasermsg(),
     viteSingleFile({ removeViteModuleLoader: true, deleteInlinedFiles: true }),
-    inlineImages(Config),
+    //inlineImages(Config),
   ],
 });

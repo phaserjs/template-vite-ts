@@ -1,3 +1,4 @@
+import Config from "../../config/config";
 import { addImage, addText } from "../display/PhaserDisplay";
 import { GameConfig } from "../types/types";
 
@@ -43,7 +44,6 @@ class GranadaKeyboard extends Phaser.GameObjects.Container {
   ) {
     super(scene);
     this.scene = scene;
-    this.scene.add.existing(this);
     this.config = config;
     this.gameConfig = gameConfig;
     this.initializeKeys();
@@ -60,8 +60,7 @@ class GranadaKeyboard extends Phaser.GameObjects.Container {
     let xPosition = 0;
     rows.forEach((row, rowIndex) => {
       xPosition =
-        (window.innerWidth -
-          (row.length * keyWidth + (row.length - 1) * padding)) /
+        (Config.size.x - (row.length * keyWidth + (row.length - 1) * padding)) /
         2;
 
       row.split("").forEach((char) => {
@@ -81,7 +80,7 @@ class GranadaKeyboard extends Phaser.GameObjects.Container {
     const deleteKey = addImage(
       deleteButtonX,
       deleteButtonY,
-      this.gameConfig.images.delete.key,
+      this.gameConfig.images.deleteBtn.key,
       this
     );
     deleteKey.setInteractive();

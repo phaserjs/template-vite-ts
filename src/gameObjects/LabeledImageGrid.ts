@@ -65,8 +65,6 @@ class LabeledImageGrid extends Phaser.GameObjects.Container {
       gridConfig.cols * (this.labels[0][0].width + gridConfig.xPadding),
       gridConfig.rows * (this.labels[0][0].height + gridConfig.yPadding)
     );
-
-    scene.add.existing(this);
   }
 
   /**

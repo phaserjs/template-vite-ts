@@ -1,6 +1,9 @@
 import { Scene } from "phaser";
 import Config from "../config/config";
-import { addImage } from "../GranadaLib/display/PhaserDisplay";
+import {
+  addImage,
+  createSceneContainer,
+} from "../GranadaLib/display/PhaserDisplay";
 import LabeledImageGrid, { GridConfig } from "../gameObjects/LabeledImageGrid";
 import Keyboard, {
   GranadaKeyboardEvents,
@@ -11,6 +14,7 @@ import { images } from "../config/assets";
 
 import WordCompleteModal from "../gameObjects/WordCompleteModal";
 import WelcomeModal from "../gameObjects/WelcomeModal";
+import { createConfetti } from "../GranadaLib/display/createConfetti";
 
 export const gridConfig: GridConfig = {
   rows: 5,
@@ -48,13 +52,18 @@ export class Game extends Scene {
   welcomeModal: WelcomeModal | null = null;
   completeModal: WordCompleteModal | null = null;
 
+  confetti: Phaser.GameObjects.Particles.ParticleEmitter;
+
   constructor() {
     super("Game");
   }
 
   create() {
     this.camera = this.cameras.main;
-    this.container = this.add.container(0, 0);
+    this.container = createSceneContainer(this);
+
+    this.confetti = createConfetti(this);
+    this.container.add(this.confetti);
 
     this.questionData = {
       question: "I have a face but no eyes, hands but no arms. What am I?",
@@ -66,7 +75,7 @@ export class Game extends Scene {
 
     this.submit = addImage(124, 676, images.submit.key, this.container);
     this.submit.setInteractive();
-    this.submit.on("pointerdown", this.checkAnswer, this);
+    this.submit.on("pointerdown", this.checkAnswer, this.container);
 
     this.resetHistory();
 
@@ -77,6 +86,8 @@ export class Game extends Scene {
       images.letter.key,
       gridConfig
     );
+    this.container.add(this.labeleldImageGrid);
+
     this.labeleldImageGrid.setSelected(
       this.currentRowIndex,
       this.currentColIndex
@@ -84,6 +95,7 @@ export class Game extends Scene {
 
     this.virtualKeyboard = new Keyboard(this, keyboardConfig, Config);
     this.virtualKeyboard.y = 560;
+    this.container.add(this.virtualKeyboard);
 
     this.virtualKeyboard.on(GranadaKeyboardEvents.DELETE, () => {
       this.attemptHistory[this.currentRowIndex][this.currentColIndex] = "";
@@ -127,6 +139,8 @@ export class Game extends Scene {
       this.welcomeModal!.destroy();
       this.welcomeModal = null;
     });
+
+    this.container.add(this.welcomeModal);
   }
 
   resetHistory = () => {
@@ -150,9 +164,15 @@ export class Game extends Scene {
 
     if (answer === this.questionData.answer) {
       console.log("Correct Answer");
+      this.confetti.start();
       this.setAnswers();
       this.fadeOutElements();
-      this.completeModal = new WordCompleteModal(this, 0, 0);
+      this.completeModal = new WordCompleteModal(this, 0, 0, () => {
+        this.completeModal!.destroy();
+        this.completeModal = null;
+        this.scene.start(Config.pages.GameOver);
+      });
+      this.container.add(this.completeModal);
     } else {
       console.log("Incorrect Answer");
       this.setAnswers();

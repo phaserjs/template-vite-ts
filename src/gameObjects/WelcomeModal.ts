@@ -13,7 +13,6 @@ export default class WelcomeModal extends Phaser.GameObjects.Container {
 
   constructor(scene: Scene, x: number, y: number, onClose: () => void) {
     super(scene, x, y);
-    scene.add.existing(this);
 
     this.onClose = onClose;
 
