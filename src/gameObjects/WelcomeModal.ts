@@ -1,7 +1,7 @@
 import { Scene } from "phaser";
 import Config from "../config/config";
 import SpinningWheel from "./SpinningWheel";
-import { addText, getDisplayScale } from "../GranadaLib/display/PhaserDisplay";
+import { addText } from "../GranadaLib/display/PhaserDisplay";
 import Button from "./Button";
 import AbstractScaledContainer from "./AbstractScaledContainer";
 

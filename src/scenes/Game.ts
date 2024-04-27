@@ -171,6 +171,7 @@ export class Game extends Scene {
       this.confetti.start();
       this.setAnswers();
       this.fadeOutElements();
+      this.labeleldImageGrid.resetFilters();
       this.completeModal = new WordCompleteModal(this, 0, 0, () => {
         this.completeModal!.destroy();
         this.completeModal = null;

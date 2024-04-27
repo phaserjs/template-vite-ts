@@ -120,6 +120,14 @@ class LabeledImageGrid extends Phaser.GameObjects.Container {
       }
     });
   };
+
+  public resetFilters = () => {
+    this.labels.forEach((labelRow) => {
+      labelRow.forEach((label) => {
+        label.resetFilter();
+      });
+    });
+  };
 }
 
 export default LabeledImageGrid;

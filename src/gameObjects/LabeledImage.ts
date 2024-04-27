@@ -84,6 +84,10 @@ class LabeledImage extends Phaser.GameObjects.Container {
     this.image.postFX.clear();
   };
 
+  public resetFilter = () => {
+    this.image.postFX.clear();
+  };
+
   public setSelected = (isSelected: boolean) => {
     if (isSelected) {
       this.image.postFX.clear();
