@@ -32,14 +32,12 @@ export const loadAllImages = (game: Phaser.Scene, images: Images): void => {
 };
 
 /**
- * Adds an image to a Phaser scene or container.
- * @param {number} x - The x-coordinate for the image position.
- * @param {number} y - The y-coordinate for the image position.
- * @param {string} key - The key for the loaded image.
- * @param {Phaser.GameObjects.Container | Phaser.Scene} container - The container or scene to add the image to.
- * @param {GameConfig} config - Game configuration object.
- * @param {boolean} [centerX=false] - Whether to center the image horizontally within the scene.
- * @returns {Phaser.GameObjects.Image} The newly created Phaser image object.
+ * Creates and adds an image to a Phaser scene or container.
+ * @param x The x-coordinate for the image position.
+ * @param y The y-coordinate for the image position.
+ * @param key The key for the loaded image.
+ * @param container The container or scene to add the image to, either a Phaser.GameObjects.Container or Phaser.Scene.
+ * @returns The newly created Phaser image object.
  */
 export const addImage = (
   x: number,
@@ -47,11 +45,12 @@ export const addImage = (
   key: string,
   container: Phaser.GameObjects.Container | Phaser.Scene
 ): Phaser.GameObjects.Image => {
-  const scene = container instanceof Phaser.Scene ? container : container.scene;
-
-  const image = scene.make.image({
-    key,
-  });
+  const scene =
+    container instanceof Phaser.GameObjects.Container
+      ? container.scene
+      : container;
+  const image = scene.make.image({ key, x, y });
+  image.setOrigin(0);
 
   if (container instanceof Phaser.GameObjects.Container) {
     container.add(image);
@@ -59,24 +58,19 @@ export const addImage = (
     scene.add.existing(image);
   }
 
-  image.x = x;
-  image.y = y;
-  image.setOrigin(0);
-
   return image;
 };
 
 /**
- * Adds text to a Phaser scene or container.
- * @param {number} x - The x-coordinate for the text position.
- * @param {number} y - The y-coordinate for the text position.
- * @param {string} fontFamily - The font family for the text.
- * @param {number} fontSize - The font size for the text.
- * @param {Phaser.GameObjects.Container | Phaser.Scene} container - The container or scene to add the text to.
- * @param {string} color - The color of the text.
- * @param {string} text - The text content.
- * @param {GameConfig} config - Game configuration object.
- * @returns {Phaser.GameObjects.Text} The newly created Phaser text object.
+ * Creates and adds text to a Phaser scene or container.
+ * @param x The x-coordinate for the text position.
+ * @param y The y-coordinate for the text position.
+ * @param fontFamily The font family for the text.
+ * @param fontSize The font size for the text.
+ * @param container The container or scene to add the text to, either a Phaser.GameObjects.Container or Phaser.Scene.
+ * @param color The color of the text.
+ * @param text The text content.
+ * @returns The newly created Phaser text object.
  */
 export const addText = (
   x: number,
@@ -87,34 +81,49 @@ export const addText = (
   color: string,
   text: string
 ): Phaser.GameObjects.Text => {
-  const scene = container instanceof Phaser.Scene ? container : container.scene;
+  const scene =
+    container instanceof Phaser.GameObjects.Container
+      ? container.scene
+      : container;
   const textObject = scene.make.text({
     x,
     y,
     text,
     style: {
-      font: fontFamily,
+      font: `${fontSize}px ${fontFamily}`,
       color,
       align: "center",
     },
   });
 
-  textObject.setFontFamily(fontFamily);
-  textObject.setFontSize(fontSize);
-
-  if (!(container instanceof Phaser.Scene)) {
+  if (container instanceof Phaser.GameObjects.Container) {
     container.add(textObject);
   }
+
   return textObject;
 };
 
+/**
+ * Calculates the display scale factor based on the scene dimensions and predefined configuration.
+ * @param scene The current Phaser scene.
+ * @returns The scale factor to be applied.
+ */
+export const getDisplayScale = (scene: Phaser.Scene): number => {
+  const scaleX = scene.game.canvas.width / Config.size.x;
+  const scaleY = scene.game.canvas.height / Config.size.y;
+  return Math.min(scaleX, scaleY);
+};
+
+/**
+ * Creates a container in a Phaser scene that scales and centers itself according to the game's canvas size and predefined configuration.
+ * @param scene The Phaser scene in which the container will be created.
+ * @returns The newly created scaled and centered Phaser container.
+ */
 export const createSceneContainer = (
   scene: Phaser.Scene
 ): Phaser.GameObjects.Container => {
   const container = scene.add.container(0, 0);
-  const scaleX = scene.game.canvas.width / Config.size.x;
-  const scaleY = scene.game.canvas.height / Config.size.y;
-  const scale = Math.min(scaleX, scaleY);
+  const scale = getDisplayScale(scene);
   container.setScale(scale);
   container.x = (scene.game.canvas.width - Config.size.x * scale) / 2;
   container.y = (scene.game.canvas.height - Config.size.y * scale) / 2;

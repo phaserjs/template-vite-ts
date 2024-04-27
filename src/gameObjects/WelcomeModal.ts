@@ -1,10 +1,11 @@
 import { Scene } from "phaser";
 import Config from "../config/config";
 import SpinningWheel from "./SpinningWheel";
-import { addText } from "../GranadaLib/display/PhaserDisplay";
+import { addText, getDisplayScale } from "../GranadaLib/display/PhaserDisplay";
 import Button from "./Button";
+import AbstractScaledContainer from "./AbstractScaledContainer";
 
-export default class WelcomeModal extends Phaser.GameObjects.Container {
+export default class WelcomeModal extends AbstractScaledContainer {
   private panelBg: Phaser.GameObjects.Image;
   private wheel: SpinningWheel;
   private heading: Phaser.GameObjects.Text;
@@ -16,15 +17,15 @@ export default class WelcomeModal extends Phaser.GameObjects.Container {
 
     this.onClose = onClose;
 
-    this.wheel = new SpinningWheel(scene, Config.size.x / 2, Config.size.y / 2);
-    this.add(this.wheel);
+    this.wheel = new SpinningWheel(scene);
+    scene.add.existing(this.wheel);
 
     this.panelBg = scene.make.image({
-      x: 0,
-      y: 246,
+      x: Config.size.x / 2,
+      y: Config.size.y / 2,
       key: Config.images.welcomeSplash.key,
     });
-    this.panelBg.setOrigin(0);
+    this.panelBg.setOrigin(0.5);
     this.add(this.panelBg);
 
     this.heading = addText(
@@ -45,12 +46,13 @@ export default class WelcomeModal extends Phaser.GameObjects.Container {
   public handlePlay() {
     this.btnPlay.disableInteractive();
     this.scene.tweens.add({
-      targets: [this],
+      targets: [this, this.wheel],
       duration: 1000,
       ease: "Linear",
       repeat: 0,
       alpha: 0,
       onComplete: () => {
+        this.wheel.destroy(true);
         this.onClose();
       },
     });

@@ -144,7 +144,7 @@ export class Game extends Scene {
       this.welcomeModal = null;
     });
 
-    this.container.add(this.welcomeModal);
+    this.add.existing(this.welcomeModal);
   }
 
   resetHistory = () => {
@@ -176,7 +176,7 @@ export class Game extends Scene {
         this.completeModal = null;
         this.scene.start(Config.pages.GameOver);
       });
-      this.container.add(this.completeModal);
+      this.add.existing(this.completeModal);
     } else {
       console.log("Incorrect Answer");
       this.setAnswers();

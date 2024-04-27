@@ -3,8 +3,9 @@ import Config from "../config/config";
 import SpinningWheel from "./SpinningWheel";
 import { addText } from "../GranadaLib/display/PhaserDisplay";
 import Button from "./Button";
+import AbstractScaledContainer from "./AbstractScaledContainer";
 
-export default class WordCompleteModal extends Phaser.GameObjects.Container {
+export default class WordCompleteModal extends AbstractScaledContainer {
   private panelBg: Phaser.GameObjects.Image;
   private wheel: SpinningWheel;
   private heading: Phaser.GameObjects.Text;
@@ -16,15 +17,16 @@ export default class WordCompleteModal extends Phaser.GameObjects.Container {
 
     this.onClose = onClose;
 
-    this.wheel = new SpinningWheel(scene, Config.size.x / 2, Config.size.y / 2);
-    this.add(this.wheel);
+    this.wheel = new SpinningWheel(scene);
+    scene.add.existing(this.wheel);
+    this.wheel.alpha = 0;
 
     this.panelBg = scene.make.image({
-      x: 26,
-      y: 206,
+      x: Config.size.x / 2,
+      y: Config.size.y / 2,
       key: Config.images.completeSplash.key,
     });
-    this.panelBg.setOrigin(0);
+    this.panelBg.setOrigin(0.5);
     this.add(this.panelBg);
 
     this.heading = addText(
@@ -46,7 +48,7 @@ export default class WordCompleteModal extends Phaser.GameObjects.Container {
     this.alpha = 0;
 
     scene.tweens.add({
-      targets: [this],
+      targets: [this, this.wheel],
       alpha: 1,
       duration: 700,
       ease: "Linear",
