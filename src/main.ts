@@ -1,8 +1,10 @@
-import { getScreenSize } from "./GranadaLib/display/ScreenUtils";
+import { AppLovinProxy } from "./GranadaLib/GranadaProxy/AppLovinProxy";
 import { Boot } from "./scenes/Boot";
 import { Game as MainGame } from "./scenes/Game";
 import { GameOver } from "./scenes/GameOver";
 import { Game, Types } from "phaser";
+
+const granadaProxy = new AppLovinProxy();
 
 const Start = () => {
   window.onload = () => {
@@ -16,11 +18,13 @@ const Start = () => {
   };
 };
 
-const checkOrientation = () => {
+const checkOrientation = async () => {
   if (screen.orientation.type.startsWith("portrait")) {
     window.removeEventListener("orientationchange", checkOrientation);
 
-    const { width, height } = getScreenSize();
+    await granadaProxy.connectToAPI();
+    const { width, height } = granadaProxy.getScreenSize();
+
     console.log("checking", width, height);
     //  Find out more information about the Game Config at:
     //  https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig

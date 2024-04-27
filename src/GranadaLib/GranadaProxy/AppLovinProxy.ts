@@ -1,5 +1,5 @@
 import { IS_DEV_MODE } from "../../Utils/getIsDevMode";
-import { AbstractGranadaProxy } from "./AbstractGranadaProxy";
+import { AbstractGranadaProxy, ScreenSize } from "./AbstractGranadaProxy";
 
 /**
  * Class representing a proxy to the AppLovin API. Extends the AbstractGranadaProxy class.
@@ -53,4 +53,28 @@ export class AppLovinProxy extends AbstractGranadaProxy {
       return Promise.reject("Failed to connect to API after maximum attempts");
     }
   }
+
+  public getScreenSize = (): ScreenSize => {
+    if (typeof mraid !== "undefined") {
+      // When MRAID is available, use its API to get the screen size.
+      const res: ScreenSize = {
+        width: mraid.getScreenSize().width,
+        height: mraid.getScreenSize().height,
+      };
+      return res;
+    }
+
+    // Default to using the window's inner dimensions.
+    const res: ScreenSize = {
+      width:
+        window.innerWidth < window.innerHeight
+          ? window.innerWidth
+          : window.innerHeight,
+      height:
+        window.innerHeight > window.innerWidth
+          ? window.innerHeight
+          : window.innerWidth,
+    };
+    return res;
+  };
 }

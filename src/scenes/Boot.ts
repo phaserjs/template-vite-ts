@@ -2,8 +2,6 @@ import { Scene } from "phaser";
 import Config from "../config/config";
 import { loadAllImages } from "../GranadaLib/display/PhaserDisplay";
 import { AudioFiles } from "../Audio";
-import { AbstractGranadaProxy } from "../GranadaLib/GranadaProxy/AbstractGranadaProxy";
-import { AppLovinProxy } from "../GranadaLib/GranadaProxy/AppLovinProxy";
 
 /**
  * The Boot scene is responsible for setting up the initial assets and
@@ -11,7 +9,6 @@ import { AppLovinProxy } from "../GranadaLib/GranadaProxy/AppLovinProxy";
  * connection checks before starting the main game.
  */
 export class Boot extends Scene {
-  private granadaProxy: AbstractGranadaProxy;
   /**
    * Constructs the Boot scene object.
    */
@@ -23,12 +20,7 @@ export class Boot extends Scene {
    * Preloads necessary assets for the boot process. This method is called automatically by Phaser.
    * It's typically used to load minimal assets required for the preloader, like a game logo or background.
    */
-  preload = () => {
-    (this.sound as Phaser.Sound.WebAudioSoundManager).decodeAudio(
-      AudioFiles.name,
-      AudioFiles.path
-    );
-  };
+  preload = async () => {};
 
   /**
    * Creates necessary game objects and setups after assets are loaded. This method also initiates the API connection check.
@@ -36,9 +28,13 @@ export class Boot extends Scene {
   create = async () => {
     console.log("checking connection to mraid...");
     loadAllImages(this, Config.images);
-    this.granadaProxy = new AppLovinProxy();
-    await this.granadaProxy.connectToAPI();
-    this.startGame();
+    console.log("Preloading Audio assets...");
+    (this.sound as Phaser.Sound.WebAudioSoundManager).decodeAudio(
+      AudioFiles.name,
+      AudioFiles.path
+    );
+
+    this.sound.once("decodedall", () => this.startGame());
   };
 
   /**

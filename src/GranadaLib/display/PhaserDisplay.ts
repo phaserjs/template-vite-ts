@@ -1,7 +1,5 @@
 import Phaser from "phaser";
-import { GameConfig, Images, Point } from "../types/types";
-import { getScreenSize } from "./ScreenUtils";
-import { IS_DEV_MODE } from "../../Utils/getIsDevMode";
+import { Images } from "../types/types";
 import Config from "../../config/config";
 
 /**
