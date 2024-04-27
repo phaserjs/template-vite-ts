@@ -20,6 +20,7 @@
     "build": "cross-env VITE_DEV_MODE=false vite build --config vite/config.prod.mjs && pnpm run delete-assets"
   },
   "devDependencies": {
+    "@types/node": "^20.12.7",
     "terser": "^5.30.4",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",

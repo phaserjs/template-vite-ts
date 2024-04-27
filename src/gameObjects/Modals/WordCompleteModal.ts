@@ -1,9 +1,9 @@
 import { Scene } from "phaser";
-import Config from "../config/config";
-import SpinningWheel from "./SpinningWheel";
-import { addText } from "../GranadaLib/display/PhaserDisplay";
-import Button from "./Button";
-import AbstractScaledContainer from "./AbstractScaledContainer";
+import Config from "../../config/config";
+import SpinningWheel from "../../GranadaLib/GameObjects/SpinningWheel";
+import { addText } from "../../GranadaLib/Display/PhaserDisplay";
+import Button from "../../GranadaLib/GameObjects/GranadaButton";
+import AbstractScaledContainer from "../../GranadaLib/Display/AbstractScaledContainer";
 
 export default class WordCompleteModal extends AbstractScaledContainer {
   private panelBg: Phaser.GameObjects.Image;
@@ -17,7 +17,7 @@ export default class WordCompleteModal extends AbstractScaledContainer {
 
     this.onClose = onClose;
 
-    this.wheel = new SpinningWheel(scene);
+    this.wheel = new SpinningWheel(scene, Config.images.wheel.key, 0x000, 0.5);
     scene.add.existing(this.wheel);
     this.wheel.alpha = 0;
 
@@ -46,12 +46,23 @@ export default class WordCompleteModal extends AbstractScaledContainer {
     this.add(this.btnPlay);
 
     this.alpha = 0;
+    this.wheel.alpha = 0;
 
     scene.tweens.add({
-      targets: [this, this.wheel],
+      targets: [this.wheel, this.panelBg],
       alpha: 1,
-      duration: 700,
-      ease: "Linear",
+      duration: 1000,
+      ease: Phaser.Math.Easing.Cubic.Out,
+      repeat: 0,
+      yoyo: false,
+      delay: 3400,
+    });
+
+    scene.tweens.add({
+      targets: [this],
+      alpha: 1,
+      duration: 1000,
+      ease: Phaser.Math.Easing.Cubic.Out,
       repeat: 0,
       yoyo: false,
       delay: 3000,

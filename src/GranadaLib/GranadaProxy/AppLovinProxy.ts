@@ -1,4 +1,4 @@
-import { IS_DEV_MODE } from "../../Utils/getIsDevMode";
+import { IS_DEV_MODE } from "../../GranadaExporters/getIsDevMode";
 import { AbstractGranadaProxy, ScreenSize } from "./AbstractGranadaProxy";
 
 /**

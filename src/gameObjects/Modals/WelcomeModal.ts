@@ -1,9 +1,9 @@
 import { Scene } from "phaser";
-import Config from "../config/config";
-import SpinningWheel from "./SpinningWheel";
-import { addText } from "../GranadaLib/display/PhaserDisplay";
-import Button from "./Button";
-import AbstractScaledContainer from "./AbstractScaledContainer";
+import Config from "../../config/config";
+import SpinningWheel from "../../GranadaLib/GameObjects/SpinningWheel";
+import { addText } from "../../GranadaLib/Display/PhaserDisplay";
+import Button from "../../GranadaLib/GameObjects/GranadaButton";
+import AbstractScaledContainer from "../../GranadaLib/Display/AbstractScaledContainer";
 
 export default class WelcomeModal extends AbstractScaledContainer {
   private panelBg: Phaser.GameObjects.Image;
@@ -17,7 +17,7 @@ export default class WelcomeModal extends AbstractScaledContainer {
 
     this.onClose = onClose;
 
-    this.wheel = new SpinningWheel(scene);
+    this.wheel = new SpinningWheel(scene, Config.images.wheel.key, 0x000, 0.5);
     scene.add.existing(this.wheel);
 
     this.panelBg = scene.make.image({
@@ -30,7 +30,7 @@ export default class WelcomeModal extends AbstractScaledContainer {
 
     this.heading = addText(
       Config.size.x / 2,
-      288,
+      300,
       Config.fonts.PoetsenOne,
       24,
       this,
@@ -39,20 +39,31 @@ export default class WelcomeModal extends AbstractScaledContainer {
     );
     this.heading.setOrigin(0.5, 0);
 
-    this.btnPlay = new Button(scene, 105, 501, "Play", () => this.handlePlay());
+    this.btnPlay = new Button(scene, 105, 520, "Play", () => this.handlePlay());
     this.add(this.btnPlay);
   }
 
   public handlePlay() {
     this.btnPlay.disableInteractive();
+
     this.scene.tweens.add({
-      targets: [this, this.wheel],
+      targets: [this.wheel],
       duration: 1000,
-      ease: "Linear",
+      ease: Phaser.Math.Easing.Cubic.Out,
       repeat: 0,
       alpha: 0,
       onComplete: () => {
         this.wheel.destroy(true);
+      },
+    });
+
+    this.scene.tweens.add({
+      targets: [this],
+      duration: 1000,
+      ease: Phaser.Math.Easing.Cubic.Out,
+      repeat: 0,
+      alpha: 0,
+      onComplete: () => {
         this.onClose();
       },
     });

@@ -4,7 +4,7 @@ import {
   addText,
   createSceneContainer,
   loadAllImages,
-} from "../GranadaLib/display/PhaserDisplay";
+} from "../GranadaLib/Display/PhaserDisplay";
 import { AudioFiles } from "../Audio";
 
 /**

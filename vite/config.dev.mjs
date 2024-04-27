@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
 import Config from "../src/config/config";
-import inlineImages from "../src/GranadaLib/vite/plugins/inlineImages.mjs";
+import inlineImages from "../src/GranadaExporters/inlineImages.js";
 
 export default defineConfig({
   base: "./",
@@ -9,7 +9,7 @@ export default defineConfig({
     port: 8080,
   },
   plugins: [
-    inlineImages(Config),
+    //inlineImages(Config),
     viteSingleFile({ removeViteModuleLoader: true, deleteInlinedFiles: true }),
   ],
 });

@@ -3,19 +3,19 @@ import Config from "../config/config";
 import {
   addImage,
   createSceneContainer,
-} from "../GranadaLib/display/PhaserDisplay";
+} from "../GranadaLib/Display/PhaserDisplay";
 import LabeledImageGrid, { GridConfig } from "../gameObjects/LabeledImageGrid";
-import Keyboard, {
-  GranadaKeyboardEvents,
-  KeyboardConfig,
-} from "../GranadaLib/input/Keyboard";
 import { QuestionType } from "../types";
 import { images } from "../config/assets";
 
-import WordCompleteModal from "../gameObjects/WordCompleteModal";
-import WelcomeModal from "../gameObjects/WelcomeModal";
-import { createConfetti } from "../GranadaLib/display/createConfetti";
+import WordCompleteModal from "../gameObjects/Modals/WordCompleteModal";
+import WelcomeModal from "../gameObjects/Modals/WelcomeModal";
+import { createConfetti } from "../GranadaLib/Display/createConfetti";
 import { AudioFiles } from "../Audio";
+import GranadaKeyboard, {
+  GranadaKeyboardEvents,
+  KeyboardConfig,
+} from "../GranadaLib/Input/Keyboard";
 
 export const gridConfig: GridConfig = {
   rows: 5,
@@ -42,7 +42,7 @@ export class Game extends Scene {
 
   labeleldImageGrid: LabeledImageGrid;
 
-  virtualKeyboard: Keyboard;
+  virtualKeyboard: GranadaKeyboard;
 
   questionData: QuestionType;
 
@@ -97,7 +97,7 @@ export class Game extends Scene {
       this.currentColIndex
     );
 
-    this.virtualKeyboard = new Keyboard(this, keyboardConfig, Config);
+    this.virtualKeyboard = new GranadaKeyboard(this, keyboardConfig, Config);
     this.virtualKeyboard.y = 560;
     this.container.add(this.virtualKeyboard);
 

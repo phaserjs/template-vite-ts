@@ -21,6 +21,9 @@ importers:
         specifier: ^5.0.5
         version: 5.0.5
     devDependencies:
+      '@types/node':
+        specifier: ^20.12.7
+        version: 20.12.7
       terser:
         specifier: ^5.30.4
         version: 5.30.4
@@ -720,7 +723,6 @@ snapshots:
   '@types/node@20.12.7':
     dependencies:
       undici-types: 5.26.5
-    optional: true
 
   acorn@8.11.3: {}
 
@@ -951,8 +953,7 @@ snapshots:
 
   typescript@5.4.5: {}
 
-  undici-types@5.26.5:
-    optional: true
+  undici-types@5.26.5: {}
 
   util@0.10.4:
     dependencies:

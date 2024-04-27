@@ -1,11 +1,11 @@
 import { Scene } from "phaser";
 import Config from "../config/config";
-import { createConfetti } from "../GranadaLib/display/createConfetti";
+import { createConfetti } from "../GranadaLib/Display/createConfetti";
 import {
   addText,
   createSceneContainer,
-} from "../GranadaLib/display/PhaserDisplay";
-import { IS_DEV_MODE } from "../Utils/getIsDevMode";
+} from "../GranadaLib/Display/PhaserDisplay";
+import { IS_DEV_MODE } from "../GranadaExporters/getIsDevMode";
 
 export class GameOver extends Scene {
   camera: Phaser.Cameras.Scene2D.Camera;

@@ -1,6 +1,6 @@
 import { Scene } from "phaser";
-import { getDisplayScale } from "../GranadaLib/display/PhaserDisplay";
-import Config from "../config/config";
+import { getDisplayScale } from "./PhaserDisplay";
+import Config from "../../config/config";
 
 export default class AbstractScaledContainer extends Phaser.GameObjects
   .Container {

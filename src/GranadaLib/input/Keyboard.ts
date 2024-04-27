@@ -1,5 +1,5 @@
 import Config from "../../config/config";
-import { addImage, addText } from "../display/PhaserDisplay";
+import { addImage, addText } from "../Display/PhaserDisplay";
 import { GameConfig } from "../types/types";
 
 /**
