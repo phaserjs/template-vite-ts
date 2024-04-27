@@ -1,6 +1,10 @@
 import { Scene } from "phaser";
 import Config from "../config/config";
-import { loadAllImages } from "../GranadaLib/display/PhaserDisplay";
+import {
+  addText,
+  createSceneContainer,
+  loadAllImages,
+} from "../GranadaLib/display/PhaserDisplay";
 import { AudioFiles } from "../Audio";
 
 /**
@@ -9,6 +13,8 @@ import { AudioFiles } from "../Audio";
  * connection checks before starting the main game.
  */
 export class Boot extends Scene {
+  loadingText: Phaser.GameObjects.Text;
+  container: Phaser.GameObjects.Container;
   /**
    * Constructs the Boot scene object.
    */
@@ -20,7 +26,20 @@ export class Boot extends Scene {
    * Preloads necessary assets for the boot process. This method is called automatically by Phaser.
    * It's typically used to load minimal assets required for the preloader, like a game logo or background.
    */
-  preload = async () => {};
+  preload = async () => {
+    this.container = createSceneContainer(this);
+    this.loadingText = addText(
+      Config.size.x / 2,
+      Config.size.y / 2,
+      Config.fonts.Poppins,
+      24,
+      this.container,
+      "0x000",
+      "Loading..."
+    );
+
+    this.loadingText.setOrigin(0.5);
+  };
 
   /**
    * Creates necessary game objects and setups after assets are loaded. This method also initiates the API connection check.

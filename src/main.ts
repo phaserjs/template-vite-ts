@@ -6,8 +6,10 @@ import { Game, Types } from "phaser";
 
 const granadaProxy = new AppLovinProxy();
 
-const Start = () => {
-  window.onload = () => {
+const Start = async () => {
+  window.onload = async () => {
+    await granadaProxy.connectToAPI();
+
     // Immediately check orientation on load
     checkOrientation();
 
@@ -18,11 +20,12 @@ const Start = () => {
   };
 };
 
-const checkOrientation = async () => {
+const checkOrientation = () => {
+  console.log("checking orientation");
+
   if (screen.orientation.type.startsWith("portrait")) {
     window.removeEventListener("orientationchange", checkOrientation);
 
-    await granadaProxy.connectToAPI();
     const { width, height } = granadaProxy.getScreenSize();
 
     console.log("checking", width, height);

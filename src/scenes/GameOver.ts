@@ -48,6 +48,7 @@ export class GameOver extends Scene {
     this.cta_text.setInteractive();
     this.cta_text.on("pointerdown", () => {
       if (IS_DEV_MODE) {
+        this.sound.stopAll();
         mraid.open("https://www.granadagames.co/");
       } else {
         window.open("https://www.granadagames.co/");
