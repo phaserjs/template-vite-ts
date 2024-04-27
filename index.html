@@ -6,6 +6,39 @@
     <title>Qwordly</title>
 
     <style>
+      .rotate-message {
+        font-family: "Poppins", "PoetsenOne";
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 1);
+        color: white;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        z-index: 1000;
+      }
+
+      /* Show the rotate message only in landscape mode */
+      @media screen and (orientation: landscape) {
+        .rotate-message {
+          display: flex;
+        }
+      }
+
+      @media screen and (orientation: portrait) {
+        .rotate-message {
+          display: none;
+        }
+      }
+    </style>
+
+    <style>
       body {
         margin: 0;
         padding: 0;
@@ -106,6 +139,7 @@
     <div id="app">
       <div id="game-container"></div>
     </div>
+    <div class="rotate-message">Please rotate your device</div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

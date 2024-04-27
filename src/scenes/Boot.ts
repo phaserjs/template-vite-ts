@@ -1,8 +1,9 @@
 import { Scene } from "phaser";
-import { IS_DEV_MODE } from "../Utils/getIsDevMode";
 import Config from "../config/config";
 import { loadAllImages } from "../GranadaLib/display/PhaserDisplay";
 import { AudioFiles } from "../Audio";
+import { AbstractGranadaProxy } from "../GranadaLib/GranadaProxy/AbstractGranadaProxy";
+import { AppLovinProxy } from "../GranadaLib/GranadaProxy/AppLovinProxy";
 
 /**
  * The Boot scene is responsible for setting up the initial assets and
@@ -10,10 +11,7 @@ import { AudioFiles } from "../Audio";
  * connection checks before starting the main game.
  */
 export class Boot extends Scene {
-  hasConnectedToAPI: boolean = false;
-  apiCheckTime: number = 100;
-  timeoutHandle: number | null = null;
-
+  private granadaProxy: AbstractGranadaProxy;
   /**
    * Constructs the Boot scene object.
    */
@@ -26,8 +24,6 @@ export class Boot extends Scene {
    * It's typically used to load minimal assets required for the preloader, like a game logo or background.
    */
   preload = () => {
-    this.hasConnectedToAPI = false;
-
     (this.sound as Phaser.Sound.WebAudioSoundManager).decodeAudio(
       AudioFiles.name,
       AudioFiles.path
@@ -37,11 +33,12 @@ export class Boot extends Scene {
   /**
    * Creates necessary game objects and setups after assets are loaded. This method also initiates the API connection check.
    */
-  create = () => {
+  create = async () => {
     console.log("checking connection to mraid...");
-    this.scheduleAPIConnectionCheck();
-
     loadAllImages(this, Config.images);
+    this.granadaProxy = new AppLovinProxy();
+    await this.granadaProxy.connectToAPI();
+    this.startGame();
   };
 
   /**
@@ -49,30 +46,6 @@ export class Boot extends Scene {
    */
   startGame = () => {
     console.log("Starting Game...");
-    this.hasConnectedToAPI = true;
     this.scene.start(Config.pages.Game);
-  };
-
-  /**
-   * Checks if the API is viewable and the app is ready to start. If not, it schedules another check.
-   */
-  checkAPIConnection = () => {
-    if (IS_DEV_MODE || (typeof mraid !== "undefined" && mraid.isViewable())) {
-      this.hasConnectedToAPI = true;
-      this.startGame();
-      console.log("connected");
-    } else {
-      this.scheduleAPIConnectionCheck();
-    }
-  };
-
-  /**
-   * Schedules the next API connection check.
-   */
-  scheduleAPIConnectionCheck = () => {
-    if (this.timeoutHandle) {
-      clearTimeout(this.timeoutHandle);
-    }
-    this.timeoutHandle = setTimeout(this.checkAPIConnection, this.apiCheckTime);
   };
 }

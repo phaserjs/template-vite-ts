@@ -29,8 +29,14 @@ export const getScreenSize = (): ScreenSize => {
 
   // Default to using the window's inner dimensions.
   const res: ScreenSize = {
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width:
+      window.innerWidth < window.innerHeight
+        ? window.innerWidth
+        : window.innerHeight,
+    height:
+      window.innerHeight > window.innerWidth
+        ? window.innerHeight
+        : window.innerWidth,
   };
   return res;
 };
