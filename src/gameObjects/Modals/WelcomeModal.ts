@@ -31,7 +31,7 @@ export default class WelcomeModal extends AbstractScaledContainer {
     this.heading = addText(
       Config.size.x / 2,
       300,
-      Config.fonts.poetsenOneRegular,
+      Config.fonts.poetsenOne,
       24,
       this,
       "#000",

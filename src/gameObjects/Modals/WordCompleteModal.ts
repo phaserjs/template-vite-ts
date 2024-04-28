@@ -32,7 +32,7 @@ export default class WordCompleteModal extends AbstractScaledContainer {
     this.heading = addText(
       Config.size.x / 2,
       278,
-      Config.fonts.poetsenOneRegular,
+      Config.fonts.poetsenOne,
       24,
       this,
       "#000",

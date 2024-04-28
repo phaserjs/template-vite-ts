@@ -25,7 +25,7 @@ export class GameOver extends Scene {
     this.gameover_text = addText(
       Config.size.x / 2,
       250,
-      Config.fonts.poppinsRegular,
+      Config.fonts.poppins,
       24,
       this.container,
       "0x000",
@@ -37,7 +37,7 @@ export class GameOver extends Scene {
     this.cta_text = addText(
       Config.size.x / 2,
       350,
-      Config.fonts.poppinsRegular,
+      Config.fonts.poppins,
       24,
       this.container,
       "0x000",

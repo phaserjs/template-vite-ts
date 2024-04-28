@@ -9,8 +9,8 @@
     "GameOver": "GameOver"
   },
   "fonts": {
-    "poetsenOneRegular": "poetsenOneRegular",
-    "poppinsRegular": "poppinsRegular"
+    "poetsenOne": "poetsenOne",
+    "poppins": "poppins"
   },
   "images": {
     "backspace": {

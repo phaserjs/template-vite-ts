@@ -30,7 +30,7 @@ export class Boot extends Scene {
     this.loadingText = addText(
       Config.size.x / 2,
       Config.size.y / 2,
-      Config.fonts.poppinsRegular,
+      Config.fonts.poppins,
       24,
       this.container,
       "0x000",
@@ -44,7 +44,6 @@ export class Boot extends Scene {
    * Creates necessary game objects and setups after assets are loaded. This method also initiates the API connection check.
    */
   create = async () => {
-    console.log("checking connection to mraid...");
     loadAllImages(this, Config.images);
     console.log("Preloading Audio assets...");
     (this.sound as Phaser.Sound.WebAudioSoundManager).decodeAudio(

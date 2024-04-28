@@ -20,7 +20,7 @@ export default class GranadaButton extends Phaser.GameObjects.Container {
     const label = addText(
       bg.width / 2,
       bg.height / 2,
-      Config.fonts.poetsenOneRegular,
+      Config.fonts.poetsenOne,
       24,
       this,
       "#fff",

@@ -8,20 +8,14 @@ import Config from "../../config/config.json";
  * @param {Images} images - An object mapping image keys to their file paths and keys.
  */
 export const loadAllImages = (game: Phaser.Scene, images: Images): void => {
-  // if (IS_DEV_MODE) {
-  //   Object.entries(images).forEach(([key, image]) => {
-  //     console.log(`Loading image ${key} from ${image.path}`);
-  //   });
-  // } else {
-
-  //}
-
-  console.log("Loading images...", images);
+  console.log("Loading images...");
 
   Object.entries(images).forEach(([key, image]) => {
-    console.log(`Loading image ${key} from ${image.path}`);
+    console.log(`Loading image ${key}`);
     game.textures.addBase64(image.key, image.path);
   });
+
+  console.log("Loaded images.");
 
   game.load.start();
 };
