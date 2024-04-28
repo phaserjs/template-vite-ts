@@ -12,12 +12,12 @@ const exists = promisify(fs.exists);
  * Updates the configuration JSON file with fonts derived from tff files in a specified directory.
  * Asynchronously reads and writes to the configuration file.
  *
- * @param fontsPath Path to the directory containing TypeScript files.
+ * @param fontsPath Path to the directory containing font files.
  * @param configFilePath Path to the configuration JSON file to update.
  * @throws Will throw an error if the configuration file does not exist or file operations fail.
  */
 export async function updateFontsConfig(
-  scenesPath: string,
+  fontsPath: string,
   configFilePath: string
 ): Promise<void> {
   const fileExists = await exists(configFilePath);
@@ -27,12 +27,12 @@ export async function updateFontsConfig(
     );
   }
   const fileType = "ttf";
-  const tsFiles = findAllFiles(scenesPath, fileType);
+  const fontFiles = findAllFiles(fontsPath, fileType);
 
-  const fonts = tsFiles.reduce(
-    (acc: Record<string, string>, filePath: string) => {
+  const fonts = fontFiles.reduce(
+    (acc: Record<string, any>, filePath: string) => {
       const { name } = path.parse(filePath); // Extract filename without extension
-      acc[name] = name;
+      acc[name] = { key: name, path: "" }; // Set path as empty string for now
       return acc;
     },
     {}
@@ -53,17 +53,20 @@ export async function updateFontsConfig(
  * Main function to execute the update process with directory paths provided via command line arguments.
  */
 if (require.main === module) {
-  const scenesPath = process.argv[2];
+  const fontsPath = process.argv[2];
   const configFilePath = process.argv[3];
 
-  if (!scenesPath || !configFilePath) {
-    console.error(
-      "Usage: ts-node addFontsToConfig.ts <scenesPath> <configFilePath>"
-    );
+  if (!fontsPath) {
+    console.error("Fonts Path is missing");
     process.exit(1);
   }
 
-  updateFontsConfig(scenesPath, configFilePath).catch((err) => {
+  if (!configFilePath) {
+    console.error("Config Path is missing");
+    process.exit(1);
+  }
+
+  updateFontsConfig(fontsPath, configFilePath).catch((err) => {
     console.error("Failed to update config file:", err);
     process.exit(1);
   });

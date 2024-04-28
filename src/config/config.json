@@ -9,8 +9,14 @@
     "GameOver": "GameOver"
   },
   "fonts": {
-    "PoetsenOne-Regular": "PoetsenOne-Regular",
-    "Poppins-Regular": "Poppins-Regular"
+    "PoetsenOne-Regular": {
+      "key": "PoetsenOne-Regular",
+      "path": ""
+    },
+    "Poppins-Regular": {
+      "key": "Poppins-Regular",
+      "path": ""
+    }
   },
   "images": {}
 }
