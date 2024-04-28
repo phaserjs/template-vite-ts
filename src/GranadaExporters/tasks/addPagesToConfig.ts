@@ -27,7 +27,7 @@ export async function updatePagesConfig(
     );
   }
   const fileType = "ts";
-  const tsFiles = findAllFiles(scenesPath, fileType);
+  const tsFiles = findAllFiles(scenesPath, [fileType]);
 
   const pages = tsFiles.reduce(
     (acc: Record<string, string>, filePath: string) => {

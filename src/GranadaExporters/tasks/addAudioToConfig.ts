@@ -28,7 +28,7 @@ export async function addAudioToConfig(
     );
   }
   const fileType = "wav";
-  const wavFiles = findAllFiles(wavPath, fileType);
+  const wavFiles = findAllFiles(wavPath, [fileType]);
 
   const wavs = await Promise.all(
     wavFiles.map(async (filePath: string) => {

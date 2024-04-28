@@ -2,15 +2,15 @@ import path from "path";
 import fs from "fs";
 
 /**
- * Recursively find all files in a directory that match a given file extension.
+ * Recursively find all files in a directory that match a given set of file extensions.
  * @param {string} dirPath - The path to the directory to search.
- * @param {string} ext - The file extension to look for.
+ * @param {string[]} exts - An array of file extensions to look for.
  * @param {string[]} arrayOfFiles - An array of files accumulated recursively.
- * @returns {string[]} An array of file paths.
+ * @returns {string[]} An array of file paths that match the specified extensions.
  */
 function getAllFiles(
   dirPath: string,
-  ext: string,
+  exts: string[],
   arrayOfFiles: string[] = []
 ): string[] {
   let files;
@@ -25,11 +25,14 @@ function getAllFiles(
     if (file.isDirectory()) {
       arrayOfFiles = getAllFiles(
         path.join(dirPath, file.name),
-        ext,
+        exts,
         arrayOfFiles
       );
-    } else if (path.extname(file.name) === ext) {
-      arrayOfFiles.push(path.join(dirPath, file.name));
+    } else {
+      const fileExt = path.extname(file.name);
+      if (exts.includes(fileExt)) {
+        arrayOfFiles.push(path.join(dirPath, file.name));
+      }
     }
   });
 
@@ -37,20 +40,22 @@ function getAllFiles(
 }
 
 /**
- * The main function that finds all files with a given extension in a specified directory.
- * This function can be exported and used in other scripts.
+ * The main function that finds all files with the given extensions in a specified directory.
  * @param {string} directoryPath - Path to the directory to search, relative to process.cwd() or absolute.
- * @param {string} fileExtension - File extension to search for.
- * @returns {string[]} An array of file paths that match the given extension.
+ * @param {string[]} fileExtensions - An array of file extensions to search for.
+ * @returns {string[]} An array of file paths that match the given extensions.
  */
-function findAllFiles(directoryPath: string, fileExtension: string): string[] {
+function findAllFiles(
+  directoryPath: string,
+  fileExtensions: string[]
+): string[] {
   const resolvedPath = path.resolve(process.cwd(), directoryPath);
-  const normalizedExt = fileExtension.startsWith(".")
-    ? fileExtension
-    : `.${fileExtension}`;
+  const normalizedExts = fileExtensions.map((ext) =>
+    ext.startsWith(".") ? ext : `.${ext}`
+  );
 
   try {
-    const result = getAllFiles(resolvedPath, normalizedExt);
+    const result = getAllFiles(resolvedPath, normalizedExts);
     console.log("Found files:", result);
     return result;
   } catch (error) {
@@ -65,4 +70,4 @@ function findAllFiles(directoryPath: string, fileExtension: string): string[] {
 export default findAllFiles; // Exporting the function for external use
 
 // Example usage: Uncomment the following line to use within this script
-// findAllFiles('./path/to/directory', '.js');
+// findAllFiles('./path/to/directory', ['.js', '.ts']);

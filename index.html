@@ -55,10 +55,39 @@
         align-items: center;
       }
     </style>
+
+    <style data-font-css="">
+      @font-face {
+        font-family: "PoetsenOne";
+        src: url("PoetsenOne-Regular.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+    </style>
+    <style data-font-css="">
+      @font-face {
+        font-family: "Poppins";
+        src: url("Poppins-Regular.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+    </style>
   </head>
 
   <body>
-    <div id="embedded-fonts">.</div>
+    <div
+      id="embedded-fonts"
+      style="
+        font-family: 'PoetsenOne, Poppins';
+        opacity: 0;
+        position: absolute;
+        pointer-events: none;
+      "
+    >
+      .
+    </div>
     <div id="app">
       <div id="game-container"></div>
     </div>

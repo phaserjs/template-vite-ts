@@ -62,7 +62,7 @@ export async function addImagesToConfig(
   const tempDir = await mkdtemp(path.join(__dirname, "tmp-"));
 
   try {
-    const svgFiles = findAllFiles(svgPath, "svg");
+    const svgFiles = findAllFiles(svgPath, ["svg"]);
     await Promise.all(
       svgFiles.map(async (file) => {
         const svgData = await readFile(file, "utf8");
