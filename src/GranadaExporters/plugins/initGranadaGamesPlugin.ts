@@ -25,7 +25,7 @@ export default function initGranadaGamesPlugin(options: PluginOptions): Plugin {
         const fontsPath = path.join(projectRoot, "src/assets/fonts");
         const imagesPath = path.join(projectRoot, "src/assets/images");
         const audioPath = path.join(projectRoot, "src/assets/audio");
-        const distPath = path.join(projectRoot, "dist");
+        const htmlPath = path.join(projectRoot, "index.html");
         // First create or update the main configuration file
         await createConfigFile(configFilePath, options.width, options.height);
 
@@ -33,7 +33,7 @@ export default function initGranadaGamesPlugin(options: PluginOptions): Plugin {
         await updatePagesConfig(scenesPath, configFilePath);
 
         // update fonts configuration
-        await updateFontsConfig(fontsPath, configFilePath);
+        await updateFontsConfig(fontsPath, htmlPath, configFilePath);
 
         // update images configuration
         await addImagesToConfig(imagesPath, configFilePath);

@@ -13,20 +13,15 @@ export const loadAllImages = (game: Phaser.Scene, images: Images): void => {
   //     console.log(`Loading image ${key} from ${image.path}`);
   //   });
   // } else {
-  game.textures.addBase64("questions", questions);
-  game.textures.addBase64("topBar", topBar);
-  game.textures.addBase64("submit", submit);
-  game.textures.addBase64("letter", letter);
-  game.textures.addBase64("letterCorrect", letterCorrect);
-  game.textures.addBase64("letterAlmost", letterAlmost);
-  game.textures.addBase64("letterWrong", letterWrong);
-  game.textures.addBase64("deleteBtn", deleteBtn);
-  game.textures.addBase64("confetti", confetti);
-  game.textures.addBase64("wheel", wheel);
-  game.textures.addBase64("welcomeSplash", welcomeSplash);
-  game.textures.addBase64("completeSplash", completeSplash);
-  game.textures.addBase64("button", button);
+
   //}
+
+  console.log("Loading images...", images);
+
+  Object.entries(images).forEach(([key, image]) => {
+    console.log(`Loading image ${key} from ${image.path}`);
+    game.textures.addBase64(image.key, image.path);
+  });
 
   game.load.start();
 };

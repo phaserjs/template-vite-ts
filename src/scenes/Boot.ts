@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import Config from "../config/working-config";
+import Config from "../config/config.json";
 import {
   addText,
   createSceneContainer,
