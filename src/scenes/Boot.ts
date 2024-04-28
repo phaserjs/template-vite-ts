@@ -5,7 +5,6 @@ import {
   createSceneContainer,
   loadAllImages,
 } from "../GranadaLib/Display/PhaserDisplay";
-import { AudioFiles } from "../Audio";
 
 /**
  * The Boot scene is responsible for setting up the initial assets and
@@ -31,7 +30,7 @@ export class Boot extends Scene {
     this.loadingText = addText(
       Config.size.x / 2,
       Config.size.y / 2,
-      Config.fonts.Poppins,
+      Config.fonts.poppinsRegular,
       24,
       this.container,
       "0x000",
@@ -49,8 +48,8 @@ export class Boot extends Scene {
     loadAllImages(this, Config.images);
     console.log("Preloading Audio assets...");
     (this.sound as Phaser.Sound.WebAudioSoundManager).decodeAudio(
-      AudioFiles.name,
-      AudioFiles.path
+      Config.audio.Neutral.key,
+      Config.audio.Neutral.path
     );
 
     this.sound.once("decodedall", () => this.startGame());

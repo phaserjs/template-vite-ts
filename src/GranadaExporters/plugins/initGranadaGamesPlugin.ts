@@ -20,12 +20,21 @@ export default function initGranadaGamesPlugin(options: PluginOptions): Plugin {
       try {
         const projectRoot = process.cwd();
 
-        const configFilePath = path.join(projectRoot, "src/config/config.json");
-        const scenesPath = path.join(projectRoot, "src/scenes");
-        const fontsPath = path.join(projectRoot, "src/assets/fonts");
-        const imagesPath = path.join(projectRoot, "src/assets/images");
-        const audioPath = path.join(projectRoot, "src/assets/audio");
-        const htmlPath = path.join(projectRoot, "index.html");
+        const configFilePath = path.resolve(
+          path.join(projectRoot, "src/config/config.json")
+        );
+        const scenesPath = path.resolve(path.join(projectRoot, "src/scenes"));
+        const fontsPath = path.resolve(
+          path.join(projectRoot, "src/assets/fonts")
+        );
+        const imagesPath = path.resolve(
+          path.join(projectRoot, "src/assets/images")
+        );
+        const audioPath = path.resolve(
+          path.join(projectRoot, "src/assets/audio")
+        );
+
+        const htmlPath = path.resolve(path.join(projectRoot, "index.html"));
         // First create or update the main configuration file
         await createConfigFile(configFilePath, options.width, options.height);
 

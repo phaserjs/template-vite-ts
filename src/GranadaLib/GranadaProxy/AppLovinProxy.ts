@@ -11,7 +11,7 @@ export class AppLovinProxy extends AbstractGranadaProxy {
   protected apiCheckTime: number = 100;
 
   /** Interval handle for the periodic API connection check. */
-  protected intervalHandle: number;
+  protected intervalHandle: NodeJS.Timeout;
 
   /** Maximum number of attempts to connect to the API before giving up. */
   protected maxConnectionAttempts: number = 50;

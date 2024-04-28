@@ -1,8 +1,6 @@
 import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
 import initGranadaGamesPlugin from "../src/GranadaExporters/plugins/initGranadaGamesPlugin";
-// import Config from "../src/config/config";
-// import inlineImages from "../src/GranadaLib/vite/plugins/inlineImages.mjs";
 
 const phasermsg = () => {
   return {
@@ -23,10 +21,12 @@ const phasermsg = () => {
 export default defineConfig({
   base: "./",
   build: {
+    target: "esnext",
     minify: "terser",
+    cssCodeSplit: true, // Enable CSS code splitting
     terserOptions: {
       compress: {
-        passes: 2,
+        passes: 10,
       },
       mangle: true,
       format: {

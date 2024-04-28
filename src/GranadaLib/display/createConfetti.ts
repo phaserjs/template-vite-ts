@@ -1,4 +1,4 @@
-import Config from "../../config/working-config";
+import Config from "../../config/config.json";
 
 export const createConfetti = (
   scene: Phaser.Scene
@@ -18,8 +18,7 @@ export const createConfetti = (
       alpha: { start: 1, end: 0 }, // Alpha range for particles
       tint: {
         // Apply random tint to each particle
-        onEmit: function (particle) {
-          //particle!.tint = Phaser.Display.Color.RandomRGB().color;
+        onEmit: function () {
           return Phaser.Display.Color.RandomRGB().color; // This will choose a random color
         },
       },

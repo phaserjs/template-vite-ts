@@ -30,7 +30,8 @@ export interface GameConfig {
   size: Point; // The size of the game canvas.
   pages: Record<string, string>; // Mapping of page names to their respective URLs.
   fonts: Record<string, string>; // Mapping of font names to their respective font files.
-  images: Record<string, AssetConfig>; // Mapping of image keys to their respective configurations.
+  images: Images; // Mapping of image keys to their respective configurations.
+  audio: Audio; // Mapping of audio keys to their respective audio files.
 }
 
 /**
@@ -42,6 +43,20 @@ export interface AssetConfig {
 }
 
 /**
+ * Type representing a collection of images used in the game, with each image identified by its key and having a corresponding configuration.
+ */
+export type Images = {
+  [key: string]: AssetConfig;
+};
+
+/**
+ * Type representing a collection of images used in the game, with each image identified by its key and having a corresponding configuration.
+ */
+export type Audio = {
+  [key: string]: AssetConfig;
+};
+
+/**
  * Type representing the page type, ensuring that it is a valid page name defined in the game configuration.
  */
 export type PageType = GameConfig["pages"][keyof GameConfig["pages"]];
@@ -50,10 +65,3 @@ export type PageType = GameConfig["pages"][keyof GameConfig["pages"]];
  * Type representing the font type, ensuring that it is a valid font name defined in the game configuration.
  */
 export type FontType = GameConfig["fonts"][keyof GameConfig["fonts"]];
-
-/**
- * Type representing a collection of images used in the game, with each image identified by its key and having a corresponding configuration.
- */
-export type Images = {
-  [key: string]: AssetConfig;
-};

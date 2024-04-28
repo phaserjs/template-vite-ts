@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import Config from "../../config/working-config";
+import Config from "../../config/config.json";
 import SpinningWheel from "../../GranadaLib/GameObjects/SpinningWheel";
 import { addText } from "../../GranadaLib/Display/PhaserDisplay";
 import Button from "../../GranadaLib/GameObjects/GranadaButton";
@@ -31,7 +31,7 @@ export default class WelcomeModal extends AbstractScaledContainer {
     this.heading = addText(
       Config.size.x / 2,
       300,
-      Config.fonts.PoetsenOne,
+      Config.fonts.poetsenOneRegular,
       24,
       this,
       "#000",

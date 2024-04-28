@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import Config from "../../config/working-config";
+import Config from "../../config/config.json";
 import { addImage, addText } from "../Display/PhaserDisplay";
 
 export default class GranadaButton extends Phaser.GameObjects.Container {
@@ -20,7 +20,7 @@ export default class GranadaButton extends Phaser.GameObjects.Container {
     const label = addText(
       bg.width / 2,
       bg.height / 2,
-      Config.fonts.PoetsenOne,
+      Config.fonts.poetsenOneRegular,
       24,
       this,
       "#fff",

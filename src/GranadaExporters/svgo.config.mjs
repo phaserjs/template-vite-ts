@@ -5,10 +5,10 @@ export default {
       params: {
         overrides: {
           // disable a default plugin
-          removeViewBox: false,
+          //removeViewBox: false,
           // customize the params of a default plugin
           inlineStyles: {
-            onlyMatchedOnce: false,
+            //onlyMatchedOnce: false,
           },
         },
       },

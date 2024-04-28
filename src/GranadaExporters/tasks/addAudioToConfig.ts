@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { promisify } from "util";
 import findAllFiles from "./findAllFiles"; // Ensure this is properly linked
-import { Config } from "../interfaces/ConfigInterface"; // Ensure this is properly defined
+import { GameConfig } from "../../GranadaLib/types/types"; // Ensure this is properly defined
 import { encodeFileToBase64 } from "../encodeFileToBase64";
 
 const readFile = promisify(fs.readFile);
@@ -45,7 +45,7 @@ export async function addAudioToConfig(
   }, {});
 
   const fileContent = await readFile(configFilePath, "utf8");
-  const config: Config = JSON.parse(fileContent);
+  const config: GameConfig = JSON.parse(fileContent);
 
   // Merge the new WAVs with existing audio data in the config
   config.audio = { ...config.audio, ...wavsObject };

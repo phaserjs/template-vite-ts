@@ -1,4 +1,4 @@
-import Config from "../../config/working-config";
+import Config from "../../config/config.json";
 import { addImage, addText } from "../Display/PhaserDisplay";
 import { GameConfig } from "../types/types";
 
@@ -80,7 +80,7 @@ class GranadaKeyboard extends Phaser.GameObjects.Container {
     const deleteKey = addImage(
       deleteButtonX,
       deleteButtonY,
-      this.gameConfig.images.deleteBtn.key,
+      this.gameConfig.images.backspace.key,
       this
     );
     deleteKey.setInteractive();

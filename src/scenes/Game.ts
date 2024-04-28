@@ -1,17 +1,14 @@
 import { Scene } from "phaser";
-import Config from "../config/working-config";
+import Config from "../config/config.json";
 import {
   addImage,
   createSceneContainer,
 } from "../GranadaLib/Display/PhaserDisplay";
 import LabeledImageGrid, { GridConfig } from "../gameObjects/LabeledImageGrid";
 import { QuestionType } from "../types";
-import { images } from "../config/assets";
-
 import WordCompleteModal from "../gameObjects/Modals/WordCompleteModal";
 import WelcomeModal from "../gameObjects/Modals/WelcomeModal";
 import { createConfetti } from "../GranadaLib/Display/createConfetti";
-import { AudioFiles } from "../Audio";
 import GranadaKeyboard, {
   GranadaKeyboardEvents,
   KeyboardConfig,
@@ -60,7 +57,7 @@ export class Game extends Scene {
   }
 
   create() {
-    const music = this.sound.add(AudioFiles.name);
+    const music = this.sound.add(Config.audio.Neutral.key);
     music.play();
 
     this.camera = this.cameras.main;
@@ -74,10 +71,15 @@ export class Game extends Scene {
       answer: "clock",
     };
 
-    this.topBar = addImage(0, 43, images.topBar.key, this.container);
-    this.question = addImage(20, 107, images.questions.key, this.container);
+    this.topBar = addImage(0, 43, Config.images.topBar.key, this.container);
+    this.question = addImage(
+      20,
+      107,
+      Config.images.questions.key,
+      this.container
+    );
 
-    this.submit = addImage(124, 676, images.submit.key, this.container);
+    this.submit = addImage(124, 676, Config.images.submit.key, this.container);
     this.submit.setInteractive();
     this.submit.on("pointerdown", this.checkAnswer, this.container);
 
@@ -87,7 +89,7 @@ export class Game extends Scene {
       this,
       64,
       277,
-      images.letter.key,
+      Config.images.letter.key,
       gridConfig
     );
     this.container.add(this.labeleldImageGrid);

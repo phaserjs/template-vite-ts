@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { promisify } from "util";
 import findAllFiles from "./findAllFiles"; // Ensure this is properly linked
-import { Config } from "../interfaces/ConfigInterface"; // Ensure this is properly defined
+import { GameConfig } from "../../GranadaLib/types/types";
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
@@ -39,7 +39,7 @@ export async function updatePagesConfig(
   );
 
   const fileContent = await readFile(configFilePath, "utf8");
-  const config: Config = JSON.parse(fileContent);
+  const config: GameConfig = JSON.parse(fileContent);
 
   // Merge the new pages with existing pages in the config
   config.pages = { ...config.pages, ...pages };

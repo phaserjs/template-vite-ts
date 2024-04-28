@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import Config from "../config/working-config";
+import Config from "../config/config.json";
 import { createConfetti } from "../GranadaLib/Display/createConfetti";
 import {
   addText,
@@ -25,7 +25,7 @@ export class GameOver extends Scene {
     this.gameover_text = addText(
       Config.size.x / 2,
       250,
-      Config.fonts.Poppins,
+      Config.fonts.poppinsRegular,
       24,
       this.container,
       "0x000",
@@ -37,7 +37,7 @@ export class GameOver extends Scene {
     this.cta_text = addText(
       Config.size.x / 2,
       350,
-      Config.fonts.Poppins,
+      Config.fonts.poppinsRegular,
       24,
       this.container,
       "0x000",

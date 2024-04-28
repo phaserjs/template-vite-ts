@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { promisify } from "util";
 import { JSDOM } from "jsdom";
-import { Config } from "../interfaces/ConfigInterface";
+import { GameConfig } from "../../GranadaLib/types/types";
 import { encodeFileToBase64 } from "../encodeFileToBase64";
 import findAllFiles from "./findAllFiles";
 import sanitizeString from "../sanitizeString";
@@ -45,7 +45,7 @@ export async function updateFontsConfig(
   );
 
   const configContent = await readFile(configFilePath, "utf8");
-  const config: Config = JSON.parse(configContent);
+  const config: GameConfig = JSON.parse(configContent);
   const newFontKeys = fonts.reduce(
     (acc, font) => ({ ...acc, [font.name]: font.name }),
     {}
