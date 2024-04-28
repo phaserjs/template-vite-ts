@@ -81,7 +81,7 @@ async function compressHtmlFile(inputPath, outputPath) {
         `Space saved: ${chalk.yellow(bytesToMB(spaceSaved))} MB !!!` +
           ` ::  ${Math.round(
             (spaceSaved / originalSize) * 100
-          )}% Reduction in size`
+          )}% Reduction in file size`
       )
     );
   } catch (error) {
