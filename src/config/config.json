@@ -8,6 +8,9 @@
     "Game": "Game",
     "GameOver": "GameOver"
   },
-  "fonts": {},
+  "fonts": {
+    "PoetsenOne-Regular": "PoetsenOne-Regular",
+    "Poppins-Regular": "Poppins-Regular"
+  },
   "images": {}
 }

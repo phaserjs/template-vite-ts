@@ -3,6 +3,7 @@ import { Plugin } from "vite";
 import path from "path";
 import { createConfigFile } from "../tasks/createConfigFile";
 import { updatePagesConfig } from "../tasks/addPagesToConfig";
+import { updateFontsConfig } from "../tasks/addFontsToConfig";
 
 interface PluginOptions {
   width: string;
@@ -20,12 +21,16 @@ export default function initGranadaConfigPlugin(
 
         const configFilePath = path.join(projectRoot, "src/config/config.json");
         const scenesPath = path.join(projectRoot, "src/scenes");
+        const fontsPath = path.join(projectRoot, "src/assets/fonts");
 
         // First create or update the main configuration file
         await createConfigFile(configFilePath, options.width, options.height);
 
         // Then update the pages configuration
         await updatePagesConfig(scenesPath, configFilePath);
+
+        // update fonts configuration
+        await updateFontsConfig(fontsPath, configFilePath);
 
         console.log("Configuration has been successfully created and updated.");
       } catch (error) {
