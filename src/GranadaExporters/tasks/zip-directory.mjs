@@ -1,7 +1,7 @@
-// Ensure your package.json has "type": "module" if you're using .js with ES imports
 import JSZip from "jszip";
 import fs from "fs-extra";
 import path from "path";
+import chalk from "chalk";
 
 /**
  * Recursively adds files and directories to the zip archive.
@@ -11,16 +11,14 @@ import path from "path";
  */
 async function addDirToZip(zip, dirPath, zipPath = "") {
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
-  console.log(`Zipping contents of ${dirPath}`);
 
   for (const entry of entries) {
     const fullPath = path.join(dirPath, entry.name);
     const relativePath = path.join(zipPath, entry.name);
-    console.log(fullPath);
     if (entry.isDirectory()) {
       await addDirToZip(zip, fullPath, relativePath);
     } else {
-      console.log(`Adding file to zip: ${fullPath}`);
+      console.log(chalk.yellow(`Adding file to zip: ${fullPath}`));
       const fileData = await fs.readFile(fullPath);
       zip.file(relativePath, fileData);
     }
@@ -33,18 +31,18 @@ async function addDirToZip(zip, dirPath, zipPath = "") {
  * @param outputZip The path to output the zip file.
  */
 async function zipDirectory(sourceDir, outputZip) {
-  console.log(`Starting to zip directory: ${sourceDir}`);
+  console.log(chalk.green(`Starting to zip directory: ${sourceDir}`));
   const zip = new JSZip();
   await addDirToZip(zip, sourceDir);
 
-  console.log(`Writing zip file to ${outputZip}`);
+  console.log(chalk.yellow(`Writing zip file to ${outputZip}`));
   const content = await zip.generateAsync({ type: "nodebuffer" });
   await fs.writeFile(outputZip, content);
 
-  console.log(`Directory zipped to ${outputZip}`);
+  console.log(chalk.green(`Directory zipped to ${outputZip}`));
 }
 
-const sourceDir = path.resolve(process.cwd(), "dist"); // For example, zip the 'dist' directory
-const outputZip = path.resolve(process.cwd(), "dist", "dist.zip"); // Output zip file in the same directory
+const sourceDir = path.resolve(process.cwd(), "dist");
+const outputZip = path.resolve(process.cwd(), "dist", "dist.zip");
 
 zipDirectory(sourceDir, outputZip).catch(console.error);
