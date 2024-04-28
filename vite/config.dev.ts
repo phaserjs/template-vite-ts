@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
-import initGranadaConfigPlugin from "../src/GranadaExporters/plugins/initGranadaConfigPlugin";
+import initGranadaGamesPlugin from "../src/GranadaExporters/plugins/initGranadaGamesPlugin";
 
 export default defineConfig({
   base: "./",
@@ -8,9 +8,10 @@ export default defineConfig({
     port: 8080,
   },
   plugins: [
-    initGranadaConfigPlugin({
+    initGranadaGamesPlugin({
       width: process.env.WIDTH || "1920",
       height: process.env.HEIGHT || "1080",
+      encodeAudio: process.env.ENCODE_AUDIO === "true",
     }),
     viteSingleFile({ removeViteModuleLoader: true, deleteInlinedFiles: true }),
   ],

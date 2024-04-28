@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { Config } from "../ConfigInterface";
+import { Config } from "../interfaces/ConfigInterface";
 import { promisify } from "util";
 
 const writeFile = promisify(fs.writeFile);
@@ -56,6 +56,7 @@ function generateConfigContent(width: number, height: number): Config {
     pages: {},
     fonts: {},
     images: {},
+    audio: {},
   };
 }
 

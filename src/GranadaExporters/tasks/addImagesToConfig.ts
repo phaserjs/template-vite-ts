@@ -20,15 +20,15 @@ async function encodeFileToBase64(filePath: string): Promise<string> {
 }
 
 /**
- * Updates the configuration JSON file with fonts derived from ttf files in a specified directory.
- * Asynchronously reads and writes to the configuration file. Encodes font files in Base64.
+ * Updates the configuration JSON file with SVG images derived from svg files in a specified directory.
+ * Asynchronously reads and writes to the configuration file. Encodes SVG files in Base64.
  *
- * @param fontsPath Path to the directory containing font files.
+ * @param svgPath Path to the directory containing SVG files.
  * @param configFilePath Path to the configuration JSON file to update.
  * @throws Will throw an error if the configuration file does not exist or file operations fail.
  */
-export async function updateFontsConfig(
-  fontsPath: string,
+export async function addImagesToConfig(
+  svgPath: string,
   configFilePath: string
 ): Promise<void> {
   const fileExists = await exists(configFilePath);
@@ -37,43 +37,43 @@ export async function updateFontsConfig(
       "Configuration file does not exist. Please ensure that the config.json file is created before running this script."
     );
   }
-  const fileType = "ttf";
-  const fontFiles = findAllFiles(fontsPath, fileType);
+  const fileType = "svg";
+  const svgFiles = findAllFiles(svgPath, fileType);
 
-  const fonts = await Promise.all(
-    fontFiles.map(async (filePath: string) => {
+  const svgs = await Promise.all(
+    svgFiles.map(async (filePath: string) => {
       const { name } = path.parse(filePath);
       const base64String = await encodeFileToBase64(filePath);
-      const dataUrl = `url(data:font/ttf;charset=utf-8;base64,${base64String})`;
+      const dataUrl = `url(data:image/svg+xml;charset=utf-8;base64,${base64String})`;
       return { name, value: { key: name, path: dataUrl } };
     })
   );
 
-  const fontsObject = fonts.reduce((acc: Record<string, any>, font) => {
-    acc[font.name] = font.value;
+  const svgsObject = svgs.reduce((acc: Record<string, any>, svg) => {
+    acc[svg.name] = svg.value;
     return acc;
   }, {});
 
   const fileContent = await readFile(configFilePath, "utf8");
   const config: Config = JSON.parse(fileContent);
 
-  // Merge the new fonts with existing fonts in the config
-  config.fonts = { ...config.fonts, ...fontsObject };
+  // Merge the new SVGs with existing images in the config
+  config.images = { ...config.images, ...svgsObject };
 
   // Serialize the updated configuration object and write it back to the file
   await writeFile(configFilePath, JSON.stringify(config, null, 2));
-  console.log("Config file updated successfully with new fonts.");
+  console.log("Config file updated successfully with new SVG images.");
 }
 
 /**
  * Main function to execute the update process with directory paths provided via command line arguments.
  */
 if (require.main === module) {
-  const fontsPath = process.argv[2];
+  const svgPath = process.argv[2];
   const configFilePath = process.argv[3];
 
-  if (!fontsPath) {
-    console.error("Fonts Path is missing");
+  if (!svgPath) {
+    console.error("SVG Path is missing");
     process.exit(1);
   }
 
@@ -82,7 +82,7 @@ if (require.main === module) {
     process.exit(1);
   }
 
-  updateFontsConfig(fontsPath, configFilePath).catch((err) => {
+  addImagesToConfig(svgPath, configFilePath).catch((err) => {
     console.error("Failed to update config file:", err);
     process.exit(1);
   });

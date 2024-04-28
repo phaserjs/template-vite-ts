@@ -20,15 +20,15 @@ async function encodeFileToBase64(filePath: string): Promise<string> {
 }
 
 /**
- * Updates the configuration JSON file with fonts derived from ttf files in a specified directory.
- * Asynchronously reads and writes to the configuration file. Encodes font files in Base64.
+ * Updates the configuration JSON file with WAV audio files derived from wav files in a specified directory.
+ * Asynchronously reads and writes to the configuration file. Encodes WAV files in Base64.
  *
- * @param fontsPath Path to the directory containing font files.
+ * @param wavPath Path to the directory containing WAV files.
  * @param configFilePath Path to the configuration JSON file to update.
  * @throws Will throw an error if the configuration file does not exist or file operations fail.
  */
-export async function updateFontsConfig(
-  fontsPath: string,
+export async function addAudioToConfig(
+  wavPath: string,
   configFilePath: string
 ): Promise<void> {
   const fileExists = await exists(configFilePath);
@@ -37,43 +37,43 @@ export async function updateFontsConfig(
       "Configuration file does not exist. Please ensure that the config.json file is created before running this script."
     );
   }
-  const fileType = "ttf";
-  const fontFiles = findAllFiles(fontsPath, fileType);
+  const fileType = "wav";
+  const wavFiles = findAllFiles(wavPath, fileType);
 
-  const fonts = await Promise.all(
-    fontFiles.map(async (filePath: string) => {
+  const wavs = await Promise.all(
+    wavFiles.map(async (filePath: string) => {
       const { name } = path.parse(filePath);
       const base64String = await encodeFileToBase64(filePath);
-      const dataUrl = `url(data:font/ttf;charset=utf-8;base64,${base64String})`;
+      const dataUrl = `url(data:audio/wav;base64,${base64String})`;
       return { name, value: { key: name, path: dataUrl } };
     })
   );
 
-  const fontsObject = fonts.reduce((acc: Record<string, any>, font) => {
-    acc[font.name] = font.value;
+  const wavsObject = wavs.reduce((acc: Record<string, any>, wav) => {
+    acc[wav.name] = wav.value;
     return acc;
   }, {});
 
   const fileContent = await readFile(configFilePath, "utf8");
   const config: Config = JSON.parse(fileContent);
 
-  // Merge the new fonts with existing fonts in the config
-  config.fonts = { ...config.fonts, ...fontsObject };
+  // Merge the new WAVs with existing audio data in the config
+  config.audio = { ...config.audio, ...wavsObject };
 
   // Serialize the updated configuration object and write it back to the file
   await writeFile(configFilePath, JSON.stringify(config, null, 2));
-  console.log("Config file updated successfully with new fonts.");
+  console.log("Config file updated successfully with new WAV audio files.");
 }
 
 /**
  * Main function to execute the update process with directory paths provided via command line arguments.
  */
 if (require.main === module) {
-  const fontsPath = process.argv[2];
+  const wavPath = process.argv[2];
   const configFilePath = process.argv[3];
 
-  if (!fontsPath) {
-    console.error("Fonts Path is missing");
+  if (!wavPath) {
+    console.error("WAV Path is missing");
     process.exit(1);
   }
 
@@ -82,7 +82,7 @@ if (require.main === module) {
     process.exit(1);
   }
 
-  updateFontsConfig(fontsPath, configFilePath).catch((err) => {
+  addAudioToConfig(wavPath, configFilePath).catch((err) => {
     console.error("Failed to update config file:", err);
     process.exit(1);
   });

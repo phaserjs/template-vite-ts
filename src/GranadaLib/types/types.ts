@@ -30,13 +30,13 @@ export interface GameConfig {
   size: Point; // The size of the game canvas.
   pages: Record<string, string>; // Mapping of page names to their respective URLs.
   fonts: Record<string, string>; // Mapping of font names to their respective font files.
-  images: Record<string, ImageConfig>; // Mapping of image keys to their respective configurations.
+  images: Record<string, AssetConfig>; // Mapping of image keys to their respective configurations.
 }
 
 /**
  * Configuration interface for images used in the game.
  */
-export interface ImageConfig {
+export interface AssetConfig {
   key: string; // The key used to reference the image.
   path: string; // The file path or URL of the image.
 }
@@ -55,5 +55,5 @@ export type FontType = GameConfig["fonts"][keyof GameConfig["fonts"]];
  * Type representing a collection of images used in the game, with each image identified by its key and having a corresponding configuration.
  */
 export type Images = {
-  [key: string]: ImageConfig;
+  [key: string]: AssetConfig;
 };

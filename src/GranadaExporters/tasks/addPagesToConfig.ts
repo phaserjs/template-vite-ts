@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { promisify } from "util";
 import findAllFiles from "./findAllFiles"; // Ensure this is properly linked
-import { Config } from "../ConfigInterface"; // Ensure this is properly defined
+import { Config } from "../interfaces/ConfigInterface"; // Ensure this is properly defined
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
@@ -56,10 +56,13 @@ if (require.main === module) {
   const scenesPath = process.argv[2];
   const configFilePath = process.argv[3];
 
-  if (!scenesPath || !configFilePath) {
-    console.error(
-      "Usage: ts-node addPagesToConfig.ts <scenesPath> <configFilePath>"
-    );
+  if (!scenesPath) {
+    console.error("Scenes Path is missing");
+    process.exit(1);
+  }
+
+  if (!configFilePath) {
+    console.error("Config Path is missing");
     process.exit(1);
   }
 

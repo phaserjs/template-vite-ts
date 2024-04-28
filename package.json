@@ -16,7 +16,7 @@
   "scripts": {
     "delete-assets": "node delete-assets.mjs",
     "encode-fonts": "node encode-fonts.mjs",
-    "dev": "cross-env VITE_DEV_MODE=true WIDTH=375 HEIGHT=812 vite --config vite/config.dev.ts",
+    "dev": "cross-env VITE_DEV_MODE=true WIDTH=375 HEIGHT=812 ENCODE_AUDIO=true vite --config vite/config.dev.ts",
     "build": "cross-env VITE_DEV_MODE=false vite build --config vite/config.prod.ts && pnpm run delete-assets"
   },
   "devDependencies": {
