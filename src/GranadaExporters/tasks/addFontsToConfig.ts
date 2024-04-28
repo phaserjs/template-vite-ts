@@ -9,8 +9,19 @@ const writeFile = promisify(fs.writeFile);
 const exists = promisify(fs.exists);
 
 /**
- * Updates the configuration JSON file with fonts derived from tff files in a specified directory.
- * Asynchronously reads and writes to the configuration file.
+ * Encodes a file to Base64.
+ *
+ * @param filePath Path to the file.
+ * @returns Base64 encoded string of the file.
+ */
+async function encodeFileToBase64(filePath: string): Promise<string> {
+  const fileBuffer = await readFile(filePath);
+  return fileBuffer.toString("base64");
+}
+
+/**
+ * Updates the configuration JSON file with fonts derived from ttf files in a specified directory.
+ * Asynchronously reads and writes to the configuration file. Encodes font files in Base64.
  *
  * @param fontsPath Path to the directory containing font files.
  * @param configFilePath Path to the configuration JSON file to update.
@@ -29,20 +40,25 @@ export async function updateFontsConfig(
   const fileType = "ttf";
   const fontFiles = findAllFiles(fontsPath, fileType);
 
-  const fonts = fontFiles.reduce(
-    (acc: Record<string, any>, filePath: string) => {
-      const { name } = path.parse(filePath); // Extract filename without extension
-      acc[name] = { key: name, path: "" }; // Set path as empty string for now
-      return acc;
-    },
-    {}
+  const fonts = await Promise.all(
+    fontFiles.map(async (filePath: string) => {
+      const { name } = path.parse(filePath);
+      const base64String = await encodeFileToBase64(filePath);
+      const dataUrl = `url(data:font/ttf;charset=utf-8;base64,${base64String})`;
+      return { name, value: { key: name, path: dataUrl } };
+    })
   );
+
+  const fontsObject = fonts.reduce((acc: Record<string, any>, font) => {
+    acc[font.name] = font.value;
+    return acc;
+  }, {});
 
   const fileContent = await readFile(configFilePath, "utf8");
   const config: Config = JSON.parse(fileContent);
 
   // Merge the new fonts with existing fonts in the config
-  config.fonts = { ...config.fonts, ...fonts };
+  config.fonts = { ...config.fonts, ...fontsObject };
 
   // Serialize the updated configuration object and write it back to the file
   await writeFile(configFilePath, JSON.stringify(config, null, 2));
