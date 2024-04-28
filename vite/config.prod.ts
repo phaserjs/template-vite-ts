@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import { viteSingleFile } from "vite-plugin-singlefile";
+import initGranadaGamesPlugin from "../src/GranadaExporters/plugins/initGranadaGamesPlugin";
 // import Config from "../src/config/config";
 // import inlineImages from "../src/GranadaLib/vite/plugins/inlineImages.mjs";
 
@@ -21,7 +22,6 @@ const phasermsg = () => {
 
 export default defineConfig({
   base: "./",
-  logLevel: "warning",
   build: {
     minify: "terser",
     terserOptions: {
@@ -39,7 +39,11 @@ export default defineConfig({
   },
   plugins: [
     phasermsg(),
+    initGranadaGamesPlugin({
+      width: process.env.WIDTH || "1920",
+      height: process.env.HEIGHT || "1080",
+      encodeAudio: process.env.ENCODE_AUDIO === "true",
+    }),
     viteSingleFile({ removeViteModuleLoader: true, deleteInlinedFiles: true }),
-    //inlineImages(Config),
   ],
 });

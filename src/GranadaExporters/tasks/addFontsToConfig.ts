@@ -3,21 +3,11 @@ import path from "path";
 import { promisify } from "util";
 import findAllFiles from "./findAllFiles"; // Ensure this is properly linked
 import { Config } from "../interfaces/ConfigInterface"; // Ensure this is properly defined
+import { encodeFileToBase64 } from "../encodeFileToBase64";
 
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 const exists = promisify(fs.exists);
-
-/**
- * Encodes a file to Base64.
- *
- * @param filePath Path to the file.
- * @returns Base64 encoded string of the file.
- */
-async function encodeFileToBase64(filePath: string): Promise<string> {
-  const fileBuffer = await readFile(filePath);
-  return fileBuffer.toString("base64");
-}
 
 /**
  * Updates the configuration JSON file with fonts derived from ttf files in a specified directory.

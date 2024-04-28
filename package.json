@@ -14,14 +14,21 @@
   },
   "homepage": "https://github.com/phaserjs/template-vite-ts#readme",
   "scripts": {
-    "delete-assets": "node delete-assets.mjs",
-    "encode-fonts": "node encode-fonts.mjs",
+    "delete-assets": "node src/GranadaExporters/tasks/delete-assets.mjs",
+    "zip": "node src/GranadaExporters/tasks/zip-directory.mjs",
     "dev": "cross-env VITE_DEV_MODE=true WIDTH=375 HEIGHT=812 ENCODE_AUDIO=true vite --config vite/config.dev.ts",
-    "build": "cross-env VITE_DEV_MODE=false vite build --config vite/config.prod.ts && pnpm run delete-assets"
+    "build": "cross-env VITE_DEV_MODE=false WIDTH=375 HEIGHT=812 ENCODE_AUDIO=true vite build --config vite/config.prod.ts && pnpm delete-assets && pnpm zip"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.12.7",
     "@types/yargs": "^17.0.32",
+    "cross-env": "^7.0.3",
+    "fs-extra": "^11.2.0",
+    "jszip": "^3.10.1",
+    "path": "^0.12.7",
+    "rimraf": "^5.0.5",
+    "svgo": "^3.2.0",
     "terser": "^5.30.4",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
@@ -29,9 +36,6 @@
     "yargs": "^17.7.2"
   },
   "dependencies": {
-    "cross-env": "^7.0.3",
-    "path": "^0.12.7",
-    "phaser": "^3.80.1",
-    "rimraf": "^5.0.5"
+    "phaser": "^3.80.1"
   }
 }
