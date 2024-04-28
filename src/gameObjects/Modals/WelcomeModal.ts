@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import Config from "../../config/config";
+import Config from "../../config/working-config";
 import SpinningWheel from "../../GranadaLib/GameObjects/SpinningWheel";
 import { addText } from "../../GranadaLib/Display/PhaserDisplay";
 import Button from "../../GranadaLib/GameObjects/GranadaButton";

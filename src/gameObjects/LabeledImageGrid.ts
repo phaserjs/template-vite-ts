@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import LabeledImage from "./LabeledImage";
-import Config from "../config/config";
+import Config from "../config/working-config";
 
 export type GridConfig = {
   rows: number;

@@ -1,4 +1,4 @@
-import Config from "../../config/config";
+import Config from "../../config/working-config";
 
 export const createConfetti = (
   scene: Phaser.Scene

@@ -1,0 +1,13 @@
+{
+  "size": {
+    "x": 375,
+    "y": 812
+  },
+  "pages": {
+    "Boot": "Boot",
+    "Game": "Game",
+    "GameOver": "GameOver"
+  },
+  "fonts": {},
+  "images": {}
+}

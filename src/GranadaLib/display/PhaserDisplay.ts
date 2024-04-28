@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import { Images } from "../types/types";
-import Config from "../../config/config";
+import Config from "../../config/working-config";
 
 /**
  * Preloads all images defined in the Images object into a Phaser scene.

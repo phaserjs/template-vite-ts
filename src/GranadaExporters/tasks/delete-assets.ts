@@ -2,7 +2,8 @@ import { rm } from "fs/promises";
 import path from "path";
 
 // Calculate the path to the assets directory
-const assetsDirPath = path.resolve("dist", "assets");
+const projectRoot = process.cwd();
+const assetsDirPath = path.resolve(projectRoot, "dist", "assets");
 console.log(`Deleting ${assetsDirPath}...`);
 
 // Use fs.rm to delete the assets directory recursively

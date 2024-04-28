@@ -16,15 +16,17 @@
   "scripts": {
     "delete-assets": "node delete-assets.mjs",
     "encode-fonts": "node encode-fonts.mjs",
-    "dev": "cross-env VITE_DEV_MODE=true vite --config vite/config.dev.mjs && pnpm run delete-assets",
-    "build": "cross-env VITE_DEV_MODE=false vite build --config vite/config.prod.mjs && pnpm run delete-assets"
+    "dev": "cross-env VITE_DEV_MODE=true WIDTH=375 HEIGHT=812 vite --config vite/config.dev.ts",
+    "build": "cross-env VITE_DEV_MODE=false vite build --config vite/config.prod.ts && pnpm run delete-assets"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
+    "@types/yargs": "^17.0.32",
     "terser": "^5.30.4",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
-    "vite-plugin-singlefile": "^2.0.1"
+    "vite-plugin-singlefile": "^2.0.1",
+    "yargs": "^17.7.2"
   },
   "dependencies": {
     "cross-env": "^7.0.3",

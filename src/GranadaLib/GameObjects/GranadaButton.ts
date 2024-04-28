@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import Config from "../../config/config";
+import Config from "../../config/working-config";
 import { addImage, addText } from "../Display/PhaserDisplay";
 
 export default class GranadaButton extends Phaser.GameObjects.Container {
