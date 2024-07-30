@@ -1,4 +1,4 @@
-
+import { GameObjects } from "phaser";
 
 /**
  * Create typewriter animation for text
@@ -6,8 +6,11 @@
  * @param {number} [speedInMs=25]
  * @returns {Promise<void>}
  */
-export function animateText(target: Phaser.GameObjects.Text | undefined, speedInMs = 25) {
-  if(!target){
+export function animateText(
+  target: Phaser.GameObjects.Text | undefined,
+  speedInMs = 25
+) {
+  if (!target) {
     return;
   }
   // store original text
@@ -71,4 +74,37 @@ export const createAligned = (
 
     x += m.width;
   }
+};
+
+export enum PlantAction {
+  grow = "grow",
+  shrink = "shrink",
+}
+
+export enum PlantNames {
+  aloe = "aloe",
+  diffen = "diffen",
+  poth = "poth",
+}
+
+export const changeOfficePlants = (
+  plantMap: { [key: string]: { [key: string]: any } },
+  plantName: string,
+  action: string
+) => {
+  const current = plantMap[plantName].current;
+  const numbers = ["1", "2", "3", "4"];
+
+  if (current === "1" && action == PlantAction.shrink) return;
+  if (current === "4" && action == PlantAction.grow) return;
+
+  let next = (Number(current) + 1).toString();
+  if (action === PlantAction.shrink) next = (Number(current) - 1).toString();
+  
+  plantMap.aloe[next].visible = true;
+  numbers.map((n) => {
+    if (n !== next) {
+      plantMap[plantName][n].visible = false;
+    }
+  });
 };
