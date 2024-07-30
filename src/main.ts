@@ -6,13 +6,15 @@ import Laptop from './scenes/Laptop';
 import { Preloader } from './scenes/Preloader';
 
 import { Game, Types } from "phaser";
+import Calendar from './scenes/Calendar';
+import { width, height } from './scenes/helpers';
 
 //  Find out more information about the Game Config at:
 //  https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
 const config: Types.Core.GameConfig = {
     type: Phaser.AUTO,
-    width: 700,
-    height: 500,
+    width: width,
+    height: height,
     parent: 'game-container',
     backgroundColor: '#028af8',
     scale: {
@@ -31,7 +33,8 @@ const config: Types.Core.GameConfig = {
         Office,
         MainGame,
         GameOver,
-        Laptop
+        Laptop,
+        Calendar
     ]
 };
 

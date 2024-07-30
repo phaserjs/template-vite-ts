@@ -54,10 +54,10 @@ export class Preloader extends Scene
         this.load.image('poth2', 'poth2.png');
         this.load.image('poth3', 'poth3.png');
         this.load.image('poth4', 'poth4.png');
-        this.load.image('logo', 'logo.png', );
+        //this.load.image('logo', 'logo.png', );
 
         // Overlays
-        this.load.image('laptop', 'backgrounds/laptop.png', );
+        this.load.image('bg-laptop', 'backgrounds/laptop.png', );
 
         // Sprites
         this.load.image('big-fist', 'sprites/big-fist.png');
@@ -74,6 +74,6 @@ export class Preloader extends Scene
         //  For example, you can define global animations here, so we can use them in other scenes.
 
         //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start('MainMenu');
+        this.scene.start('Calendar');
     }
 }
