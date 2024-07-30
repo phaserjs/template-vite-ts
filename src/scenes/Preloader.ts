@@ -54,6 +54,18 @@ export class Preloader extends Scene
         this.load.image('poth2', 'poth2.png');
         this.load.image('poth3', 'poth3.png');
         this.load.image('poth4', 'poth4.png');
+        this.load.image('logo', 'logo.png', );
+
+        // Overlays
+        this.load.image('laptop', 'backgrounds/laptop.png', );
+
+        // Sprites
+        this.load.image('big-fist', 'sprites/big-fist.png');
+        this.load.image('small-fist', 'sprites/small-fist.png' );
+        this.load.image('fly', 'sprites/fly.png');
+        this.load.image('slack-box', 'sprites/slack-box.png');
+        this.load.image('textbox', 'sprites/textbox.png');
+
     }
 
     create ()
