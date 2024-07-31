@@ -26,11 +26,11 @@ export class Preloader extends Scene {
     //  Load the assets for the game - Replace with your own assets
     this.load.setPath("assets");
 
-    // Backgrounds
+    // Office Backgrounds
     this.load.image("sky", "backgrounds/sky.png");
     this.load.image("office", "backgrounds/office.png");
-    
-    // Sprites
+
+    // Office Sprites
     this.load.image("chair", "chair.png");
     this.load.image("laptop", "laptop.png");
     this.load.image("rug", "rug.png");
@@ -54,15 +54,34 @@ export class Preloader extends Scene {
     this.load.image("poth4", "poth4.png");
     this.load.image("logo", "logo.png");
 
-    // Overlays
+    // Laptop Overlays
     this.load.image("laptop", "backgrounds/laptop.png");
 
-    // Sprites
+    // Laptop Sprites
     this.load.image("big-fist", "sprites/big-fist.png");
     this.load.image("small-fist", "sprites/small-fist.png");
     this.load.image("fly", "sprites/fly.png");
     this.load.image("slack-box", "sprites/slack-box.png");
     this.load.image("textbox", "sprites/textbox.png");
+
+    // Plant Game Sprites
+    this.load.image("textbox2", "textbox.png");
+    this.load.image("bigDiffen1", "plants/diffen1.png");
+    this.load.image("bigDiffen2", "plants/diffen2.png");
+    this.load.image("bigDiffen3", "plants/diffen3.png");
+    this.load.image("bigDiffen4", "plants/diffen4.png");
+    this.load.image("bigAloe1", "plants/aloe1.png");
+    this.load.image("bigAloe2", "plants/aloe2.png");
+    this.load.image("bigAloe3", "plants/aloe3.png");
+    this.load.image("bigAloe4", "plants/aloe4.png");
+    this.load.image("bigPoth1", "plants/poth1.png");
+    this.load.image("bigPoth2", "plants/poth2.png");
+    this.load.image("bigPoth3", "plants/poth3.png");
+    this.load.image("bigPoth4", "plants/poth4.png");
+
+    // Plant Game Overlays
+    this.load.image("plantGame", "backgrounds/plantGame.png");
+
   }
 
   create() {
@@ -70,6 +89,6 @@ export class Preloader extends Scene {
     //  For example, you can define global animations here, so we can use them in other scenes.
 
     //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-    this.scene.start("MainMenu");
+    this.scene.start("Office");
   }
 }

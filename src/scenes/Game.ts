@@ -26,10 +26,10 @@ export class Game extends Scene
         });
         this.msg_text.setOrigin(0.5);
 
-        this.input.once('pointerdown', () => {
+        // this.input.once('pointerdown', () => {
 
-            this.scene.start('GameOver');
+        //     this.scene.start('GameOver');
 
-        });
+        // });
     }
 }
