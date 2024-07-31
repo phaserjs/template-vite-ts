@@ -78,21 +78,11 @@ export class Office extends Scene {
     // Laptop Button
     laptop.setInteractive({ useHandCursor: true });
     laptop.on("pointerup", () => {
+        evaluatePlantStats()
         changeOfficePlants(this.plantMap, PlantNames.aloe);
         changeOfficePlants(this.plantMap, PlantNames.diffen);
         changeOfficePlants(this.plantMap, PlantNames.poth);
     });
-
-    // this.input.once("pointerup", () => {
-    //   this.scene.start("PlantGame");
-    // });
     
-  }
-  update() {
-    if (hasOpenedComputer) {
-      changeOfficePlants(this.plantMap, PlantNames.aloe);
-      changeOfficePlants(this.plantMap, PlantNames.diffen);
-      changeOfficePlants(this.plantMap, PlantNames.poth);
-    }
   }
 }

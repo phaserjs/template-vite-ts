@@ -93,8 +93,8 @@ export const changeOfficePlants = (
 ) => {
   const numbers = [1, 2, 3, 4];
   const next = plantStats[plantName].healthNum;
-
-  plantMap.aloe[next].visible = true;
+console.log("next", next)
+  plantMap[plantName][next].visible = true;
   numbers.map((n) => {
     if (n !== next) {
       plantMap[plantName][n].visible = false;
@@ -155,7 +155,10 @@ export const evaluatePlantStats = () => {
   for (const p in plantStats) {
     const waterDiff = Math.abs(plantStats[p].water - plantStats[p].waterGoal);
     const sunDiff = Math.abs(plantStats[p].sunlight - plantStats[p].sunGoal);
-    console.log("in eval");
+    // console.log("water", p, plantStats[p].water);
+    // console.log("goal", p, plantStats[p].waterGoal);
+    // console.log("waterDiff", waterDiff);
+    // console.log("sunDiff", sunDiff);
 
     if (waterDiff < 10 && sunDiff < 10) {
       plantStats[p].health = "Amazing";
@@ -170,6 +173,9 @@ export const evaluatePlantStats = () => {
       plantStats[p].health = "Poor";
       plantStats[p].healthNum = 1;
     }
+    console.log("health", p, plantStats[p].health);
+    console.log("healthnum", p, plantStats[p].healthNum);
+  
   }
 };
 
