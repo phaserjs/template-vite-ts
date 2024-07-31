@@ -2,6 +2,9 @@ import { Boot } from './scenes/Boot';
 import { Game as MainGame } from './scenes/Game';
 import { GameOver } from './scenes/GameOver';
 import { Office } from './scenes/Office';
+import { PlantGame } from './scenes/PlantGame';
+import { PlantHealth } from './scenes/PlantHealth';
+
 import Laptop from './scenes/Laptop';
 import { Preloader } from './scenes/Preloader';
 
@@ -31,6 +34,8 @@ const config: Types.Core.GameConfig = {
         Boot,
         Preloader,
         Office,
+        PlantGame,
+        PlantHealth,
         MainGame,
         GameOver,
         Laptop,

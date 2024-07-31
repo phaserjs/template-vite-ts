@@ -26,10 +26,10 @@ export class GameOver extends Scene
         });
         this.gameover_text.setOrigin(0.5);
 
-        this.input.once('pointerdown', () => {
+        // this.input.once('pointerup', () => {
 
-            this.scene.start('MainMenu');
+        //     this.scene.start('Office');
 
-        });
+        // });
     }
 }

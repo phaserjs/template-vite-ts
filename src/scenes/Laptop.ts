@@ -166,7 +166,7 @@ init(data: any) {
     }
     if (this.bugs < 1){
       this.fist?.destroy();
-      this.scene.start("GameOver");
+      // this.scene.start("GameOver");
       this.scene.stop();
 
     }
