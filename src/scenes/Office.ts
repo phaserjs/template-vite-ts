@@ -17,11 +17,12 @@ export class Office extends Scene {
     const books = this.add.image(115 * 2, 91 * 2, "books");
     const desk = this.add.image(177 * 2, 178 * 2, "desk");
     const chair = this.add.image(211 * 2, 177 * 2, "chair");
-    const mug = this.add.image(175 * 2, 125 * 2, "mug");
     const laptop = this.add.image(175 * 2, 125 * 2, "laptop");
     const pots = this.add.image(212 * 2, 189, "pots");
     const pictures = this.add.image(313 * 2, 64 * 2, "pictures");
     const trash = this.add.image(60 * 2, 194 * 2, "trash");
+    const mug = this.add.image(140 * 2, 130 * 2, "mug");
+
     // Plants 1
     const aloe1 = this.add.image(211 * 2, 84 * 2, "aloe1");
     const diffen1 = this.add.image(186 * 2, 79 * 2, "diffen1");

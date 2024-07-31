@@ -89,17 +89,10 @@ export enum PlantNames {
 
 export const changeOfficePlants = (
   plantMap: { [key: string]: { [key: number | string]: any } },
-  plantName: string,
-  action: string
+  plantName: string
 ) => {
-  const current = plantMap[plantName].current;
   const numbers = [1, 2, 3, 4];
-
-  if (current === 1 && action == PlantAction.shrink) return;
-  if (current === 4 && action == PlantAction.grow) return;
-
-  let next = Number(current) + 1;
-  if (action === PlantAction.shrink) next = Number(current) - 1;
+  const next = plantStats[plantName].healthNum;
 
   plantMap.aloe[next].visible = true;
   numbers.map((n) => {
@@ -116,13 +109,21 @@ export const plantHealthMap = {
   Amazing: 4,
 };
 
-export const plantStats = {
+type PlantStats = {
+  [key: string]: {
+    [key: string]: any;
+  };
+};
+
+export const plantStats: PlantStats = {
   diffen: {
     name: "Dieffenbachia",
     healthNum: 1,
     health: "Poor",
     water: 0,
     sunlight: 0,
+    waterGoal: -60,
+    sunGoal: 30,
   },
   aloe: {
     name: "Aloe",
@@ -130,6 +131,8 @@ export const plantStats = {
     health: "Poor",
     water: 0,
     sunlight: 0,
+    waterGoal: 15,
+    sunGoal: -80,
   },
   poth: {
     name: "Pothos",
@@ -137,6 +140,8 @@ export const plantStats = {
     health: "Poor",
     water: 0,
     sunlight: 0,
+    waterGoal: -60,
+    sunGoal: -60,
   },
 };
 
@@ -145,3 +150,35 @@ export let currentPlant = PlantNames.diffen;
 export const updateCurrentPlant = (newPlant: PlantNames) => {
   currentPlant = newPlant;
 };
+
+export const evaluatePlantStats = () => {
+  for (const p in plantStats) {
+    const waterDiff = Math.abs(plantStats[p].water - plantStats[p].waterGoal);
+    const sunDiff = Math.abs(plantStats[p].sunlight - plantStats[p].sunGoal);
+    console.log("water", p, plantStats[p].water);
+    console.log("goal", p, plantStats[p].waterGoal);
+    console.log("waterDiff", waterDiff);
+    console.log("sunDiff", sunDiff);
+
+    if (waterDiff < 10 && sunDiff < 10) {
+      plantStats[p].health = "Amazing";
+      plantStats[p].healthNum = 4;
+    } else if (waterDiff < 20 && sunDiff < 20) {
+      plantStats[p].health = "Great";
+      plantStats[p].healthNum = 3;
+    } else if (waterDiff < 30 && sunDiff < 30) {
+      plantStats[p].health = "Good";
+      plantStats[p].healthNum = 2;
+    } else {
+      plantStats[p].health = "Poor";
+      plantStats[p].healthNum = 1;
+    }
+  }
+};
+
+// Bool that checks if the player has opened the computer since last checking
+// on their plants
+export let hasOpenedComputer = false;
+
+export const setHasOpenedComputer = (bool: boolean) =>
+  (hasOpenedComputer = bool);

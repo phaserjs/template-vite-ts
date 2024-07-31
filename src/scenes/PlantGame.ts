@@ -1,6 +1,7 @@
 import { Scene, GameObjects } from "phaser";
 import {
   changeOfficePlants,
+  evaluatePlantStats,
   PlantAction,
   PlantNames,
   updateCurrentPlant,
@@ -14,6 +15,7 @@ export class PlantGame extends Scene {
   }
 
   create() {
+    evaluatePlantStats()
     this.background = this.add.image(350, 250, "plantGame");
 
     // Plants 1
@@ -35,21 +37,18 @@ export class PlantGame extends Scene {
 
     const plantMap = {
       aloe: {
-        current: 2,
         1: aloe1,
         2: aloe2,
         3: aloe3,
         4: aloe4,
       },
       diffen: {
-        current: 2,
         1: diffen1,
         2: diffen2,
         3: diffen3,
         4: diffen4,
       },
       poth: {
-        current: 2,
         1: poth1,
         2: poth2,
         3: poth3,
@@ -58,9 +57,9 @@ export class PlantGame extends Scene {
     };
 
     // Hide larger plants
-    changeOfficePlants(plantMap, PlantNames.aloe, PlantAction.shrink);
-    changeOfficePlants(plantMap, PlantNames.diffen, PlantAction.shrink);
-    changeOfficePlants(plantMap, PlantNames.poth, PlantAction.shrink);
+    changeOfficePlants(plantMap, PlantNames.aloe);
+    changeOfficePlants(plantMap, PlantNames.diffen);
+    changeOfficePlants(plantMap, PlantNames.poth);
 
     // Plant Health buttons
     poth1.setInteractive({ useHandCursor: true });
