@@ -56,56 +56,66 @@ export class PlantGame extends Scene {
     changeOfficePlants(plantMap, PlantNames.aloe, PlantAction.shrink);
     changeOfficePlants(plantMap, PlantNames.diffen, PlantAction.shrink);
     changeOfficePlants(plantMap, PlantNames.poth, PlantAction.shrink);
-    
-     // Plant Health buttons
-     poth1.setInteractive({ useHandCursor: true });
-     poth1.on("pointerdown", () => {
-       this.scene.launch("PlantHealth");
-     });
-     poth2.setInteractive({ useHandCursor: true });
-     poth2.on("pointerdown", () => {
-       this.scene.launch("PlantHealth");
-     });
-     poth3.setInteractive({ useHandCursor: true });
-     poth3.on("pointerdown", () => {
-       this.scene.launch("PlantHealth");
-     });
-     poth4.setInteractive({ useHandCursor: true });
-     poth4.on("pointerdown", () => {
-       this.scene.launch("PlantHealth");
-     });
-     aloe1.setInteractive({ useHandCursor: true });
-     aloe1.on("pointerdown", () => {
-       this.scene.launch("PlantHealth");
-     });
-     aloe2.setInteractive({ useHandCursor: true });
-     aloe2.on("pointerdown", () => {
-       this.scene.launch("PlantHealth");
-     });
-     aloe3.setInteractive({ useHandCursor: true });
-     aloe3.on("pointerdown", () => {
-       this.scene.launch("PlantHealth");
-     });
-     aloe4.setInteractive({ useHandCursor: true });
-     aloe4.on("pointerdown", () => {
-       this.scene.launch("PlantHealth");
-     });
-     diffen1.setInteractive({ useHandCursor: true });
-     diffen1.on("pointerdown", () => {
-       this.scene.launch("PlantHealth");
-     });
-     diffen2.setInteractive({ useHandCursor: true });
-     diffen2.on("pointerdown", () => {
-       this.scene.launch("PlantHealth");
-     });
-     diffen3.setInteractive({ useHandCursor: true });
-     diffen3.on("pointerdown", () => {
-       this.scene.launch("PlantHealth");
-     });
-     diffen4.setInteractive({ useHandCursor: true });
-     diffen4.on("pointerdown", () => {
-       this.scene.launch("PlantHealth");
-     });
 
+    // Plant Health buttons
+    poth1.setInteractive({ useHandCursor: true });
+    poth1.on("pointerup", () => {
+      this.scene.launch("PlantHealth");
+    });
+    poth2.setInteractive({ useHandCursor: true });
+    poth2.on("pointerup", () => {
+      this.scene.launch("PlantHealth");
+    });
+    poth3.setInteractive({ useHandCursor: true });
+    poth3.on("pointerup", () => {
+      this.scene.launch("PlantHealth");
+    });
+    poth4.setInteractive({ useHandCursor: true });
+    poth4.on("pointerup", () => {
+      this.scene.launch("PlantHealth");
+    });
+    aloe1.setInteractive({ useHandCursor: true });
+    aloe1.on("pointerup", () => {
+      this.scene.launch("PlantHealth");
+    });
+    aloe2.setInteractive({ useHandCursor: true });
+    aloe2.on("pointerup", () => {
+      this.scene.launch("PlantHealth");
+    });
+    aloe3.setInteractive({ useHandCursor: true });
+    aloe3.on("pointerup", () => {
+      this.scene.launch("PlantHealth");
+    });
+    aloe4.setInteractive({ useHandCursor: true });
+    aloe4.on("pointerup", () => {
+      this.scene.launch("PlantHealth");
+    });
+    diffen1.setInteractive({ useHandCursor: true });
+    diffen1.on("pointerup", () => {
+      this.scene.launch("PlantHealth");
+    });
+    diffen2.setInteractive({ useHandCursor: true });
+    diffen2.on("pointerup", () => {
+      this.scene.launch("PlantHealth");
+    });
+    diffen3.setInteractive({ useHandCursor: true });
+    diffen3.on("pointerup", () => {
+      this.scene.launch("PlantHealth");
+    });
+    diffen4.setInteractive({ useHandCursor: true });
+    diffen4.on("pointerup", () => {
+      this.scene.launch("PlantHealth");
+    });
+
+    // Close button
+    const close = this.add.rectangle(610, 70, 15, 15, 0x000000).setOrigin(0);;
+    const x = this.add.text(613, 70, "x").setOrigin(0);
+    close.setInteractive({ useHandCursor: true });
+    close.on("pointerup", () => {
+      this.scene.stop("PlantHealth");
+
+      this.scene.stop("PlantGame");
+      this.scene.resume("Office");
+    });
   }
 }

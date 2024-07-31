@@ -14,7 +14,7 @@ export class Office extends Scene {
     this.background = this.add.image(175 * 2, 125 * 2, "office");
 
     const rug = this.add.image(178 * 2, 235 * 2, "rug");
-    const books = this.add.image(119 * 2, 91 * 2, "books");
+    const books = this.add.image(115 * 2, 91 * 2, "books");
     const desk = this.add.image(177 * 2, 178 * 2, "desk");
     const chair = this.add.image(211 * 2, 177 * 2, "chair");
     const mug = this.add.image(175 * 2, 125 * 2, "mug");
@@ -71,12 +71,12 @@ export class Office extends Scene {
 
     // Plant game button
     pots.setInteractive({ useHandCursor: true });
-    pots.on("pointerdown", () => {
+    pots.on("pointerup", () => {
       this.scene.pause("Office");
       this.scene.launch("PlantGame");
     });
 
-    // this.input.once("pointerdown", () => {
+    // this.input.once("pointerup", () => {
     //   this.scene.start("PlantGame");
     // });
   }

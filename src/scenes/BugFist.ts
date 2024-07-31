@@ -26,7 +26,7 @@ constructor() {
     // Resume Scene Button
     const ResumeButton = this.add.text(100, 100, "Resume Scene", {color: '000000'});
     ResumeButton.setInteractive();
-    // ResumeButton.on("pointerdown", () => {
+    // ResumeButton.on("pointerup", () => {
     //   this.scene.resume("ElevatorScene");
     //   this.scene.stop();
     // });
