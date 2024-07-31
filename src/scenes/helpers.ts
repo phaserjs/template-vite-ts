@@ -88,23 +88,60 @@ export enum PlantNames {
 }
 
 export const changeOfficePlants = (
-  plantMap: { [key: string]: { [key: string]: any } },
+  plantMap: { [key: string]: { [key: number | string]: any } },
   plantName: string,
   action: string
 ) => {
   const current = plantMap[plantName].current;
-  const numbers = ["1", "2", "3", "4"];
+  const numbers = [1, 2, 3, 4];
 
-  if (current === "1" && action == PlantAction.shrink) return;
-  if (current === "4" && action == PlantAction.grow) return;
+  if (current === 1 && action == PlantAction.shrink) return;
+  if (current === 4 && action == PlantAction.grow) return;
 
-  let next = (Number(current) + 1).toString();
-  if (action === PlantAction.shrink) next = (Number(current) - 1).toString();
-  
+  let next = Number(current) + 1;
+  if (action === PlantAction.shrink) next = Number(current) - 1;
+
   plantMap.aloe[next].visible = true;
   numbers.map((n) => {
     if (n !== next) {
       plantMap[plantName][n].visible = false;
     }
   });
+};
+
+export const plantHealthMap = {
+  Poor: 1,
+  Good: 2,
+  Great: 3,
+  Amazing: 4,
+};
+
+export const plantStats = {
+  diffen: {
+    name: "Dieffenbachia",
+    healthNum: 1,
+    health: "Poor",
+    water: 0,
+    sunlight: 0,
+  },
+  aloe: {
+    name: "Aloe",
+    healthNum: 1,
+    health: "Poor",
+    water: 0,
+    sunlight: 0,
+  },
+  poth: {
+    name: "Pothos",
+    healthNum: 1,
+    health: "Poor",
+    water: 0,
+    sunlight: 0,
+  },
+};
+
+export let currentPlant = PlantNames.diffen;
+
+export const updateCurrentPlant = (newPlant: PlantNames) => {
+  currentPlant = newPlant;
 };

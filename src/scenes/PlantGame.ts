@@ -1,5 +1,10 @@
 import { Scene, GameObjects } from "phaser";
-import { changeOfficePlants, PlantAction, PlantNames } from "./helpers";
+import {
+  changeOfficePlants,
+  PlantAction,
+  PlantNames,
+  updateCurrentPlant,
+} from "./helpers";
 
 export class PlantGame extends Scene {
   background: GameObjects.Image;
@@ -30,25 +35,25 @@ export class PlantGame extends Scene {
 
     const plantMap = {
       aloe: {
-        current: "2",
-        "1": aloe1,
-        "2": aloe2,
-        "3": aloe3,
-        "4": aloe4,
+        current: 2,
+        1: aloe1,
+        2: aloe2,
+        3: aloe3,
+        4: aloe4,
       },
       diffen: {
-        current: "2",
-        "1": diffen1,
-        "2": diffen2,
-        "3": diffen3,
-        "4": diffen4,
+        current: 2,
+        1: diffen1,
+        2: diffen2,
+        3: diffen3,
+        4: diffen4,
       },
       poth: {
-        current: "2",
-        "1": poth1,
-        "2": poth2,
-        "3": poth3,
-        "4": poth4,
+        current: 2,
+        1: poth1,
+        2: poth2,
+        3: poth3,
+        4: poth4,
       },
     };
 
@@ -60,55 +65,67 @@ export class PlantGame extends Scene {
     // Plant Health buttons
     poth1.setInteractive({ useHandCursor: true });
     poth1.on("pointerup", () => {
+      updateCurrentPlant(PlantNames.poth);
       this.scene.launch("PlantHealth");
     });
     poth2.setInteractive({ useHandCursor: true });
     poth2.on("pointerup", () => {
+      updateCurrentPlant(PlantNames.poth);
       this.scene.launch("PlantHealth");
     });
     poth3.setInteractive({ useHandCursor: true });
     poth3.on("pointerup", () => {
+      updateCurrentPlant(PlantNames.poth);
       this.scene.launch("PlantHealth");
     });
     poth4.setInteractive({ useHandCursor: true });
     poth4.on("pointerup", () => {
+      updateCurrentPlant(PlantNames.poth);
       this.scene.launch("PlantHealth");
     });
     aloe1.setInteractive({ useHandCursor: true });
     aloe1.on("pointerup", () => {
+      updateCurrentPlant(PlantNames.aloe);
       this.scene.launch("PlantHealth");
     });
     aloe2.setInteractive({ useHandCursor: true });
     aloe2.on("pointerup", () => {
+      updateCurrentPlant(PlantNames.aloe);
       this.scene.launch("PlantHealth");
     });
     aloe3.setInteractive({ useHandCursor: true });
     aloe3.on("pointerup", () => {
+      updateCurrentPlant(PlantNames.aloe);
       this.scene.launch("PlantHealth");
     });
     aloe4.setInteractive({ useHandCursor: true });
     aloe4.on("pointerup", () => {
+      updateCurrentPlant(PlantNames.aloe);
       this.scene.launch("PlantHealth");
     });
     diffen1.setInteractive({ useHandCursor: true });
     diffen1.on("pointerup", () => {
+      updateCurrentPlant(PlantNames.diffen);
       this.scene.launch("PlantHealth");
     });
     diffen2.setInteractive({ useHandCursor: true });
     diffen2.on("pointerup", () => {
+      updateCurrentPlant(PlantNames.diffen);
       this.scene.launch("PlantHealth");
     });
     diffen3.setInteractive({ useHandCursor: true });
     diffen3.on("pointerup", () => {
+      updateCurrentPlant(PlantNames.diffen);
       this.scene.launch("PlantHealth");
     });
     diffen4.setInteractive({ useHandCursor: true });
     diffen4.on("pointerup", () => {
+      updateCurrentPlant(PlantNames.diffen);
       this.scene.launch("PlantHealth");
     });
 
     // Close button
-    const close = this.add.rectangle(610, 70, 15, 15, 0x000000).setOrigin(0);;
+    const close = this.add.rectangle(610, 70, 15, 15, 0x000000).setOrigin(0);
     const x = this.add.text(613, 70, "x").setOrigin(0);
     close.setInteractive({ useHandCursor: true });
     close.on("pointerup", () => {
