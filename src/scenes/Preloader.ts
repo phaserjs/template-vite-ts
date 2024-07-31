@@ -55,7 +55,7 @@ export class Preloader extends Scene {
     this.load.image("logo", "logo.png");
 
     // Laptop Overlays
-    this.load.image("laptop", "backgrounds/laptop.png");
+    this.load.image("bg-laptop", "backgrounds/laptop.png");
 
     // Laptop Sprites
     this.load.image("big-fist", "sprites/big-fist.png");

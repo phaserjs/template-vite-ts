@@ -1,5 +1,5 @@
-import { GameObjects } from "phaser";
-
+export const width = 700;
+export const height = 500;
 /**
  * Create typewriter animation for text
  * @param {Phaser.GameObjects.Text} target
