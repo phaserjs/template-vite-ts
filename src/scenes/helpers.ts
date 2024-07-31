@@ -155,10 +155,7 @@ export const evaluatePlantStats = () => {
   for (const p in plantStats) {
     const waterDiff = Math.abs(plantStats[p].water - plantStats[p].waterGoal);
     const sunDiff = Math.abs(plantStats[p].sunlight - plantStats[p].sunGoal);
-    console.log("water", p, plantStats[p].water);
-    console.log("goal", p, plantStats[p].waterGoal);
-    console.log("waterDiff", waterDiff);
-    console.log("sunDiff", sunDiff);
+    console.log("in eval");
 
     if (waterDiff < 10 && sunDiff < 10) {
       plantStats[p].health = "Amazing";

@@ -1,8 +1,9 @@
 import { Scene, GameObjects } from "phaser";
-import { changeOfficePlants, PlantAction, PlantNames } from "./helpers";
+import { changeOfficePlants, evaluatePlantStats, hasOpenedComputer, PlantAction, PlantNames, setHasOpenedComputer } from "./helpers";
 
 export class Office extends Scene {
   background: GameObjects.Image;
+  plantMap: { [key: string]: { [key: number]: GameObjects.Image } };
 
   constructor() {
     super("Office");
@@ -41,23 +42,20 @@ export class Office extends Scene {
     const diffen4 = this.add.image(193 * 2, 74 * 2, "diffen4");
     const poth4 = this.add.image(243 * 2, 183, "poth4");
 
-    const plantMap = {
+    this.plantMap = {
       aloe: {
-        current: "2",
         "1": aloe1,
         "2": aloe2,
         "3": aloe3,
         "4": aloe4,
       },
       diffen: {
-        current: "2",
         "1": diffen1,
         "2": diffen2,
         "3": diffen3,
         "4": diffen4,
       },
       poth: {
-        current: "2",
         "1": poth1,
         "2": poth2,
         "3": poth3,
@@ -66,9 +64,9 @@ export class Office extends Scene {
     };
 
     // Hide larger plants
-    changeOfficePlants(plantMap, PlantNames.aloe, PlantAction.shrink);
-    changeOfficePlants(plantMap, PlantNames.diffen, PlantAction.shrink);
-    changeOfficePlants(plantMap, PlantNames.poth, PlantAction.shrink);
+    changeOfficePlants(this.plantMap, PlantNames.aloe);
+    changeOfficePlants(this.plantMap, PlantNames.diffen);
+    changeOfficePlants(this.plantMap, PlantNames.poth);
 
     // Plant game button
     pots.setInteractive({ useHandCursor: true });
@@ -77,8 +75,24 @@ export class Office extends Scene {
       this.scene.launch("PlantGame");
     });
 
+    // Laptop Button
+    laptop.setInteractive({ useHandCursor: true });
+    laptop.on("pointerup", () => {
+        changeOfficePlants(this.plantMap, PlantNames.aloe);
+        changeOfficePlants(this.plantMap, PlantNames.diffen);
+        changeOfficePlants(this.plantMap, PlantNames.poth);
+    });
+
     // this.input.once("pointerup", () => {
     //   this.scene.start("PlantGame");
     // });
+    
+  }
+  update() {
+    if (hasOpenedComputer) {
+      changeOfficePlants(this.plantMap, PlantNames.aloe);
+      changeOfficePlants(this.plantMap, PlantNames.diffen);
+      changeOfficePlants(this.plantMap, PlantNames.poth);
+    }
   }
 }

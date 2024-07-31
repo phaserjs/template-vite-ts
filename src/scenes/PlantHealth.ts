@@ -1,5 +1,5 @@
 import { Scene } from "phaser";
-import { currentPlant, plantHealthMap, PlantNames, plantStats } from "./helpers";
+import { currentPlant, evaluatePlantStats, plantHealthMap, PlantNames, plantStats } from "./helpers";
 
 export class PlantHealth extends Scene {
   constructor() {

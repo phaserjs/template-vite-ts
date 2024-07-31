@@ -2,6 +2,7 @@ import { Scene, GameObjects } from "phaser";
 import {
   changeOfficePlants,
   evaluatePlantStats,
+  hasOpenedComputer,
   PlantAction,
   PlantNames,
   updateCurrentPlant,
@@ -9,13 +10,14 @@ import {
 
 export class PlantGame extends Scene {
   background: GameObjects.Image;
+  plantMap: { [key: string]: { [key: number]: GameObjects.Image } };
 
   constructor() {
     super("PlantGame");
   }
 
   create() {
-    evaluatePlantStats()
+    evaluatePlantStats();
     this.background = this.add.image(350, 250, "plantGame");
 
     // Plants 1
@@ -35,7 +37,7 @@ export class PlantGame extends Scene {
     const aloe4 = this.add.image(159 * 2, 135 * 2, "bigAloe4");
     const diffen4 = this.add.image(112 * 2, 128 * 2, "bigDiffen4");
 
-    const plantMap = {
+    this.plantMap = {
       aloe: {
         1: aloe1,
         2: aloe2,
@@ -57,9 +59,9 @@ export class PlantGame extends Scene {
     };
 
     // Hide larger plants
-    changeOfficePlants(plantMap, PlantNames.aloe);
-    changeOfficePlants(plantMap, PlantNames.diffen);
-    changeOfficePlants(plantMap, PlantNames.poth);
+    changeOfficePlants(this.plantMap, PlantNames.aloe);
+    changeOfficePlants(this.plantMap, PlantNames.diffen);
+    changeOfficePlants(this.plantMap, PlantNames.poth);
 
     // Plant Health buttons
     poth1.setInteractive({ useHandCursor: true });
@@ -134,4 +136,5 @@ export class PlantGame extends Scene {
       this.scene.resume("Office");
     });
   }
+  
 }
