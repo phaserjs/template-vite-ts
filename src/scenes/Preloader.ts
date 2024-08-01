@@ -26,6 +26,25 @@ export class Preloader extends Scene {
     //  Load the assets for the game - Replace with your own assets
     this.load.setPath("assets");
 
+    // Welcome Background
+    this.load.image("start-screen", "backgrounds/welcome-screen-background.png");
+
+    // Welcome Sprites
+    this.load.image("arrow", "sprites/arrow.png");
+    this.load.image("credits", "sprites/credits-text.png");
+    this.load.image("room-3d", "sprites/room-3d.png");
+    this.load.image("start", "sprites/start-text.png");
+    this.load.image("title", "sprites/title-text.png");
+
+    // Credits Background
+    this.load.image("credits-bg", "backgrounds/credits-background.png");
+    this.load.spritesheet("fire", "fire-frames.png", {frameWidth: 153, frameHeight: 79});
+
+    // Credits Sprites
+    this.load.image("fire1", "fire1.png");
+    this.load.image("fire2", "fire2.png");
+
+
     // Office Backgrounds
     this.load.image("sky", "backgrounds/sky.png");
     this.load.image("office", "backgrounds/office.png");
@@ -124,6 +143,6 @@ export class Preloader extends Scene {
     //  For example, you can define global animations here, so we can use them in other scenes.
 
     //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-    this.scene.start("Office");
+    this.scene.start("Welcome");
   }
 }

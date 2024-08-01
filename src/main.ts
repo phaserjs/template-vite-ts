@@ -1,6 +1,8 @@
 import { Boot } from './scenes/Boot';
 import { Game as MainGame } from './scenes/Game';
 import { GameOver } from './scenes/GameOver';
+import { Welcome } from './scenes/Welcome';
+import { Credits } from './scenes/Credits';
 import { Office } from './scenes/Office';
 import { Desktop } from './scenes/Desktop';
 import { PlantGame } from './scenes/PlantGame';
@@ -36,6 +38,8 @@ const config: Types.Core.GameConfig = {
     scene: [
         Boot,
         Preloader,
+        Welcome,
+        Credits,
         Office,
         PlantGame,
         PlantHealth,
