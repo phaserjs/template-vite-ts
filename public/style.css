@@ -13,3 +13,11 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+@font-face {
+    font-family: "dogicapixel";
+    src: url('public/dogicapixel.ttf');
+    font-weight: 400;
+    font-weight: normal;
+
+}
