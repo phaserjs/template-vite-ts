@@ -18,7 +18,7 @@ export class PlantLady extends Scene {
     const block = this.add.image(310, 320, "block");
     let plantInfo: GameObjects.Image[] = [pothText, diffenText, aloeText];
 
-    // Close window button
+    // Right arrow button
     rightArrow.setInteractive({ useHandCursor: true });
     rightArrow.on("pointerup", () => {
       plantInfo[0].visible = false;
@@ -27,7 +27,7 @@ export class PlantLady extends Scene {
       plantInfo.push(plantInfo.shift());
     });
 
-    // Close window button
+    // Left arrow button
     leftArrow.setInteractive({ useHandCursor: true });
     leftArrow.on("pointerup", () => {
       plantInfo[0].visible = false;

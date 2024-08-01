@@ -26,6 +26,15 @@ export class Preloader extends Scene {
     //  Load the assets for the game - Replace with your own assets
     this.load.setPath("assets");
 
+    // Sounds
+    this.load.audio('music', 'sounds/music.mp3');
+    this.load.audio('emailNoti', 'sounds/slackNoti.mp3');
+    this.load.audio('meetSound', 'sounds/meetSound.mp3');
+
+    // Game Over
+    this.load.image("GameOver", "backgrounds/GameOver.png");
+    this.load.image("creditsButton", "creditsButton.png");
+
     // Office Backgrounds
     this.load.image("sky", "backgrounds/sky.png");
     this.load.image("office", "backgrounds/office.png");
@@ -94,6 +103,8 @@ export class Preloader extends Scene {
     this.load.image("success", "success.png");
     this.load.image("tooSlow", "tooSlow.png");
     this.load.image("meet", "meet.png");
+    this.load.image("leaf", "leaf.png");
+
 
 
 

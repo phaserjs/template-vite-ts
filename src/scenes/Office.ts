@@ -3,16 +3,20 @@ import {
   bugVisits,
   calVisits,
   changeOfficePlants,
+  count,
   evaluatePlantStats,
   hasOpenedComputer,
   increaseBugVisits,
   increaseCalVisits,
   increaseClock,
+  increaseMeetVisits,
   increasePlantVisits,
+  meetVisits,
   PlantAction,
   PlantNames,
   plantVisits,
   setHasOpenedComputer,
+  writeEndMessage,
 } from "./helpers";
 
 export class Office extends Scene {
@@ -28,6 +32,8 @@ export class Office extends Scene {
     const sky = this.add.image(178 * 2, 54 * 2, "sky");
     sky.scale = 0.5;
     this.background = this.add.image(175 * 2, 125 * 2, "office");
+
+    const emailNoti = this.sound.add('emailNoti');
 
     const rug = this.add.image(178 * 2, 235 * 2, "rug");
     const books = this.add.image(115 * 2, 91 * 2, "books");
@@ -57,7 +63,7 @@ export class Office extends Scene {
     twoPM.setVisible(false);
     const fivePM = this.add.image(103, 78, "5pm");
     fivePM.setVisible(false);
-    this.timestable = [nineAM, twelvePM, twoPM, fivePM];
+    this.timestable = [nineAM, twelvePM, twelvePM, twoPM, fivePM];
 
     // Plants 1
     const aloe1 = this.add.image(211 * 2, 84 * 2, "aloe1");
@@ -118,7 +124,11 @@ export class Office extends Scene {
     peeText.setVisible(true);
     peeBar.width +=15
     if (peeBar.width > backBar.width){
-        //TODO: end game
+        writeEndMessage("You drank too much coffee\n\nYou aren't feeling well and have to\n\nsign off early")
+        this.scene.pause("Office")
+        this.scene.launch("Desktop")
+        this.scene.pause("Desktop")
+        this.scene.launch("GameOver")
     }
     });
 
@@ -131,6 +141,16 @@ export class Office extends Scene {
       changeOfficePlants(this.plantMap, PlantNames.diffen);
       changeOfficePlants(this.plantMap, PlantNames.poth);
       changeOfficePlants(this.plantMap, PlantNames.aloe);
+      this.scene.pause("Office");
+    });
+
+    // gameover Button
+    const over = this.add.rectangle(100, 100, 50, 50, 0x000000)
+    over.setInteractive({ useHandCursor: true });
+    over.on("pointerup", () => {
+    this.scene.launch("Desktop");
+
+      this.scene.launch("GameOver");
       this.scene.pause("Office");
     });
   }
@@ -147,5 +167,15 @@ export class Office extends Scene {
       increaseBugVisits();
       increaseClock(this.timestable);
     }
+    if (meetVisits === 1) {
+        increaseMeetVisits();
+        increaseClock(this.timestable);
+      }
+    if (count === 4){
+        this.scene.launch("Desktop");
+      this.scene.launch("GameOver");
+      this.scene.pause("Office");
+    }
   }
+ 
 }

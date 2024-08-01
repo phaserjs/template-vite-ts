@@ -6,13 +6,15 @@ export class Desktop extends Scene {
   }
 
   create() {
+    const meetSound = this.sound.add("meetSound")
+    
     const laptop = this.add.image(350, 250, "bg-laptop");
     const desktop = this.add.image(351, 244, "desktop");
     const gcal = this.add.image(570, 170, "gcal");
     const vscode = this.add.image(570, 120, "vscode");
-    const meet = this.add.image(575, 270, "meet");
-    const plant = this.add.rectangle(570, 220, 40, 40, 0x000000);
-
+    const meet = this.add.image(575, 220, "meet");
+    const leaf = this.add.image(570, 265, "leaf");
+    leaf.setScale(1.5).setAngle(45)
 
      // bug game button
      vscode.setInteractive({ useHandCursor: true });
@@ -23,10 +25,14 @@ export class Desktop extends Scene {
 
      // google meet game button
      meet.setInteractive({ useHandCursor: true });
+     meet.on("pointerdown", () => {
+        meetSound.play()
+      });
+     
      meet.on("pointerup", () => {
-       this.scene.launch("GoogleMeet");
-       this.scene.pause("Desktop");
-     });
+        this.scene.launch("GoogleMeet");
+      });
+     
 
      // gcal game button
      gcal.setInteractive({ useHandCursor: true });
@@ -36,8 +42,8 @@ export class Desktop extends Scene {
      });
 
      // plant lady game button
-     plant.setInteractive({ useHandCursor: true });
-     plant.on("pointerup", () => {
+     leaf.setInteractive({ useHandCursor: true });
+     leaf.on("pointerup", () => {
        this.scene.launch("PlantLady");
      });
 

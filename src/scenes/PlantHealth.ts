@@ -58,12 +58,7 @@ export class PlantHealth extends Scene {
     });
 
     sliderW.setSize(400, 32);
-    sliderW.setInteractive({ draggable: true });
 
-    sliderW.on("drag", function (pointer: any, dragX: any, dragY: any) {
-      sliderW.x = dragX;
-      sliderW.y = dragY;
-    });
 
     // Sunlight Slider
     const sliderS = this.add.container(395, 97);
@@ -81,11 +76,5 @@ export class PlantHealth extends Scene {
     });
 
     sliderS.setSize(400, 32);
-    sliderS.setInteractive({ draggable: true });
-
-    sliderS.on("drag", function (pointer: any, dragX: any, dragY: any) {
-      sliderS.x = dragX;
-      sliderS.y = dragY;
-    });
   }
 }

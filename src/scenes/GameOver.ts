@@ -1,35 +1,56 @@
-import { Scene } from 'phaser';
+import { Scene } from "phaser";
+import { endMessage, updateEndMessage } from "./helpers";
 
-export class GameOver extends Scene
-{
-    camera: Phaser.Cameras.Scene2D.Camera;
-    background: Phaser.GameObjects.Image;
-    gameover_text : Phaser.GameObjects.Text;
+export class GameOver extends Scene {
+  camera: Phaser.Cameras.Scene2D.Camera;
+  background: Phaser.GameObjects.Image;
 
-    constructor ()
-    {
-        super('GameOver');
-    }
+  constructor() {
+    super("GameOver");
+  }
 
-    create ()
-    {
-        this.camera = this.cameras.main
-        this.camera.setBackgroundColor(0xff0000);
+  create() {
+    const emailNoti = this.sound.add("emailNoti")
+    emailNoti.play()
+    updateEndMessage();
+    this.background = this.add.image(350, 250, "GameOver");
+    this.background.setScale(0.7);
 
-        this.background = this.add.image(512, 384, 'background');
-        this.background.setAlpha(0.5);
+    const gameover_text = this.add.text(250, 170, "Time to log off", {
+      fontSize: 20,
+      color: "#7fafb0",
 
-        this.gameover_text = this.add.text(512, 384, 'Game Over', {
-            fontFamily: 'Arial Black', fontSize: 64, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
-        });
-        this.gameover_text.setOrigin(0.5);
+      align: "center",
+    });
 
-        // this.input.once('pointerup', () => {
+    const endText = this.add.text(250, 210, endMessage, {
+      fontSize: 14,
+      color: "#7fafb0",
+    });
 
-        //     this.scene.start('Office');
+    // Restart Buttons
+    const restart = this.add.zone(185, 370, 70, 20);
+    restart.setInteractive({ useHandCursor: true });
+    restart.on("pointerup", () => {
+      location.reload();
+    });
 
-        // });
-    }
+    const restart2 = this.add.zone(540, 125, 25, 20);
+    restart2.setInteractive({ useHandCursor: true });
+    restart2.on("pointerup", () => {
+      location.reload();
+    });
+
+
+    // Credits button
+    const creditsButton = this.add.image(495, 365, "creditsButton");
+    creditsButton.setInteractive();
+    creditsButton.on("pointerup", () => {
+      this.scene.stop("Desktop");
+      this.scene.stop("GoogleMeet");
+      this.scene.stop("PlantLady");
+      this.scene.stop("Office");
+      this.scene.launch("Credits");
+    });
+  }
 }

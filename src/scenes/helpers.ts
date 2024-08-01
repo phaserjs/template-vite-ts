@@ -180,21 +180,46 @@ export let hasOpenedComputer = true;
 export const setHasOpenedComputer = (bool: boolean) =>
   (hasOpenedComputer = bool);
 
-export let plantVisits = 0
+export let plantVisits = 0;
 
-export const increasePlantVisits = () => plantVisits++
+export const increasePlantVisits = () => plantVisits++;
 
-export let bugVisits = 0
+export let bugVisits = 0;
 
-export const increaseBugVisits = () => bugVisits++
+export const increaseBugVisits = () => bugVisits++;
 
-export let calVisits = 0
+export let calVisits = 0;
 
-export const increaseCalVisits = () => calVisits++
+export const increaseCalVisits = () => calVisits++;
+
+export let meetVisits = 0;
+
+export const increaseMeetVisits = () => meetVisits++;
+
+export let isRoomMessy = false;
+
+export const setIsRoomMessy = (bool:boolean) => {isRoomMessy=bool};
+
+export let count = 0;
 
 export const increaseClock = (timestable: GameObjects.Image[]) => {
-  timestable[0].setVisible(false)
-  timestable[1].setVisible(true)
+  timestable[0].setVisible(false);
+  timestable[1].setVisible(true);
   //@ts-ignore
-  timestable.push(timestable.shift())
+  timestable.push(timestable.shift());
+  count++;
+};
+
+export let endMessage = "You got a lot done today!"
+export const writeEndMessage = (newMessage: string) => {
+  endMessage = newMessage
+}
+export const updateEndMessage = () => {
+  console.log(isRoomMessy)
+  if (plantStats.aloe.healthNum >2 && plantStats.diffen.healthNum >2 && plantStats.poth.healthNum >2){
+    endMessage = "You are a plant wizard! \n\nAfter work, enjoy your oxygen rich home."
+  }
+  if (isRoomMessy) {
+    endMessage = "It was an ok day, \n\nMaybe tomorrow you can clean your \n\nroom before the meeting starts."
+  }
 }
