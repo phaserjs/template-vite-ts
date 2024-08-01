@@ -2,8 +2,11 @@ import { Boot } from './scenes/Boot';
 import { Game as MainGame } from './scenes/Game';
 import { GameOver } from './scenes/GameOver';
 import { Office } from './scenes/Office';
+import { Desktop } from './scenes/Desktop';
 import { PlantGame } from './scenes/PlantGame';
+import { GoogleMeet } from './scenes/GoogleMeet';
 import { PlantHealth } from './scenes/PlantHealth';
+import { PlantLady } from './scenes/PlantLady';
 
 import Laptop from './scenes/Laptop';
 import { Preloader } from './scenes/Preloader';
@@ -36,6 +39,9 @@ const config: Types.Core.GameConfig = {
         Office,
         PlantGame,
         PlantHealth,
+        Desktop,
+        PlantLady,
+        GoogleMeet,
         MainGame,
         GameOver,
         Laptop,

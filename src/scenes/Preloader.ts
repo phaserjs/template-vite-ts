@@ -52,10 +52,21 @@ export class Preloader extends Scene {
     this.load.image("poth2", "poth2.png");
     this.load.image("poth3", "poth3.png");
     this.load.image("poth4", "poth4.png");
-    this.load.image("logo", "logo.png");
+    this.load.image("clock", "clock.png");
+    this.load.image("sun", "sun.png");
+    this.load.image("2pm", "2pm.png");
+    this.load.image("9am", "9am.png");
+    this.load.image("12pm", "12pm.png");
+    this.load.image("5pm", "5pm.png");
+
 
     // Laptop Overlays
     this.load.image("bg-laptop", "backgrounds/laptop.png");
+    this.load.image("plantlady", "backgrounds/plantlady.png");
+    this.load.image("desktop", "backgrounds/desktop.png");
+    this.load.image("alert", "backgrounds/alert.png");
+    this.load.image("googleMeet", "backgrounds/googleMeet.png");
+
 
     // Laptop Sprites
     this.load.image("big-fist", "sprites/big-fist.png");
@@ -63,6 +74,29 @@ export class Preloader extends Scene {
     this.load.image("fly", "sprites/fly.png");
     this.load.image("slack-box", "sprites/slack-box.png");
     this.load.image("textbox", "sprites/textbox.png");
+    this.load.image("vscode", "vscode.png");
+    this.load.image("gcal", "gcal.png");
+    this.load.image("aloe-text", "aloe-text.png");
+    this.load.image("diffen-text", "diffen-text.png");
+    this.load.image("poth-text", "poth-text.png");
+    this.load.image("plant-text", "plant-text.png");
+    this.load.image("block", "block.png");
+    this.load.image("left-arrow", "left-arrow.png");
+    this.load.image("right-arrow", "right-arrow.png");
+    this.load.image("bed", "bed.png");
+    this.load.image("closet", "closet.png");
+    this.load.image("clothes", "clothes.png");
+    this.load.image("crooked", "crooked.png");
+    this.load.image("floorBook", "floorBook.png");
+    this.load.image("pictures-bed", "pictures-bed.png");
+    this.load.image("shelf", "shelf.png");
+    this.load.image("shelfBooks", "shelfBooks.png");
+    this.load.image("success", "success.png");
+    this.load.image("tooSlow", "tooSlow.png");
+    this.load.image("meet", "meet.png");
+
+
+
 
     // Plant Game Sprites
     this.load.image("textbox2", "textbox.png");
@@ -81,6 +115,7 @@ export class Preloader extends Scene {
 
     // Plant Game Overlays
     this.load.image("plantGame", "backgrounds/plantGame.png");
+
 
   }
 
