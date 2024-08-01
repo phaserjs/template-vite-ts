@@ -34,10 +34,10 @@ export class Preloader extends Scene {
 
     // Credits Background
     this.load.image("credits-bg", "backgrounds/credits-background.png");
-    this.load.spritesheet("fire", "fire-frames.png", {
-      frameWidth: 153,
-      frameHeight: 79,
-    });
+
+    // Credits Sprites
+    this.load.spritesheet("fire", "fire-frames.png", {frameWidth: 153, frameHeight: 79});
+
 
     // Office Backgrounds
     this.load.image("sky", "backgrounds/sky.png");
