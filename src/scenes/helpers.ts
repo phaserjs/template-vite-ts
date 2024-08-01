@@ -1,4 +1,4 @@
-import { GameObjects } from "phaser";
+import { GameObjects, LEFT } from "phaser";
 
 export const width = 700;
 export const height = 500;
@@ -230,3 +230,19 @@ export const updateEndMessage = () => {
     endMessage = "You weren't able to squish \n\nall the bugs today... \n\nyou'll get to it tomorrow!"
   }
 }
+/**
+ *
+ * @param {GameObjects.Text[]} objects
+ * @param {number} left
+ * @param {number} right
+ */
+export const alignObjectsHorizontal = (
+  objects: GameObjects.Text[],
+  left: number,
+  right: number
+) => {
+  let offset = (right - left)/objects.length;
+  objects.map((obj, i) => {
+    obj.setPosition(left + offset * i, obj.y);
+  });
+};

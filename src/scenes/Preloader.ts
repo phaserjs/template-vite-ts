@@ -1,7 +1,7 @@
 import { Scene } from "phaser";
 
 export class Preloader extends Scene {
-  music: any
+  music: any;
   constructor() {
     super("Preloader");
   }
@@ -107,6 +107,19 @@ export class Preloader extends Scene {
     this.load.image("meet", "meet.png");
     this.load.image("leaf", "leaf.png");
 
+    // Overlays
+    this.load.image("bg-laptop", "backgrounds/laptop.png");
+    this.load.image("cal-overlay", "backgrounds/cal-overlay.png");
+    this.load.spritesheet(
+      "very-important-meeting",
+      "sprites/very-important-meeting.png",
+      { frameWidth: 72, frameHeight: 36 }
+    );
+    this.load.spritesheet("ticker", "sprites/ticker-sheet.png", {
+      frameWidth: 74,
+      frameHeight: 9,
+    });
+
     // Plant Game Sprites
     this.load.image("textbox2", "textbox.png");
     this.load.image("bigDiffen1", "plants/diffen1.png");
@@ -126,15 +139,15 @@ export class Preloader extends Scene {
     this.load.image("plantGame", "backgrounds/plantGame.png");
   }
   create() {
-    this.add.image(350,250,"welcome-background")
+    this.add.image(350, 250, "welcome-background");
     this.music = this.sound.add("music");
     this.music?.play({
-        mute: false,
-        volume: 0.35,
-        loop: true,
-      });
+      mute: false,
+      volume: 0.35,
+      loop: true,
+    });
     this.scene.start("Welcome", {
-        music: this.music,
-      });
+      music: this.music,
+    });
   }
 }
