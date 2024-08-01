@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { animateText, increaseBugVisits } from "./helpers";
+import { animateText, increaseBugVisits, setIsBugsSquished } from "./helpers";
 // const phrases = ["SQUASHED!!", "SPLATTED!!", "DESTROYED!!", "Kiiiiiiilled", "Die tree killer!!", "EAT FIST", "GET MUSHED"]
 export default class Laptop extends Phaser.Scene {
 fist: Phaser.Types.Physics.Arcade.ImageWithDynamicBody | undefined
@@ -176,7 +176,7 @@ init(data: any) {
     }
     if (this.bugs < 1){
       this.fist?.destroy();
-      // this.scene.start("GameOver");
+      setIsBugsSquished(true)
       this.scene.stop();
 
     }

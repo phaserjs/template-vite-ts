@@ -10,6 +10,7 @@ export class Welcome extends Scene
 
     create ()
     {
+
         const background = this.add.image(0, 0, 'start-screen').setOrigin(0);
 
         const room = this.add.image(280, 90, 'room-3d').setOrigin(0);
@@ -19,6 +20,8 @@ export class Welcome extends Scene
         const start = this.add.image(74, 252, 'start').setOrigin(0);
 
         const credits = this.add.image(74, 310, 'credits').setOrigin(0);
+        
+        const unionBug = this.add.image(600, 65, 'unionBug').setScale(.05)
 
         const arrow = this.add.image(50, 262, 'arrow')
         arrow.setVisible(false)

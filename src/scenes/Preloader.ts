@@ -1,25 +1,9 @@
 import { Scene } from "phaser";
 
 export class Preloader extends Scene {
+  music: any
   constructor() {
     super("Preloader");
-  }
-
-  init() {
-    //  We loaded this image in our Boot Scene, so we can display it here
-    this.add.image(512, 384, "backgrounds/office.png");
-
-    //  A simple progress bar. This is the outline of the bar.
-    this.add.rectangle(512, 384, 468, 32).setStrokeStyle(1, 0xffffff);
-
-    //  This is the progress bar itself. It will increase in size from the left based on the % of progress.
-    const bar = this.add.rectangle(512 - 230, 384, 4, 28, 0xffffff);
-
-    //  Use the 'progress' event emitted by the LoaderPlugin to update the loading bar
-    this.load.on("progress", (progress: number) => {
-      //  Update the progress bar (our bar is 464px wide, so 100% = 464px)
-      bar.width = 4 + 460 * progress;
-    });
   }
 
   preload() {
@@ -27,17 +11,21 @@ export class Preloader extends Scene {
     this.load.setPath("assets");
 
     // Sounds
-    this.load.audio('music', 'sounds/music.mp3');
-    this.load.audio('emailNoti', 'sounds/slackNoti.mp3');
-    this.load.audio('meetSound', 'sounds/meetSound.mp3');
+    this.load.audio("music", "sounds/music.mp3");
+    this.load.audio("emailNoti", "sounds/slackNoti.mp3");
+    this.load.audio("meetSound", "sounds/meetSound.mp3");
 
     // Game Over
     this.load.image("GameOver", "backgrounds/GameOver.png");
     this.load.image("creditsButton", "creditsButton.png");
     // Welcome Background
-    this.load.image("start-screen", "backgrounds/welcome-screen-background.png");
+    this.load.image(
+      "start-screen",
+      "backgrounds/welcome-screen-background.png"
+    );
 
     // Welcome Sprites
+    this.load.image("unionBug", "union-bug.png");
     this.load.image("arrow", "sprites/arrow.png");
     this.load.image("credits", "sprites/credits-text.png");
     this.load.image("room-3d", "sprites/room-3d.png");
@@ -46,12 +34,10 @@ export class Preloader extends Scene {
 
     // Credits Background
     this.load.image("credits-bg", "backgrounds/credits-background.png");
-    this.load.spritesheet("fire", "fire-frames.png", {frameWidth: 153, frameHeight: 79});
-
-    // Credits Sprites
-    this.load.image("fire1", "fire1.png");
-    this.load.image("fire2", "fire2.png");
-
+    this.load.spritesheet("fire", "fire-frames.png", {
+      frameWidth: 153,
+      frameHeight: 79,
+    });
 
     // Office Backgrounds
     this.load.image("sky", "backgrounds/sky.png");
@@ -86,14 +72,12 @@ export class Preloader extends Scene {
     this.load.image("12pm", "12pm.png");
     this.load.image("5pm", "5pm.png");
 
-
     // Laptop Overlays
     this.load.image("bg-laptop", "backgrounds/laptop.png");
     this.load.image("plantlady", "backgrounds/plantlady.png");
     this.load.image("desktop", "backgrounds/desktop.png");
     this.load.image("alert", "backgrounds/alert.png");
     this.load.image("googleMeet", "backgrounds/googleMeet.png");
-
 
     // Laptop Sprites
     this.load.image("big-fist", "sprites/big-fist.png");
@@ -123,10 +107,6 @@ export class Preloader extends Scene {
     this.load.image("meet", "meet.png");
     this.load.image("leaf", "leaf.png");
 
-
-
-
-
     // Plant Game Sprites
     this.load.image("textbox2", "textbox.png");
     this.load.image("bigDiffen1", "plants/diffen1.png");
@@ -144,15 +124,17 @@ export class Preloader extends Scene {
 
     // Plant Game Overlays
     this.load.image("plantGame", "backgrounds/plantGame.png");
-
-
   }
-
   create() {
-    //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
-    //  For example, you can define global animations here, so we can use them in other scenes.
-
-    //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-    this.scene.start("Welcome");
+    this.add.image(350,250,"welcome-background")
+    this.music = this.sound.add("music");
+    this.music?.play({
+        mute: false,
+        volume: 0.35,
+        loop: true,
+      });
+    this.scene.start("Welcome", {
+        music: this.music,
+      });
   }
 }

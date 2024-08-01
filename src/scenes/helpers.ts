@@ -200,6 +200,10 @@ export let isRoomMessy = false;
 
 export const setIsRoomMessy = (bool:boolean) => {isRoomMessy=bool};
 
+export let isBugsSquished = false;
+
+export const setIsBugsSquished = (bool:boolean) => {isBugsSquished=bool};
+
 export let count = 0;
 
 export const increaseClock = (timestable: GameObjects.Image[]) => {
@@ -221,5 +225,8 @@ export const updateEndMessage = () => {
   }
   if (isRoomMessy) {
     endMessage = "It was an ok day, \n\nMaybe tomorrow you can clean your \n\nroom before the meeting starts."
+  }
+  if (isBugsSquished) {
+    endMessage = "You weren't able to squish \n\nall the bugs today... \n\nyou'll get to it tomorrow!"
   }
 }
