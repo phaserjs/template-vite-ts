@@ -1,3 +1,4 @@
+import { GameObjects, LEFT } from "phaser";
 
 export const width = 700;
 export const height = 500;
@@ -72,4 +73,21 @@ export const createAligned = (
 
     x += m.width;
   }
+};
+
+/**
+ *
+ * @param {GameObjects.Text[]} objects
+ * @param {number} left
+ * @param {number} right
+ */
+export const alignObjectsHorizontal = (
+  objects: GameObjects.Text[],
+  left: number,
+  right: number
+) => {
+  let offset = (right - left)/objects.length;
+  objects.map((obj, i) => {
+    obj.setPosition(left + offset * i, obj.y);
+  });
 };

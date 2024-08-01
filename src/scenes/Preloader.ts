@@ -57,7 +57,10 @@ export class Preloader extends Scene
         //this.load.image('logo', 'logo.png', );
 
         // Overlays
-        this.load.image('bg-laptop', 'backgrounds/laptop.png', );
+        this.load.image('bg-laptop', 'backgrounds/laptop.png');
+        this.load.image('bg-laptop-cal', 'backgrounds/laptop-cal.png');
+        this.load.spritesheet('very-important-meeting', 'sprites/very-important-meeting.png', { frameWidth: 72, frameHeight: 36 });
+
 
         // Sprites
         this.load.image('big-fist', 'sprites/big-fist.png');
