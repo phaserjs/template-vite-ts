@@ -58,9 +58,9 @@ export class Preloader extends Scene
 
         // Overlays
         this.load.image('bg-laptop', 'backgrounds/laptop.png');
-        this.load.image('bg-laptop-cal', 'backgrounds/laptop-cal.png');
+        this.load.image('cal-overlay', 'backgrounds/cal-overlay.png');
         this.load.spritesheet('very-important-meeting', 'sprites/very-important-meeting.png', { frameWidth: 72, frameHeight: 36 });
-
+        this.load.spritesheet('ticker', 'sprites/ticker-sheet.png', { frameWidth: 74, frameHeight: 9 });
 
         // Sprites
         this.load.image('big-fist', 'sprites/big-fist.png');
