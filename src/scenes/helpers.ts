@@ -1,3 +1,5 @@
+import { GameObjects } from "phaser";
+
 export const width = 700;
 export const height = 500;
 /**
@@ -93,7 +95,6 @@ export const changeOfficePlants = (
 ) => {
   const numbers = [1, 2, 3, 4];
   const next = plantStats[plantName].healthNum;
-console.log("next", next)
   plantMap[plantName][next].visible = true;
   numbers.map((n) => {
     if (n !== next) {
@@ -122,8 +123,8 @@ export const plantStats: PlantStats = {
     health: "Poor",
     water: 0,
     sunlight: 0,
-    waterGoal: -60,
-    sunGoal: 30,
+    waterGoal: -80,
+    sunGoal: 50,
   },
   aloe: {
     name: "Aloe",
@@ -131,7 +132,7 @@ export const plantStats: PlantStats = {
     health: "Poor",
     water: 0,
     sunlight: 0,
-    waterGoal: 15,
+    waterGoal: 50,
     sunGoal: -80,
   },
   poth: {
@@ -155,10 +156,6 @@ export const evaluatePlantStats = () => {
   for (const p in plantStats) {
     const waterDiff = Math.abs(plantStats[p].water - plantStats[p].waterGoal);
     const sunDiff = Math.abs(plantStats[p].sunlight - plantStats[p].sunGoal);
-    // console.log("water", p, plantStats[p].water);
-    // console.log("goal", p, plantStats[p].waterGoal);
-    // console.log("waterDiff", waterDiff);
-    // console.log("sunDiff", sunDiff);
 
     if (waterDiff < 10 && sunDiff < 10) {
       plantStats[p].health = "Amazing";
@@ -173,15 +170,31 @@ export const evaluatePlantStats = () => {
       plantStats[p].health = "Poor";
       plantStats[p].healthNum = 1;
     }
-    console.log("health", p, plantStats[p].health);
-    console.log("healthnum", p, plantStats[p].healthNum);
-  
   }
 };
 
 // Bool that checks if the player has opened the computer since last checking
 // on their plants
-export let hasOpenedComputer = false;
+export let hasOpenedComputer = true;
 
 export const setHasOpenedComputer = (bool: boolean) =>
   (hasOpenedComputer = bool);
+
+export let plantVisits = 0
+
+export const increasePlantVisits = () => plantVisits++
+
+export let bugVisits = 0
+
+export const increaseBugVisits = () => bugVisits++
+
+export let calVisits = 0
+
+export const increaseCalVisits = () => calVisits++
+
+export const increaseClock = (timestable: GameObjects.Image[]) => {
+  timestable[0].setVisible(false)
+  timestable[1].setVisible(true)
+  //@ts-ignore
+  timestable.push(timestable.shift())
+}

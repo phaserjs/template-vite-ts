@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { animateText } from "./helpers";
+import { animateText, increaseBugVisits } from "./helpers";
 // const phrases = ["SQUASHED!!", "SPLATTED!!", "DESTROYED!!", "Kiiiiiiilled", "Die tree killer!!", "EAT FIST", "GET MUSHED"]
 export default class Laptop extends Phaser.Scene {
 fist: Phaser.Types.Physics.Arcade.ImageWithDynamicBody | undefined
@@ -25,14 +25,13 @@ init(data: any) {
 }
   create() {
 
-    //background
-    this.add.image(350, 250, "laptop");
-
+    const background = this.add.rectangle(350, 250, 533, 370, 0x000000)
     let text = this.add.text(
       105,
       80,
-      "Memory Leak!! Hit 'Space' to squash some invasive species.",
-      { color: "#FFFFFF", fontSize: "14px" }
+      "System Malfunction!! Hit 'Space' to squash some \
+      \ninvasive species.",
+      { color: "#0BDA51", fontSize: "14px" }
     );
     animateText(text);
     // this.word_slam = this.add.text(
@@ -58,7 +57,7 @@ init(data: any) {
       \nsuch as vehicles, stone, rusty metal, outdoor furniture, and firewood.\
       \nAdult SLF can hitch rides in vehicles, on any outdoor item, or cling to\
       \nclothing or hats, and be easily transported into and throughout New York.",
-      { color: "#FFFFFF", fontSize: "10px" }
+      { color: "#0BDA51", fontSize: "10px" }
     );
     animateText(fly_facts);
 
@@ -139,6 +138,17 @@ init(data: any) {
     this.space = this.input?.keyboard?.addKey(
       Phaser.Input.Keyboard.KeyCodes.SPACE
     );
+
+     // Close button
+     const close = this.add.rectangle(625, 45, 15, 15, 0x000000).setOrigin(0);
+     const x = this.add.text(628, 45, "x").setOrigin(0);
+     close.setInteractive({ useHandCursor: true });
+     close.on("pointerup", () => {
+      increaseBugVisits()
+       this.scene.stop("Desktop");
+       this.scene.stop("Laptop");
+       this.scene.resume("Office");
+     });
 
   }
   update(): void {

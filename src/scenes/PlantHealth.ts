@@ -55,7 +55,6 @@ export class PlantHealth extends Scene {
     controlW.on("drag", function (pointer: any, dragX: any, dragY: any) {
       controlW.x = Phaser.Math.Clamp(dragX, -90, 90);
       plantStats[currentPlant].water = controlW.x
-      console.log("in slider",plantStats[currentPlant].water)
     });
 
     sliderW.setSize(400, 32);

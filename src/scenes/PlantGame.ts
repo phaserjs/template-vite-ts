@@ -3,8 +3,10 @@ import {
   changeOfficePlants,
   evaluatePlantStats,
   hasOpenedComputer,
+  increasePlantVisits,
   PlantAction,
   PlantNames,
+  setHasOpenedComputer,
   updateCurrentPlant,
 } from "./helpers";
 
@@ -17,25 +19,29 @@ export class PlantGame extends Scene {
   }
 
   create() {
-    evaluatePlantStats();
+    if (hasOpenedComputer) {
+      evaluatePlantStats();
+      setHasOpenedComputer(false);
+    }
+
     this.background = this.add.image(350, 250, "plantGame");
 
     // Plants 1
-    const aloe1 = this.add.image(169 * 2, 160 * 2, "bigAloe1");
     const diffen1 = this.add.image(106 * 2, 178 * 2, "bigDiffen1");
     const poth1 = this.add.image(224 * 2, 165 * 2, "bigPoth1");
+    const aloe1 = this.add.image(169 * 2, 160 * 2, "bigAloe1");
     // Plants 2
-    const aloe2 = this.add.image(169 * 2, 143 * 2, "bigAloe2");
     const diffen2 = this.add.image(96 * 2, 163 * 2, "bigDiffen2");
     const poth2 = this.add.image(230 * 2, 145 * 2, "bigPoth2");
+    const aloe2 = this.add.image(169 * 2, 143 * 2, "bigAloe2");
     // Plants 3
     const poth3 = this.add.image(229 * 2, 145 * 2, "bigPoth3");
-    const aloe3 = this.add.image(179 * 2, 133 * 2, "bigAloe3");
     const diffen3 = this.add.image(98 * 2, 140 * 2, "bigDiffen3");
+    const aloe3 = this.add.image(179 * 2, 133 * 2, "bigAloe3");
     // Plants 4
     const poth4 = this.add.image(244 * 2, 135 * 2, "bigPoth4");
-    const aloe4 = this.add.image(159 * 2, 135 * 2, "bigAloe4");
     const diffen4 = this.add.image(112 * 2, 128 * 2, "bigDiffen4");
+    const aloe4 = this.add.image(159 * 2, 135 * 2, "bigAloe4");
 
     this.plantMap = {
       aloe: {
@@ -59,9 +65,9 @@ export class PlantGame extends Scene {
     };
 
     // Hide larger plants
-    changeOfficePlants(this.plantMap, PlantNames.aloe);
     changeOfficePlants(this.plantMap, PlantNames.diffen);
     changeOfficePlants(this.plantMap, PlantNames.poth);
+    changeOfficePlants(this.plantMap, PlantNames.aloe);
 
     // Plant Health buttons
     poth1.setInteractive({ useHandCursor: true });
@@ -130,11 +136,10 @@ export class PlantGame extends Scene {
     const x = this.add.text(613, 70, "x").setOrigin(0);
     close.setInteractive({ useHandCursor: true });
     close.on("pointerup", () => {
+      increasePlantVisits();
       this.scene.stop("PlantHealth");
-
       this.scene.stop("PlantGame");
       this.scene.resume("Office");
     });
   }
-  
 }

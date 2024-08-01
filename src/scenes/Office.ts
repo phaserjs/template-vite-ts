@@ -1,9 +1,24 @@
 import { Scene, GameObjects } from "phaser";
-import { changeOfficePlants, evaluatePlantStats, hasOpenedComputer, PlantAction, PlantNames, setHasOpenedComputer } from "./helpers";
+import {
+  bugVisits,
+  calVisits,
+  changeOfficePlants,
+  evaluatePlantStats,
+  hasOpenedComputer,
+  increaseBugVisits,
+  increaseCalVisits,
+  increaseClock,
+  increasePlantVisits,
+  PlantAction,
+  PlantNames,
+  plantVisits,
+  setHasOpenedComputer,
+} from "./helpers";
 
 export class Office extends Scene {
   background: GameObjects.Image;
   plantMap: { [key: string]: { [key: number]: GameObjects.Image } };
+  timestable: GameObjects.Image[];
 
   constructor() {
     super("Office");
@@ -22,7 +37,27 @@ export class Office extends Scene {
     const pots = this.add.image(212 * 2, 189, "pots");
     const pictures = this.add.image(313 * 2, 64 * 2, "pictures");
     const trash = this.add.image(60 * 2, 194 * 2, "trash");
+    // Coffee
     const mug = this.add.image(140 * 2, 130 * 2, "mug");
+    const peeText = this.add
+      .text(540, 6, "Pee Meter", { color: "#000000", fontSize: "14px" })
+      .setOrigin(0);
+    const backBar = this.add.rectangle(540, 20, 150, 20, 0x000000).setOrigin(0);
+    const peeBar = this.add.rectangle(543, 23, 0, 14, 0xffea00).setOrigin(0);
+    peeBar.setVisible(false);
+    backBar.setVisible(false);
+    peeText.setVisible(false);
+
+    // Clock
+    const clock = this.add.image(80, 150, "clock");
+    const nineAM = this.add.image(97, 78, "9am");
+    const twelvePM = this.add.image(107, 78, "12pm");
+    twelvePM.setVisible(false);
+    const twoPM = this.add.image(104, 93, "2pm");
+    twoPM.setVisible(false);
+    const fivePM = this.add.image(103, 78, "5pm");
+    fivePM.setVisible(false);
+    this.timestable = [nineAM, twelvePM, twoPM, fivePM];
 
     // Plants 1
     const aloe1 = this.add.image(211 * 2, 84 * 2, "aloe1");
@@ -64,9 +99,9 @@ export class Office extends Scene {
     };
 
     // Hide larger plants
-    changeOfficePlants(this.plantMap, PlantNames.aloe);
     changeOfficePlants(this.plantMap, PlantNames.diffen);
     changeOfficePlants(this.plantMap, PlantNames.poth);
+    changeOfficePlants(this.plantMap, PlantNames.aloe);
 
     // Plant game button
     pots.setInteractive({ useHandCursor: true });
@@ -75,14 +110,42 @@ export class Office extends Scene {
       this.scene.launch("PlantGame");
     });
 
+    // Coffee button
+    mug.setInteractive({ useHandCursor: true });
+    mug.on("pointerup", () => {
+        peeBar.setVisible(true);
+    backBar.setVisible(true);
+    peeText.setVisible(true);
+    peeBar.width +=15
+    if (peeBar.width > backBar.width){
+        //TODO: end game
+    }
+    });
+
     // Laptop Button
     laptop.setInteractive({ useHandCursor: true });
     laptop.on("pointerup", () => {
-        evaluatePlantStats()
-        changeOfficePlants(this.plantMap, PlantNames.aloe);
-        changeOfficePlants(this.plantMap, PlantNames.diffen);
-        changeOfficePlants(this.plantMap, PlantNames.poth);
+      this.scene.launch("Desktop");
+      evaluatePlantStats();
+      setHasOpenedComputer(true);
+      changeOfficePlants(this.plantMap, PlantNames.diffen);
+      changeOfficePlants(this.plantMap, PlantNames.poth);
+      changeOfficePlants(this.plantMap, PlantNames.aloe);
+      this.scene.pause("Office");
     });
-    
+  }
+  update() {
+    if (plantVisits === 2) {
+      increasePlantVisits();
+      increaseClock(this.timestable);
+    }
+    if (calVisits === 1) {
+      increaseCalVisits();
+      increaseClock(this.timestable);
+    }
+    if (bugVisits === 1) {
+      increaseBugVisits();
+      increaseClock(this.timestable);
+    }
   }
 }
