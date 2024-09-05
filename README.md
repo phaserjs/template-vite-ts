@@ -117,8 +117,8 @@ Before:
 
 ```json
 "scripts": {
-    "dev": "node log.js dev && vite --config vite/config.dev.mjs",
-    "build": "node log.js build && vite build --config vite/config.prod.mjs"
+    "dev": "node log.js dev & dev-template-script",
+    "build": "node log.js build & build-template-script"
 },
 ```
 
@@ -126,8 +126,8 @@ After:
 
 ```json
 "scripts": {
-    "dev": "vite --config vite/config.dev.mjs",
-    "build": "vite build --config vite/config.prod.mjs"
+    "dev": "dev-template-script",
+    "build": "build-template-script"
 },
 ```
 
