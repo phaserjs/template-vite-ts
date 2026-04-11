@@ -1,6 +1,6 @@
 # Phaser Vite TypeScript Template
 
-This is a Phaser 3 project template that uses Vite for bundling. It supports hot-reloading for quick development workflow, includes TypeScript support and scripts to generate production-ready builds.
+This is a Phaser 3 project template that uses Vite for bundling. It supports hot-reloading for quick development workflow, includes TypeScript support, and has scripts to generate production-ready builds.
 
 **[This Template is also available as a JavaScript version.](https://github.com/phaserjs/template-vite)**
 
@@ -35,10 +35,6 @@ After cloning the repo, run `npm install` from your project directory. Then, you
 The local development server runs on `http://localhost:8080` by default. Please see the Vite documentation if you wish to change this, or add SSL support.
 
 Once the server is running you can edit any of the files in the `src` folder. Vite will automatically recompile your code and then reload the browser.
-
-## Template Project Structure
-
-We have provided a default project structure to get you started. This is as follows:
 
 ## Template Project Structure
 
